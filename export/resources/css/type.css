@@ -1,0 +1,54 @@
+@font-face {
+  font-family: "Iconfont";
+  src: url("/public/fonts/Iconfont.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
+  text-wrap: balance;
+  line-height: var(--leading-flat);
+  font-family: var(--font-heading);
+  text-transform: var(--heading-text-transform);
+}
+
+h1,
+.h1 {
+  font-size: var(--font-size-h1);
+}
+
+h2,
+.h2 {
+  font-size: var(--font-size-h2);
+}
+
+h3,
+.h3 {
+  font-size: var(--font-size-h3);
+}
+
+h4,
+.h4 {
+  font-size: var(--font-size-h4);
+}
+
+h5,
+.h5 {
+  font-size: var(--font-size-h5);
+}
+
+h6,
+.h6 {
+  font-size: var(--font-size-h6);
+}
+
+p{
+  font-size: var(--font-size-p);
+  text-wrap: pretty;
+}
+
+.text-large{
+  font-size: var(--size-500);
+  font-weight: 500;
+  line-height: var(--leading-tight);
+}

@@ -1,0 +1,19 @@
+title: 'Site settings'
+site_name: 'Vizuall skabelon side'
+phone: '92 99 16 00'
+email: info@centralenthy.dk
+address: 'Lille Fjordstræde 7'
+zip: '7760 Hurup Thy'
+socialmedia_links:
+  -
+    id: 8F8bT6v6N4-JfcuT7cIee
+    handle: /
+    prefix: 'https://www.facebook.com/'
+    type: facebook
+    enabled: true
+  -
+    id: u6vWEcAcF2EhJgHtc5Vs-
+    handle: /
+    prefix: 'https://www.instagram.com/'
+    type: instagram
+    enabled: true

@@ -1,0 +1,350 @@
+title: 'Theme settings'
+show_topbar: true
+topbar:
+  widgets:
+    -
+      id: adIwQcnzitkX11ry7eb3g
+      text: 'Søg her...'
+      button_input: icon
+      icon:
+        name: 'boxicons:search'
+        attributes:
+          width: 1em
+          height: 1em
+          viewBox: '0 0 24 24'
+        viewBox:
+          - 0
+          - 0
+          - 24
+          - 24
+        body: '<path fill="currentColor" d="M18 10c0-4.41-3.59-8-8-8s-8 3.59-8 8s3.59 8 8 8c1.85 0 3.54-.63 4.9-1.69l5.1 5.1L21.41 20l-5.1-5.1A8 8 0 0 0 18 10M4 10c0-3.31 2.69-6 6-6s6 2.69 6 6s-2.69 6-6 6s-6-2.69-6-6"/>'
+      type: search_bar
+      enabled: true
+  settings:
+    color_scheme: theme-4
+    pt:
+      -
+        sides:
+          - top
+        value: 0
+        custom: false
+    pb:
+      -
+        sides:
+          - top
+        value: 0
+        custom: false
+header:
+  widgets:
+    -
+      id: ucyPOndGaDJz5LW5e1OWw
+      type: logo
+      enabled: true
+      logo: dencker-logo-primaer-neg-rgb.png
+      height: 61
+    -
+      id: aK_HhbhtIBPZzdkTG4lm2
+      navigation_type: normal
+      type: navigation
+      enabled: true
+      advance_navigation: false
+      nav_options: default
+      navigation_picker:
+        - footer_nav
+    -
+      id: B1vPw1TKl-cKsTm53leTv
+      links:
+        -
+          id: KGJ4M-ffl9HeCsbbnTm5x
+          text: 'Kontakt os'
+          outline: false
+      type: cta_links
+      enabled: true
+  settings:
+    color_scheme: theme-1
+    padding:
+      -
+        sides:
+          - top
+          - bottom
+        value: 7
+        custom: false
+    font: '--font-heading'
+    font_size: '--size-200'
+footer:
+  footer_widgets:
+    -
+      id: RqWpTBvBwf_P2uKYRNAEt
+      title: 'Kontakt os'
+      type: contact_info
+      enabled: true
+    -
+      id: ISwP2r6BlJBEUwLd2wlG3
+      title: 'Nyttige links'
+      navigation_picker:
+        - footer_nav
+      type: navigation
+      enabled: true
+    -
+      id: _tPTZr49eC0kNdraXOXiv
+      title: 'Bliv kontaktet'
+      type: form
+      enabled: true
+      form_picker: contact_form
+  settings:
+    color_scheme: theme-2
+    pt:
+      -
+        sides:
+          - top
+        value: 0
+        custom: false
+    pb:
+      -
+        sides:
+          - top
+        value: 0
+        custom: false
+primary_color: '#011A65'
+secondary_color: '#4bd2bc'
+tertiary_color: '#E54533'
+quaternary_color: '#00c728'
+contrast_light: '#fafafa'
+contrast_dark: '#011656'
+neutral_color: gray
+color_schemes:
+  -
+    id: 1cn9FEwg8I1ueMFUV235e
+    handle: theme-1
+    label: 'theme 1'
+    text_color: '#fafafa'
+    background_color: '#011656'
+    button_one_color: '#4bd2bc'
+    button_two_color: '#fafafa'
+    type: color_scheme
+    enabled: true
+    inner_background_color: '#273c7c'
+    inner_text_color: '#fafafa'
+    button_one_text_color: '#011656'
+    button_two_text_color: '#011656'
+  -
+    id: 0U-RHk5NzzEAQ2VKDH6aJ
+    handle: theme-2
+    label: 'Thema 2'
+    type: color_scheme
+    enabled: true
+    text_color: '#0a0a0a'
+    background_color: '#f5f5f5'
+    button_one_color: '#011656'
+    button_two_color: '#011656'
+    inner_background_color: '#011A65'
+    inner_text_color: '#fafafa'
+  -
+    id: No-g2l7kmW_joCKv6Ma_f
+    handle: theme-3
+    label: 'Theme 3'
+    text_color: '#011656'
+    background_color: '#fafafa'
+    button_one_color: '#011656'
+    button_two_color: '#011656'
+    type: color_scheme
+    enabled: true
+    button_one_text_color: '#fafafa'
+  -
+    id: aiTyLPyBVAhDTnMY51AAa
+    handle: theme-4
+    label: 'Theme 4'
+    background_color: '#4bd2bc'
+    text_color: '#011656'
+    button_one_color: '#011656'
+    button_two_color: '#011656'
+    type: color_scheme
+    enabled: true
+    inner_background_color: '#66d9c6'
+    inner_text_color: '#011656'
+    button_one_text_color: '#fafafa'
+    button_two_text_color: '#fafafa'
+  -
+    id: exINJkgqUMRs9GAqOLjpe
+    handle: theme-6
+    label: 'Theme 6'
+    background_color: '#f5f5f5'
+    text_color: '#011656'
+    inner_background_color: '#4bd2bc'
+    inner_text_color: '#011656'
+    button_one_color: '#011656'
+    button_one_text_color: '#fafafa'
+    button_two_color: '#011656'
+    button_two_text_color: '#fafafa'
+    type: color_scheme
+    enabled: true
+  -
+    id: uVSFDRxGU9iDPrIurx2qd
+    handle: header-theme
+    label: 'Header theme'
+    background_color: '#011656'
+    text_color: '#fafafa'
+    button_one_color: '#4bd2bc'
+    button_one_text_color: '#011656'
+    button_two_text_color: '#fafafa'
+    type: color_scheme
+    enabled: true
+container_width: 80em
+fluid_sizes:
+  max_viewport: 1280
+  unit: vw
+  sizes:
+    -
+      handle: size-100
+      min: 15
+      max: 16
+      id: default-0
+    -
+      handle: size-200
+      min: 16
+      max: 18
+      id: default-1
+    -
+      handle: size-300
+      min: 18
+      max: 22
+      id: default-2
+    -
+      handle: size-400
+      min: 21
+      max: 26
+      id: default-3
+    -
+      handle: size-500
+      min: 24
+      max: 34
+      id: default-4
+    -
+      handle: size-600
+      min: 31
+      max: 44
+      id: default-5
+    -
+      handle: size-700
+      min: 38
+      max: 56
+      id: default-6
+    -
+      handle: size-800
+      min: 48
+      max: 70
+      id: default-7
+    -
+      handle: size-900
+      min: 60
+      max: 86
+      id: default-8
+    -
+      handle: size-1000
+      min: 72
+      max: 110
+      id: default-9
+    -
+      handle: size-1100
+      min: 84
+      max: 135
+      id: default-10
+    -
+      handle: size-1200
+      min: 90
+      max: 150
+      id: default-11
+  sizes_css:
+    -
+      handle: size-100
+      value: 'clamp(0.9375rem, 0.9167rem + 0.1042vw, 1rem)'
+    -
+      handle: size-200
+      value: 'clamp(1rem, 0.9583rem + 0.2083vw, 1.125rem)'
+    -
+      handle: size-300
+      value: 'clamp(1.125rem, 1.0417rem + 0.4167vw, 1.375rem)'
+    -
+      handle: size-400
+      value: 'clamp(1.3125rem, 1.2083rem + 0.5208vw, 1.625rem)'
+    -
+      handle: size-500
+      value: 'clamp(1.5rem, 1.2917rem + 1.0417vw, 2.125rem)'
+    -
+      handle: size-600
+      value: 'clamp(1.9375rem, 1.6667rem + 1.3542vw, 2.75rem)'
+    -
+      handle: size-700
+      value: 'clamp(2.375rem, 2rem + 1.875vw, 3.5rem)'
+    -
+      handle: size-800
+      value: 'clamp(3rem, 2.5417rem + 2.2917vw, 4.375rem)'
+    -
+      handle: size-900
+      value: 'clamp(3.75rem, 3.2083rem + 2.7083vw, 5.375rem)'
+    -
+      handle: size-1000
+      value: 'clamp(4.5rem, 3.7083rem + 3.9583vw, 6.875rem)'
+    -
+      handle: size-1100
+      value: 'clamp(5.25rem, 4.1875rem + 5.3125vw, 8.4375rem)'
+    -
+      handle: size-1200
+      value: 'clamp(5.625rem, 4.375rem + 6.25vw, 9.375rem)'
+custom_fonts:
+  -
+    id: 3WBAz_tVNW3sJHOq7haNg
+    file: BarlowCondensed-Bold-3.woff2
+    weight: '700'
+    variable: false
+  -
+    id: n822ArsqY1KBDKQa9fLQm
+    file: BarlowCondensed-Medium-1.woff2
+    weight: '500'
+    variable: false
+  -
+    id: bWsabp8XvITZJMNuKv3eo
+    file: BarlowCondensed-Regular.woff2
+    weight: '400'
+    variable: false
+font_family:
+  base: Inter
+  base_font_weight: font-regular
+  headings: BarlowCondensed
+  headings_uppercase: true
+  headline_font_weight: 700
+line_height: leading-normal
+font_scale_preview:
+  h1: size-700
+  h2: size-600
+  h3: size-500
+  h4: size-400
+  h5: size-300
+  h6: size-200
+  p: size-100
+button_font: '--font-base'
+button_size: '--size-sm'
+button_weight: '--font-weight-bold'
+button_radius: var(--radius-sm)
+button_uppercase: false
+button_preview:
+  bg: '#011656'
+  text: '#fafafa'
+media_color_overlay: '#E54533'
+opacity: 20%
+show_blog: true
+show_employees: true
+show_services: true
+show_cases: true
+show_events: true
+show_products: true
+show_testimonials: true
+show_reusable_sections: true
+custom_css: |-
+  .entries-style-1 .list-item,.media-textbox-style-1 .media-wrapper{
+      border-top-left-radius: 1.5rem;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 1.5rem;
+      border-bottom-left-radius: 3px;
+      overflow: clip;
+  }
