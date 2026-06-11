@@ -1,0 +1,10 @@
+{
+    "name": "vizuallgit/vizuall-starter-kit",
+    "type": "statamic-starter-kit",
+    "extra": {
+        "statamic": {
+            "name": "Starter Kit",
+            "description": "Starter kit med custom addons, color scheme, sections og Live Preview"
+        }
+    }
+}
