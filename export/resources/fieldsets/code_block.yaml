@@ -1,0 +1,174 @@
+title: 'Code Block'
+fields:
+  -
+    handle: title
+    field:
+      type: text
+      display: Title
+      if:
+        admin_settings.show_title: 'equals true'
+  -
+    handle: richtext
+    field: common.simple_text
+    config:
+      display: Richtext
+      if:
+        admin_settings.show_richtext: 'equals true'
+  -
+    handle: single_image
+    field:
+      container: assets
+      max_files: 1
+      type: assets
+      display: 'Single image'
+      if:
+        admin_settings.show_single_image: 'equals true'
+  -
+    handle: images
+    field:
+      container: assets
+      type: assets
+      display: Images
+      if:
+        admin_settings.show_images: 'equals true'
+  -
+    handle: links
+    field: links.links
+    config:
+      if:
+        admin_settings.show_links: 'equals true'
+  -
+    handle: list
+    field:
+      type: replicator
+      display: List
+      if:
+        admin_settings.show_list: 'equals true'
+      sets:
+        new_set_group:
+          display: 'New Set Group'
+          sets:
+            item:
+              display: Item
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Title
+                    if:
+                      $parent.admin_settings.list_conditional.show_title: 'equals true'
+                -
+                  handle: richtext
+                  field: common.simple_text
+                  config:
+                    display: Richtext
+                    if:
+                      $parent.admin_settings.list_conditional.show_richtext: 'equals true'
+                -
+                  handle: links
+                  field: links.links
+                  config:
+                    if:
+                      $parent.admin_settings.list_conditional.show_links: 'equals true'
+                -
+                  handle: image
+                  field:
+                    container: assets
+                    max_files: 1
+                    type: assets
+                    display: Image
+                    if:
+                      $parent.admin_settings.list_conditional.show_image: 'equals true'
+  -
+    handle: admin_settings
+    field:
+      type: group
+      display: 'Admin indstillinger'
+      if: 'custom isAdmin'
+      fields:
+        -
+          handle: admin_notice
+          field:
+            type: html
+            html: '<div style="padding:8px 12px;background:#fef3c7;border:1px solid #f59e0b;border-radius:6px;color:#92400e;font-size:13px;">⚠️ Kun synlig og redigerbar for super admins</div>'
+        -
+          handle: show_title
+          field:
+            type: toggle
+            display: 'Show title'
+            width: 25
+        -
+          handle: show_richtext
+          field:
+            type: toggle
+            display: 'Show richtext'
+            width: 25
+        -
+          handle: show_single_image
+          field:
+            type: toggle
+            display: 'Show single image'
+            width: 25
+        -
+          handle: show_links
+          field:
+            type: toggle
+            display: 'Show links'
+            width: 25
+        -
+          handle: show_images
+          field:
+            type: toggle
+            display: 'Show images'
+            width: 25
+        -
+          handle: show_list
+          field:
+            type: toggle
+            display: 'Show list'
+            width: 25
+        -
+          handle: list_conditional
+          field:
+            type: group
+            display: 'List conditional'
+            if:
+              show_list: 'equals true'
+            fields:
+              -
+                handle: show_title
+                field:
+                  type: toggle
+                  display: 'Show title'
+                  width: 25
+              -
+                handle: show_image
+                field:
+                  type: toggle
+                  display: 'Show image'
+                  width: 25
+              -
+                handle: show_links
+                field:
+                  type: toggle
+                  display: 'Show links'
+                  width: 25
+              -
+                handle: show_richtext
+                field:
+                  type: toggle
+                  display: 'Show richtext'
+                  width: 25
+        -
+          handle: code
+          field:
+            type: code_editor
+            language: html
+            display: 'HTML / Antlers kode'
+            instructions: 'Skriv HTML eller Antlers tags. Fx: {{ collection:listing from="cases" }}'
+        -
+          handle: custom_css
+          field:
+            type: css_editor
+            display: 'Custom css'

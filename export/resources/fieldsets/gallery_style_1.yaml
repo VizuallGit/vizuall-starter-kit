@@ -1,0 +1,167 @@
+title: 'Gallery style 1'
+fields:
+  -
+    handle: section_heading
+    field: common.section_heading
+    config:
+      validate:
+        - required
+  -
+    handle: images
+    field:
+      container: assets
+      type: assets
+      display: Billeder
+      mode: grid
+  -
+    handle: show_settings
+    field:
+      type: revealer
+      display: 'Vis indstillinger'
+  -
+    handle: settings
+    field:
+      type: tabby
+      display: Indstillinger
+      if:
+        show_settings: 'equals true'
+      fields:
+        -
+          handle: main
+          field:
+            type: tab
+            display: Main
+        -
+          handle: color_scheme
+          field:
+            type: color_scheme_selector
+            display: 'Color Scheme'
+        -
+          handle: gallery_mode
+          field:
+            options:
+              -
+                key: slider
+                value: Slider
+              -
+                key: grid
+                value: Grid
+              -
+                key: masonry
+                value: Masonry
+            default: grid
+            type: button_group
+            display: Layout
+        -
+          handle: hide_heading
+          field:
+            type: toggle
+            display: 'Hide heading'
+        -
+          handle: image_size
+          field:
+            type: select
+            display: 'Image size'
+            options:
+              -
+                key: 10
+                value: Small
+              -
+                key: 15
+                value: Medium
+              -
+                key: 20
+                value: Large
+              -
+                key: 25
+                value: XL
+            default: '20'
+            if:
+              gallery_mode: 'not slider'
+        -
+          handle: aspect_ratio
+          field: common.aspect_ratio
+          config:
+            unless:
+              gallery_mode: 'equals masonry'
+        -
+          handle: slider_items
+          field:
+            min: 1
+            max: 5
+            type: range
+            display: 'Slider items'
+            if:
+              gallery_mode: 'equals slider'
+        -
+          handle: direction
+          field:
+            options:
+              -
+                key: column
+                value: Kolonne
+              -
+                key: row
+                value: Rækker
+            default: column
+            type: button_group
+            display: Retning
+            if:
+              gallery_mode: 'equals masonry'
+        -
+          handle: spacing
+          field:
+            type: tab
+            display: Spacing
+        -
+          handle: gap
+          field:
+            options:
+              -
+                key: 0
+                value: Ingen
+              -
+                key: var(--size-200)
+                value: XSmall
+              -
+                key: var(--size-500)
+                value: Small
+              -
+                key: var(--size-700)
+                value: Medium
+              -
+                key: var(--size-900)
+                value: Large
+            default: var(--size-500)
+            type: select
+            display: Gap
+        -
+          handle: padding
+          field:
+            max: 12
+            type: spacing
+            display: Padding
+            step: 3
+        -
+          handle: pt
+          field: common.spacing
+          config:
+            display: 'Padding top'
+            width: 50
+        -
+          handle: pb
+          field: common.spacing
+          config:
+            display: 'Padding bottom'
+            side: bottom
+            width: 50
+        -
+          handle: custom
+          field:
+            type: tab
+            display: Custom
+        -
+          handle: css
+          field:
+            type: css_editor
+            display: Css

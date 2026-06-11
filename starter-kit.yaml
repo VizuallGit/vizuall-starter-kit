@@ -18,6 +18,10 @@ export_paths:
   - resources/views/utilities/component-exporter.blade.php
   - public/fonts
   - resources/users/roles.yaml
+  - resources/fieldsets
+  - resources/blueprints/collections/pages
+  - resources/blueprints/globals/site_settings.yaml
+  - resources/blueprints/globals/theme_settings.yaml
   - content/globals/site_settings.yaml
   - content/globals/theme_settings.yaml
   - content/assets

@@ -1,0 +1,93 @@
+title: 'Page sections'
+fields:
+  -
+    handle: page_sections
+    field:
+      type: replicator
+      display: 'Page sections'
+      collapse: accordion
+      sets:
+        items:
+          display: Items
+          sets:
+            hero/style_1:
+              display: 'Hero style 1'
+              image: screenshot-2026-05-17-at-21.56.53.png
+              fields:
+                - import: hero_style_1
+            hero/style_2:
+              display: 'Hero style 2'
+              fields:
+                - import: hero_style_2
+            entries/style_1:
+              display: 'Entries style 1'
+              image: screenshot-2026-05-17-at-22.10.24.png
+              fields:
+                - import: entries_style_1
+            entries/style_2:
+              display: 'Entries style 2'
+              image: screenshot-2026-05-17-at-22.08.19.png
+              fields:
+                - import: entries_style_2
+            entries/style_3:
+              display: 'Entries style 3'
+              image: screenshot-2026-05-18-at-11.08.57.png
+              fields:
+                - import: entries_style_3
+            gallery/style_1:
+              display: 'Galleri style 1'
+              fields:
+                - import: gallery_style_1
+            media_textbox/style_1:
+              display: 'Media textbox Style 1'
+              fields:
+                - import: media_textbox_style_1
+            media_textbox/style_2:
+              display: 'Media textbox style 2'
+              image: screenshot-2026-05-18-at-11.08.36.png
+              fields:
+                - import: media_textbox_style_2
+            code_block:
+              display: 'Code Block'
+              fields:
+                - import: code_block
+            reusable_sections:
+              display: 'Reusable sections'
+              fields:
+                -
+                  handle: reusable_sections
+                  field:
+                    collections:
+                      - reusable_sections
+                    max_items: 1
+                    type: entries
+                    display: 'Reusable sections'
+            testimonails/style_1:
+              display: 'Testimonails style 1'
+              fields:
+                - import: testimonials_style_1
+            video_section/style_1:
+              display: 'Video section style 1'
+              image: screenshot-2026-05-18-at-11.09.16.png
+              fields:
+                - import: video_section_style_1
+            top_banner/style_1:
+              display: 'Top banner style 1'
+              fields:
+                - import: top_banner_style_1
+            column_section:
+              display: 'Column section'
+              fields:
+                - import: column_section
+            event_list:
+              display: 'Event list'
+              fields:
+                - import: event_list
+            content_section/style_1:
+              display: 'Content section style 1'
+              fields:
+                - import: content_section_style_1
+            hero/style_4:
+              display: 'Hero style 4'
+              fields:
+                - import: hero_style_4

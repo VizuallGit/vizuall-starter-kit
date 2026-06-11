@@ -1,0 +1,97 @@
+title: 'Content section - style 1'
+fields:
+  -
+    handle: headline
+    field:
+      type: text
+      display: Headline
+      validate:
+        - required
+  -
+    handle: text
+    field:
+      buttons:
+        - h2
+        - h3
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - quote
+        - anchor
+        - image
+        - table
+        - bard-group-sizes-dropdown
+        - bard-group-flow-spacing-dropdown
+        - color
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: Text
+  -
+    handle: list
+    field:
+      collapse: accordion
+      type: replicator
+      display: List
+      sets:
+        new_set_group:
+          display: 'New Set Group'
+          sets:
+            item:
+              display: Item
+              fields:
+                -
+                  handle: headline
+                  field:
+                    type: text
+                    display: Headline
+                -
+                  handle: text
+                  field: common.simple_text
+                  config:
+                    display: Text
+  -
+    handle: show_settings
+    field:
+      type: revealer
+      display: 'Show settings'
+  -
+    handle: settings
+    field:
+      type: tabby
+      display: Settings
+      if:
+        show_settings: 'equals true'
+      fields:
+        -
+          handle: main
+          field:
+            type: tab
+            display: Main
+        -
+          handle: color_scheme
+          field:
+            type: color_scheme_selector
+            display: 'Color Scheme'
+        -
+          handle: spacing
+          field:
+            type: tab
+            display: Spacing
+        -
+          handle: padding
+          field: common.section_spacing
+          config:
+            display: Padding
+        -
+          handle: custom
+          field:
+            type: tab
+            display: Custom
+        -
+          handle: css
+          field:
+            type: css_editor
+            display: Css

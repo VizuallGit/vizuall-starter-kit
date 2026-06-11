@@ -1,0 +1,71 @@
+title: 'Testimonials style 1'
+fields:
+  -
+    handle: type
+    field:
+      options:
+        -
+          key: static
+          value: 'Static list'
+        -
+          key: dynamic
+          value: 'Dynamisk list'
+      type: button_group
+      display: Type
+  -
+    handle: list
+    field:
+      collapse: accordion
+      type: replicator
+      display: List
+      if:
+        type: 'equals static'
+      sets:
+        items:
+          display: Items
+          sets:
+            item:
+              display: Item
+              fields:
+                -
+                  handle: name
+                  field:
+                    type: text
+                    display: Name
+                -
+                  handle: position
+                  field:
+                    type: text
+                    display: Position
+                -
+                  handle: text
+                  field:
+                    buttons:
+                      - bold
+                      - italic
+                      - removeformat
+                      - anchor
+                    container: assets
+                    remove_empty_nodes: false
+                    type: bard
+                    display: Text
+                -
+                  handle: profile_image
+                  field:
+                    container: assets
+                    type: assets
+                    display: 'Profile Image'
+                -
+                  handle: link
+                  field:
+                    type: link
+                    display: Link
+  -
+    handle: dynamic_list
+    field:
+      collections:
+        - testimonials
+      type: entries
+      display: 'Dynamic list'
+      if:
+        type: 'equals dynamic'

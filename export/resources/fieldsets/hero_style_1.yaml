@@ -1,0 +1,117 @@
+title: 'Hero style 1'
+fields:
+  -
+    handle: text
+    field:
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: Text
+      buttons:
+        - bard-group-sizes-dropdown
+        - bard-group-flow-spacing-dropdown
+        - h1
+        - h2
+        - bold
+        - italic
+        - removeformat
+        - anchor
+        - horizontalrule
+        - color
+        - bard-uppercase
+        - bard-title
+        - bard-highlighted
+      bts_styles:
+        - text_100
+        - text_200
+        - text_300
+        - text_400
+        - text_500
+        - text_600
+        - text_700
+        - text_800
+        - text_900
+  - import: links
+  -
+    handle: media
+    field:
+      container: assets
+      max_files: 1
+      type: assets
+      display: 'Background media'
+      validate:
+        - 'mimetypes:image/jpeg,image/png,image/gif,image/webp,video/mp4'
+  -
+    handle: show_settings
+    field:
+      type: revealer
+      display: 'Show settings'
+  -
+    handle: settings
+    field:
+      type: tabby
+      display: Settings
+      if:
+        show_settings: 'equals true'
+      fields:
+        -
+          handle: tab_colors
+          field:
+            type: tab
+            display: Farver
+        -
+          handle: color_scheme
+          field:
+            type: color_scheme_selector
+            display: Farveskema
+        -
+          handle: theme_color_picker_field
+          field:
+            type: theme_color_picker
+            display: 'Theme Color Picker Field'
+        -
+          handle: tab_spacing
+          field:
+            type: tab
+            display: Spacing
+        -
+          handle: padding
+          field: common.section_spacing
+          config:
+            display: Padding
+        -
+          handle: tab_background
+          field:
+            type: tab
+            display: Baggrund
+        -
+          handle: media_width
+          field:
+            type: width
+            display: 'Background media width'
+            if:
+              $parent.media: 'not empty'
+              show_settings: 'custom isAdmin'
+        -
+          handle: background_position
+          field:
+            options:
+              - key: top
+                value: Top
+              - key: right
+                value: Right
+              - key: bottom
+                value: Bottom
+              - key: left
+                value: Left
+            default: right
+            type: button_group
+            display: 'Background position'
+        -
+          handle: background_opacity
+          field:
+            type: grid
+            display: 'Background opacity'
+            fields:
+              - handle: opacity
+                field: common.opacity

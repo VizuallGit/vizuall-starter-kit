@@ -1,0 +1,50 @@
+hide: true
+title: Home
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              validate:
+                - required
+          -
+            handle: bard_field
+            field:
+              buttons:
+                - bard-group-sizes-dropdown
+                - bard-group-flow-spacing-dropdown
+                - h2
+                - h3
+                - bold
+                - italic
+                - unorderedlist
+                - color
+                - orderedlist
+                - removeformat
+                - quote
+                - anchor
+                - image
+                - table
+                - bard-two-columns
+                - bard-three-columns
+              container: assets
+              remove_empty_nodes: false
+              type: bard
+              display: 'Bard Field'
+  sidebar:
+    display: Sidebar
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'

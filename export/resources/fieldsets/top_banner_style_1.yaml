@@ -1,0 +1,14 @@
+title: 'Top banner style 1'
+fields:
+  -
+    handle: section_heading
+    field: common.section_heading
+  -
+    import: links
+  -
+    handle: media
+    field:
+      container: assets
+      max_files: 1
+      type: assets
+      display: Media

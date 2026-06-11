@@ -1,0 +1,733 @@
+title: 'Theme settings'
+tabs:
+  site_sections:
+    display: 'Sites sections'
+    sections:
+      -
+        display: Topbar
+        fields:
+          -
+            handle: show_topbar
+            field:
+              type: toggle
+              display: 'Show topbar'
+          -
+            handle: topbar
+            field:
+              type: group
+              display: Topbar
+              if:
+                show_topbar: 'equals true'
+              fields:
+                - import: widgets
+                -
+                  handle: show_settings
+                  field:
+                    type: revealer
+                    display: 'Show settings'
+                -
+                  handle: settings
+                  field:
+                    type: group
+                    display: Settings
+                    if:
+                      show_settings: 'equals true'
+                    fields:
+                      -
+                        handle: color_scheme
+                        field:
+                          type: color_scheme_selector
+                          display: 'Color Scheme'
+                      -
+                        handle: pt
+                        field: common.spacing
+                        config:
+                          display: 'Padding top'
+                          width: 50
+                      -
+                        handle: pb
+                        field: common.spacing
+                        config:
+                          display: 'Padding bottom'
+                          width: 50
+                          side: bottom
+      -
+        display: Header
+        fields:
+          -
+            handle: header
+            field:
+              type: group
+              display: Header
+              fields:
+                - import: widgets
+                -
+                  handle: show_settings
+                  field:
+                    type: revealer
+                    display: 'Show settings'
+                -
+                  handle: settings
+                  field:
+                    type: group
+                    display: Settings
+                    if:
+                      show_settings: 'equals true'
+                    fields:
+                      -
+                        handle: color_scheme
+                        field:
+                          type: color_scheme_selector
+                          display: 'Color Scheme'
+                      -
+                        handle: padding
+                        field:
+                          max: 9
+                          type: spacing
+                          display: Padding
+      -
+        display: Footer
+        fields:
+          -
+            handle: footer
+            field:
+              type: group
+              display: Footer
+              fields:
+                - import: footer_widgets
+                -
+                  handle: show_settings
+                  field:
+                    type: revealer
+                    display: 'Show settings'
+                    localizable: false
+                -
+                  handle: settings
+                  field:
+                    type: group
+                    display: Settings
+                    if:
+                      show_settings: 'equals true'
+                    localizable: false
+                    fields:
+                      -
+                        handle: color_scheme
+                        field:
+                          type: color_scheme_selector
+                          display: 'Color Scheme'
+                          localizable: false
+                      -
+                        handle: padding
+                        field: common.spacing
+                        config:
+                          max: 9
+                          display: Padding
+                          width: 100
+  colors:
+    display: Colors
+    sections:
+      -
+        display: Primary
+        fields:
+          -
+            handle: primary_color
+            field:
+              type: color
+              display: 'Primary color'
+              width: 33
+          -
+            handle: primary_tones_bias
+            field:
+              type: range
+              display: Lysniveau
+              instructions: 'Negativt = mørkere toner. Positivt = lysere toner.'
+              min: -50
+              max: 50
+              default: 0
+              width: 33
+              if:
+                primary_color: 'not empty'
+          -
+            handle: primary_saturation
+            field:
+              type: range
+              display: Saturation
+              instructions: 'Negativt = mere gråt. Positivt = mere levende farve.'
+              min: -100
+              default: 0
+              width: 33
+              if:
+                primary_color: 'not empty'
+          -
+            handle: primary_scale_preview
+            field:
+              type: theme_color_scale_preview
+              base_color: primary_color
+              bias_field: primary_tones_bias
+              saturation_field: primary_saturation
+              if:
+                primary_color: 'not empty'
+      -
+        display: Secondary
+        fields:
+          -
+            handle: secondary_color
+            field:
+              type: color
+              display: 'Secondary color'
+              width: 33
+          -
+            handle: secondary_tones_bias
+            field:
+              type: range
+              display: Lysniveau
+              instructions: 'Negativt = mørkere toner. Positivt = lysere toner.'
+              min: -50
+              max: 50
+              default: 0
+              width: 33
+              if:
+                secondary_color: 'not empty'
+          -
+            handle: secondary_saturation
+            field:
+              type: range
+              display: Saturation
+              instructions: 'Negativt = mere gråt. Positivt = mere levende farve.'
+              min: -100
+              default: 0
+              width: 33
+              if:
+                secondary_color: 'not empty'
+          -
+            handle: secondary_scale_preview
+            field:
+              type: theme_color_scale_preview
+              base_color: secondary_color
+              bias_field: secondary_tones_bias
+              saturation_field: secondary_saturation
+              if:
+                secondary_color: 'not empty'
+      -
+        display: Tertiary
+        fields:
+          -
+            handle: tertiary_color
+            field:
+              type: color
+              display: 'Tertiary color'
+              width: 33
+          -
+            handle: tertiary_tones_bias
+            field:
+              type: range
+              display: Lysniveau
+              instructions: 'Negativt = mørkere toner. Positivt = lysere toner.'
+              min: -50
+              max: 50
+              default: 0
+              width: 33
+              if:
+                tertiary_color: 'not empty'
+          -
+            handle: tertiary_saturation
+            field:
+              type: range
+              display: Saturation
+              instructions: 'Negativt = mere gråt. Positivt = mere levende farve.'
+              min: -100
+              default: 0
+              width: 33
+              if:
+                tertiary_color: 'not empty'
+          -
+            handle: tertiary_scale_preview
+            field:
+              type: theme_color_scale_preview
+              base_color: tertiary_color
+              bias_field: tertiary_tones_bias
+              saturation_field: tertiary_saturation
+              if:
+                tertiary_color: 'not empty'
+      -
+        display: Quaternary
+        fields:
+          -
+            handle: quaternary_color
+            field:
+              type: color
+              display: 'Quaternary color'
+              width: 33
+          -
+            handle: quaternary_tones_bias
+            field:
+              type: range
+              display: Lysniveau
+              instructions: 'Negativt = mørkere toner. Positivt = lysere toner.'
+              min: -50
+              max: 50
+              default: 0
+              width: 33
+              if:
+                quaternary_color: 'not empty'
+          -
+            handle: quaternary_saturation
+            field:
+              type: range
+              display: Saturation
+              instructions: 'Negativt = mere gråt. Positivt = mere levende farve.'
+              min: -100
+              default: 0
+              width: 33
+              if:
+                quaternary_color: 'not empty'
+          -
+            handle: quaternary_scale_preview
+            field:
+              type: theme_color_scale_preview
+              base_color: quaternary_color
+              bias_field: quaternary_tones_bias
+              saturation_field: quaternary_saturation
+              if:
+                quaternary_color: 'not empty'
+      -
+        fields:
+          -
+            handle: contrast_light
+            field:
+              type: theme_color_picker
+              display: 'Lys kontrasttekst'
+              instructions: 'Bruges automatisk som tekstfarve på mørke knapper.'
+              width: 50
+          -
+            handle: contrast_dark
+            field:
+              type: theme_color_picker
+              display: 'Mørk kontrasttekst'
+              instructions: 'Bruges automatisk som tekstfarve på lyse knapper.'
+              width: 50
+          -
+            handle: color_schemes
+            field:
+              type: replicator
+              display: 'Color Schemes'
+              button_label: 'Tilføj farveskema'
+              collapse: accordion
+              sets:
+                main:
+                  display: Main
+                  sets:
+                    color_scheme:
+                      display: Farveskema
+                      fields:
+                        -
+                          handle: preview
+                          field:
+                            type: color_scheme_preview
+                            display: Forhåndsvisning
+                        -
+                          handle: handle
+                          field:
+                            type: slug
+                            display: Handle
+                            from: label
+                            visibility: hidden
+                        -
+                          handle: label
+                          field:
+                            type: text
+                            display: Navn
+                            validate:
+                              - required
+                        -
+                          handle: background_color
+                          field:
+                            type: theme_color_picker
+                            display: Baggrundsfarve
+                            width: 25
+                        -
+                          handle: text_color
+                          field:
+                            type: theme_color_picker
+                            display: Tekstfarve
+                            width: 25
+                        -
+                          handle: inner_background_color
+                          field:
+                            type: theme_color_picker
+                            display: 'Inner bagrundsfarve'
+                            width: 25
+                        -
+                          handle: inner_text_color
+                          field:
+                            type: theme_color_picker
+                            display: 'Inner tekstfarve'
+                            width: 25
+                        -
+                          handle: button_one_color
+                          field:
+                            type: theme_color_picker
+                            display: 'Button One Color'
+                            width: 25
+                        -
+                          handle: button_one_hover_color
+                          field:
+                            type: theme_color_picker
+                            display: 'Button one hover color'
+                            width: 25
+                        -
+                          handle: button_two_color
+                          field:
+                            type: theme_color_picker
+                            display: 'Button Two Color'
+                            width: 25
+                        -
+                          handle: button_two_hover_color
+                          field:
+                            type: theme_color_picker
+                            display: 'Button two hover color'
+                            width: 25
+                        -
+                          handle: highlighted_color
+                          field:
+                            type: theme_color_picker
+                            display: 'Highlighted color'
+                            width: 25
+  sizes:
+    display: Sizes
+    sections:
+      -
+        fields:
+          -
+            handle: container_width
+            field:
+              options:
+                - key: 64em
+                  value: 'XS / 1024px'
+                - key: 71.25em
+                  value: 'Small / 1140px'
+                - key: 75em
+                  value: 'Medium / 1200px'
+                - key: 80em
+                  value: 'Large / 1280px'
+                - key: 85.375em
+                  value: 'XL / 1366px'
+                - key: 100%
+                  value: 'Full width'
+              default: 75em
+              type: select
+              display: 'Container width'
+              instructions: 'Angiv breden af siden.'
+          -
+            handle: fluid_sizes
+            field:
+              type: fluid_size
+              display: 'Fluid størrelser'
+              instructions: 'Definér fluid CSS-størrelser med clamp(). Giver CSS-variabler som --fluid-{handle}.'
+  typography:
+    display: Typography
+    sections:
+      -
+        fields:
+          -
+            handle: adobe_kits
+            field:
+              type: grid
+              display: 'Adobe Fonts kits'
+              instructions: "Tilføj en eller flere Adobe Fonts kit-URL'er"
+              add_row: 'Tilføj kit'
+              fields:
+                -
+                  handle: url
+                  field:
+                    type: text
+                    display: Kit-URL
+                    placeholder: 'https://use.typekit.net/xxxxxxx.css'
+                    localizable: false
+          -
+            handle: custom_fonts
+            field:
+              type: grid
+              display: 'Custom fonte'
+              instructions: 'Upload custom fonte til public/fonts/. Familienavnet udledes automatisk af filnavnet.'
+              add_row: 'Tilføj font'
+              fields:
+                -
+                  handle: file
+                  field:
+                    type: font_uploader
+                    display: 'Font fil'
+                -
+                  handle: weight
+                  field:
+                    type: select
+                    display: Vægt
+                    width: 20
+                    if:
+                      variable: 'equals false'
+                    options:
+                      - key: '100'
+                        value: '100 Thin'
+                      - key: '200'
+                        value: '200 ExtraLight'
+                      - key: '300'
+                        value: '300 Light'
+                      - key: '400'
+                        value: '400 Regular'
+                      - key: '500'
+                        value: '500 Medium'
+                      - key: '600'
+                        value: '600 SemiBold'
+                      - key: '700'
+                        value: '700 Bold'
+                      - key: '800'
+                        value: '800 ExtraBold'
+                      - key: '900'
+                        value: '900 Black'
+                    default: '400'
+                -
+                  handle: variable
+                  field:
+                    type: toggle
+                    display: 'Variable font'
+                    instructions: 'Slå fra hvis fonten har separate filer pr. vægtning'
+                    width: 20
+          -
+            handle: font_family
+            field:
+              type: group
+              display: 'Font family'
+              fields:
+                -
+                  handle: base
+                  field: common.font_family
+                  config:
+                    display: Base
+                    width: 33
+                -
+                  handle: base_font_weight
+                  field: common.font_weight
+                  config:
+                    width: 33
+                -
+                  handle: base_wdth
+                  field: common.font_width
+                  config:
+                    width: 33
+                -
+                  handle: headings
+                  field: common.font_family
+                  config:
+                    display: Headings
+                    width: 25
+                -
+                  handle: headline_font_weight
+                  field: common.font_weight
+                  config:
+                    width: 25
+                -
+                  handle: heading_wdth
+                  field: common.font_width
+                  config:
+                    width: 25
+                -
+                  handle: headings_uppercase
+                  field:
+                    type: toggle
+                    display: Uppercase
+                    width: 25
+                    localizable: false
+          - handle: line_height
+            field: common.line_height
+          -
+            handle: font_scale_preview
+            field:
+              type: fluid_font_preview
+              display: 'Forhåndsvisning af skriftstørrelser'
+              defaults:
+                h1: size-900
+                h2: size-700
+                h3: size-600
+                h4: size-500
+                h5: size-400
+                h6: size-300
+                p: size-100
+  button:
+    display: Button
+    sections:
+      -
+        fields:
+          -
+            handle: button_font
+            field:
+              options:
+                - key: '--font-base'
+                  value: Base
+                - key: '--font-heading'
+                  value: Heading
+              type: select
+              display: Typography
+              default: '--font-base'
+              width: 50
+          -
+            handle: button_size
+            field:
+              options:
+                - key: '--size-xs'
+                  value: XS
+                - key: '--size-100'
+                  value: Small
+                - key: '--size-200'
+                  value: Medium
+                - key: '--size-300'
+                  value: Large
+              type: select
+              display: Size
+              default: '--size-200'
+              width: 50
+          -
+            handle: button_weight
+            field:
+              options:
+                - key: '--font-weight-regular'
+                  value: Regular
+                - key: '--font-weight-medium'
+                  value: Medium
+                - key: '--font-weight-semibold'
+                  value: Semibold
+                - key: '--font-weight-bold'
+                  value: Bold
+              type: select
+              display: Tykkelse
+              default: '--font-weight-font-semibold'
+              width: 33
+          -
+            handle: button_width
+            field: common.font_width
+            config:
+              width: 33
+          -
+            handle: button_radius
+            field:
+              options:
+                - key: 0px
+                  value: None
+                - key: var(--radius-xs)
+                  value: XS
+                - key: var(--radius-sm)
+                  value: Small
+                - key: var(--radius-md)
+                  value: Medium
+                - key: var(--radius-lg)
+                  value: Large
+                - key: var(--radius-xl)
+                  value: XL
+                - key: 'calc(infinity * 1px)'
+                  value: Full
+              type: select
+              display: 'Runde hjørner'
+              default: '--radius-none'
+              width: 33
+          -
+            handle: button_uppercase
+            field:
+              type: toggle
+              display: Uppercase
+          -
+            handle: button_preview
+            field:
+              type: button_preview
+              display: Forhåndsvisning
+  media:
+    display: Media
+    sections:
+      -
+        fields:
+          -
+            handle: media_color_overlay
+            field:
+              type: theme_color_picker
+              display: 'Media color overlay'
+              width: 25
+          -
+            handle: opacity
+            field: common.opacity
+            config:
+              width: 75
+  sektioner:
+    display: Sektioner
+    sections:
+      -
+        instructions: 'Ændringer gemmes automatisk i page_sections fieldset ved tryk på Save.'
+        fields:
+          -
+            handle: section_manager
+            field:
+              type: section_manager
+              display: Sektioner
+  collections:
+    display: Kollektioner
+    sections:
+      -
+        instructions: 'Slå kollektioner til/fra i CP-menuen. Kollektioner der er slået fra forsvinder fra sidenavigationen.'
+        fields:
+          -
+            handle: show_blog
+            field:
+              type: toggle
+              display: Blog
+              default: true
+              width: 25
+          -
+            handle: show_employees
+            field:
+              type: toggle
+              display: Employees
+              default: true
+              width: 25
+          -
+            handle: show_services
+            field:
+              type: toggle
+              display: Services
+              width: 25
+          -
+            handle: show_cases
+            field:
+              type: toggle
+              display: Cases
+              width: 25
+          -
+            handle: show_events
+            field:
+              type: toggle
+              display: Events
+              width: 25
+          -
+            handle: show_products
+            field:
+              type: toggle
+              display: Products
+              width: 25
+          -
+            handle: show_testimonials
+            field:
+              type: toggle
+              display: Testimonials
+              width: 25
+          -
+            handle: show_reusable_sections
+            field:
+              type: toggle
+              display: 'Reusable sections'
+              width: 25
+  css_script:
+    display: 'Css & script'
+    sections:
+      -
+        fields:
+          -
+            handle: custom_css
+            field:
+              type: css_editor
+              display: 'Custom css'

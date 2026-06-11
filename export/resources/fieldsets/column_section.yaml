@@ -1,0 +1,131 @@
+title: 'Column section'
+fields:
+  -
+    handle: columns
+    field:
+      type: column_builder
+      display: Kolonner
+      collapse: accordion
+      sets:
+        kolonne_typer:
+          display: 'Kolonne typer'
+          sets:
+            billede:
+              display: Billede
+              fields:
+                -
+                  handle: image
+                  field:
+                    max_files: 1
+                    container: assets
+                    type: assets
+                    display: Billede
+                -
+                  handle: fit
+                  field:
+                    options:
+                      -
+                        key: cover
+                        value: Cover
+                      -
+                        key: contain
+                        value: Contain
+                      -
+                        key: fill
+                        value: Fill
+                    default: cover
+                    type: button_group
+                    display: Fit
+                    width: 50
+                -
+                  handle: aspect_ratio
+                  field: common.aspect_ratio
+                  config:
+                    width: 50
+            tekst:
+              display: Tekst
+              fields:
+                -
+                  handle: content
+                  field: common.simple_text
+            links:
+              display: Links
+              fields:
+                -
+                  handle: links
+                  field: links.links
+            tom:
+              display: Tom
+              fields: {  }
+            test:
+              display: Test
+              fields:
+                -
+                  handle: text_field
+                  field:
+                    type: text
+                    display: 'Text Field'
+            new:
+              display: New
+              fields:
+                -
+                  handle: textarea_field
+                  field:
+                    type: textarea
+                    display: 'Textarea Field'
+                -
+                  handle: bard_field
+                  field:
+                    container: assets
+                    remove_empty_nodes: false
+                    type: bard
+                    display: 'Bard Field'
+                    toolbar_mode: floating
+                -
+                  handle: width_field
+                  field:
+                    type: width
+                    display: 'Width Field'
+  -
+    handle: show_settings
+    field:
+      type: revealer
+      display: 'Vis indstillinger'
+  -
+    handle: settings
+    field:
+      type: group
+      display: Indstillinger
+      if:
+        show_settings: 'equals true'
+      fields:
+        -
+          handle: color_scheme
+          field:
+            type: color_scheme_selector
+            display: Farveskema
+        -
+          handle: padding
+          field: common.section_spacing
+          config:
+            display: Padding
+        -
+          handle: gap
+          field:
+            options:
+              -
+                key: '0'
+                value: Ingen
+              -
+                key: 1rem
+                value: Small
+              -
+                key: 2rem
+                value: Medium
+              -
+                key: 3rem
+                value: Large
+            default: 1rem
+            type: select
+            display: 'Afstand mellem kolonner'
+            width: 33

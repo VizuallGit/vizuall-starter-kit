@@ -1,0 +1,240 @@
+title: 'Media textbox style 2'
+fields:
+  -
+    handle: text
+    field:
+      buttons:
+        - h2
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - anchor
+      remove_empty_nodes: trim
+      type: bard
+      display: Text
+      localizable: true
+      always_show_set_button: true
+      collapse: true
+      sets:
+        blocks:
+          display: Blocks
+          icon: addon-boxes-stack
+          sets:
+            logos:
+              display: Logos
+              icon: edit-design-compare-ab-testing
+              fields:
+                -
+                  handle: logos
+                  field:
+                    type: grid
+                    display: Logos
+                    fields:
+                      -
+                        handle: logo
+                        field:
+                          max_files: 1
+                          container: assets
+                          type: assets
+                          display: Logo
+                          localizable: false
+                          folder: logos
+                          restrict: true
+                      -
+                        handle: size
+                        field:
+                          options:
+                            -
+                              key: 3rem
+                              value: Small
+                            -
+                              key: 5rem
+                              value: Medium
+                            -
+                              key: 8rem
+                              value: Large
+                            -
+                              key: 12rem
+                              value: X-Large
+                          default: 5rem
+                          type: select
+                          display: Size
+                          width: 50
+            links:
+              display: Links
+              icon: link
+              fields:
+                -
+                  handle: links
+                  field: links.links
+  -
+    handle: media
+    field:
+      max_files: 1
+      container: assets
+      type: assets
+      display: Media
+  -
+    handle: show_settingss
+    field:
+      input_label: 'Se section indstillinger'
+      type: revealer
+      display: 'Show settings'
+  -
+    handle: settings
+    field:
+      type: group
+      display: 'Section settings'
+      if:
+        show_settingss: 'equals true'
+      fields:
+        -
+          handle: style
+          field:
+            options:
+              -
+                key: style_one
+                value: '2 col image and textbox'
+              -
+                key: style_two
+                value: 'Textbox on image'
+              -
+                key: style_four
+                value: 'Image on textbox'
+              -
+                key: style_three
+                value: 'Text on full width image'
+            default: style_one
+            type: select
+            display: 'Layout style'
+            width: 33
+        -
+          handle: image_placement
+          field:
+            options:
+              -
+                key: left
+                value: Left
+              -
+                key: right
+                value: Right
+            default: left
+            type: button_group
+            display: 'Image placement'
+            width: 25
+            unless:
+              style: 'equals style_three'
+        -
+          handle: image_width
+          field:
+            type: width
+            display: 'Image width'
+            width: 25
+            default: '50'
+            if:
+              style: 'equals style_one'
+              $parent.media: 'not empty'
+            options:
+              - '40'
+              - 50
+              - '60'
+              - 100
+        -
+          handle: image_centering
+          field:
+            options:
+              -
+                key: top
+                value: Top
+              -
+                key: center
+                value: Center
+              -
+                key: bottom
+                value: Bottom
+            default: center
+            type: select
+            display: 'Image centering'
+            width: 25
+            if:
+              style: 'equals style_four'
+              $parent.media: 'not empty'
+        -
+          handle: small_image
+          field:
+            type: toggle
+            display: 'Space around media'
+            width: 25
+            if:
+              style: 'equals style_one'
+        -
+          handle: flip_image
+          field:
+            type: toggle
+            display: 'Flip image'
+            width: 25
+            if:
+              $parent.media: 'not empty'
+        -
+          handle: image_opacity
+          field:
+            type: select
+            display: 'Image opacity'
+            width: 25
+            options:
+              -
+                key: opacity-10
+                value: '10'
+              -
+                key: opacity-20
+                value: '20'
+              -
+                key: opacity-30
+                value: '30'
+              -
+                key: opacity-40
+                value: '40'
+              -
+                key: opacity-50
+                value: '50'
+              -
+                key: opacity-60
+                value: '60'
+              -
+                key: opacity-70
+                value: '70'
+              -
+                key: opacity-80
+                value: '80'
+              -
+                key: opacity-90
+                value: '90'
+              -
+                key: opacity-100
+                value: '100'
+            default: opacity-20
+            if:
+              style: 'equals style_three'
+              $parent.media: 'not empty'
+            clearable: true
+        -
+          handle: text_centering
+          field:
+            options:
+              -
+                key: left
+                value: Left
+              -
+                key: center
+                value: Center
+              -
+                key: right
+                value: Right
+            default: center
+            type: button_group
+            display: 'Text centering'
+            width: 50
+            if:
+              style: 'equals style_three'

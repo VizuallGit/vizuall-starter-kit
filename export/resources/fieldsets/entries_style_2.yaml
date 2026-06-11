@@ -1,0 +1,125 @@
+title: 'Entries style 2'
+fields:
+  -
+    handle: section_heading
+    field: common.section_heading
+  -
+    handle: entries
+    field:
+      type: replicator
+      display: Entries
+      button_label: 'Tilføj ny entry'
+      collapse: accordion
+      sets:
+        items:
+          display: Items
+          sets:
+            entry:
+              display: Entry
+              fields:
+                -
+                  handle: text
+                  field: common.simple_text
+                  config:
+                    display: Text
+                -
+                  import: links
+                -
+                  handle: background_image
+                  field:
+                    container: assets
+                    max_files: 1
+                    type: assets
+                    display: 'Background image'
+                -
+                  handle: show_settings
+                  field:
+                    type: revealer
+                    display: 'Show settings'
+                -
+                  handle: settings
+                  field:
+                    type: tabby
+                    display: Settings
+                    if:
+                      show_settings: 'equals true'
+                    fields:
+                      -
+                        handle: color
+                        field:
+                          type: tab
+                          display: Color
+                      -
+                        handle: override_color
+                        field:
+                          type: toggle
+                          display: 'Override color'
+                      -
+                        handle: color_scheme
+                        field:
+                          type: color_scheme_selector
+                          display: 'Color Scheme'
+                          if:
+                            override_color: 'equals true'
+                      -
+                        handle: opacity
+                        field: common.opacity
+                        config:
+                          display: 'Bg opacity'
+                          width: 25
+                      -
+                        handle: spacing
+                        field:
+                          type: tab
+                          display: Spacing
+                      -
+                        handle: padding
+                        field:
+                          max: 8
+                          type: spacing
+                          display: Padding
+                          step: 2
+                      -
+                        handle: custom_css
+                        field:
+                          type: tab
+                          display: 'Custom css'
+                      -
+                        handle: css
+                        field:
+                          type: css_editor
+                          display: Css
+                          instructions: 'Brug `:root` til at målrette selve elementet.'
+  -
+    handle: show_settings
+    field:
+      type: revealer
+      display: 'Show settings'
+  -
+    handle: settings
+    field:
+      type: tabby
+      display: Settings
+      if:
+        show_settings: 'equals true'
+      fields:
+        -
+          handle: color
+          field:
+            type: tab
+            display: Color
+        -
+          handle: color_scheme
+          field:
+            type: color_scheme_selector
+            display: 'Color Scheme'
+        -
+          handle: spacing
+          field:
+            type: tab
+            display: Spacing
+        -
+          handle: pt
+          field: common.spacing
+          config:
+            display: 'Padding top'

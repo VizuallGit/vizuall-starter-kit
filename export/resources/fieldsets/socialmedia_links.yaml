@@ -1,0 +1,106 @@
+title: 'Socialmedia links'
+fields:
+  -
+    handle: socialmedia_links
+    field:
+      display: 'Socialmedia links'
+      type: replicator
+      always_save: false
+      localizable: false
+      fullscreen: false
+      sets:
+        main:
+          display: Main
+          sets:
+            facebook:
+              display: Facebook
+              icon: social-facebook
+              fields:
+                -
+                  handle: handle
+                  field:
+                    input_type: url
+                    prepend: 'https://www.facebook.com/'
+                    display: Handle
+                    type: text
+                    localizable: false
+                -
+                  handle: prefix
+                  field:
+                    default: 'https://www.facebook.com/'
+                    type: hidden
+                    localizable: false
+            instagram:
+              display: Instagram
+              icon: social-instagram
+              fields:
+                -
+                  handle: handle
+                  field:
+                    input_type: url
+                    prepend: 'https://www.instagram.com/'
+                    display: Handle
+                    type: text
+                    localizable: false
+                -
+                  handle: prefix
+                  field:
+                    default: 'https://www.instagram.com/'
+                    type: hidden
+                    localizable: false
+            linkedin:
+              display: Linkedin
+              icon: social-linkedin
+              fields:
+                -
+                  handle: handle
+                  field:
+                    input_type: url
+                    display: Handle
+                    type: text
+                    prepend: 'https://www.linkedin.com/'
+                    localizable: false
+                -
+                  handle: prefix
+                  field:
+                    default: 'https://www.linkedin.com/'
+                    type: hidden
+                    localizable: false
+            twitter:
+              display: Twitter
+              icon: social-twitter
+              fields:
+                -
+                  handle: handle
+                  field:
+                    input_type: url
+                    display: Handle
+                    type: text
+                    prepend: 'https://twitter.com/'
+                    localizable: false
+                -
+                  handle: prefix
+                  field:
+                    default: 'https://twitter.com/'
+                    type: hidden
+                    localizable: false
+            pinterest:
+              display: Pinterest
+              icon: social-pinterest
+              fields:
+                -
+                  handle: handle
+                  field:
+                    prepend: 'https://www.pinterest.dk/'
+                    display: Handle
+                    type: text
+                    always_save: false
+                    localizable: false
+                -
+                  handle: prefix
+                  field:
+                    default: 'https://www.pinterest.dk/'
+                    display: Prefix
+                    type: hidden
+                    always_save: false
+                    localizable: false

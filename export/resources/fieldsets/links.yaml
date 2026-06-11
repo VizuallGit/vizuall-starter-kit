@@ -1,0 +1,31 @@
+title: Links
+fields:
+  -
+    handle: links
+    field:
+      max_rows: 2
+      type: grid
+      display: Links
+      add_row: 'Tilføj link'
+      fields:
+        -
+          handle: url
+          field:
+            type: link
+            display: Url
+        -
+          handle: text
+          field:
+            type: text
+            display: Text
+        -
+          handle: icon
+          field:
+            store_as: svg_data
+            type: iconify
+            display: Icon
+        -
+          handle: outline
+          field:
+            type: toggle
+            display: Outline

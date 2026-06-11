@@ -1,0 +1,18 @@
+title: Sections
+fields:
+  -
+    handle: heror
+    field:
+      type: group
+      display: heror
+      fields:
+        -
+          handle: kk
+          field:
+            type: text
+            display: kk
+  -
+    handle: text_field
+    field:
+      type: text
+      display: 'Text Field'

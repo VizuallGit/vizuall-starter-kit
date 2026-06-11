@@ -1,0 +1,51 @@
+title: 'Site settings'
+tabs:
+  info:
+    display: Information
+    sections:
+      -
+        display: Infomation
+        fields:
+          -
+            handle: site_name
+            field:
+              type: text
+              display: 'Site name'
+          -
+            handle: phone
+            field:
+              input_type: tel
+              type: text
+              display: Phone
+          -
+            handle: email
+            field:
+              input_type: email
+              type: text
+              display: Email
+          -
+            handle: address
+            field:
+              display: Address
+              type: text
+              always_save: false
+          -
+            handle: zip
+            field:
+              display: Zip
+              type: text
+              always_save: false
+          -
+            handle: cvr
+            field:
+              display: Cvr
+              type: text
+              always_save: false
+          -
+            import: socialmedia_links
+          -
+            handle: opening_hours
+            field:
+              display: 'Opening hours'
+              type: list
+              always_save: false

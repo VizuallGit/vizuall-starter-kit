@@ -1,0 +1,91 @@
+title: 'Media textbox style 1'
+fields:
+  -
+    handle: text
+    field: common.simple_text
+    config:
+      buttons:
+        - bard-group-sizes-dropdown
+        - bard-group-flow-spacing-dropdown
+        - bard-title
+        - bard-highlighted
+        - bard-uppercase
+        - h1
+        - h2
+        - h3
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - anchor
+        - horizontalrule
+      display: Text
+  - handle: links
+    field: links.links
+  -
+    handle: media
+    field:
+      container: assets
+      max_files: 1
+      type: assets
+      display: Media
+  -
+    handle: show_settings
+    field:
+      type: revealer
+      display: 'Show settings'
+  -
+    handle: settings
+    field:
+      type: tabby
+      display: Settings
+      if:
+        show_settings: 'equals true'
+      fields:
+        -
+          handle: main
+          field:
+            type: tab
+            display: Main
+        -
+          handle: color_scheme
+          field:
+            type: color_scheme_selector
+            display: 'Color Scheme'
+        -
+          handle: flip_content
+          field:
+            type: toggle
+            display: 'Flip content'
+        -
+          handle: media_width
+          field:
+            type: width
+            display: 'Media width'
+            default: '50'
+            options:
+              - 40
+              - 50
+              - 60
+              - 100
+        -
+          handle: spacing
+          field:
+            type: tab
+            display: Spacing
+        -
+          handle: padding
+          field: common.section_spacing
+          config:
+            display: Padding
+        -
+          handle: custom
+          field:
+            type: tab
+            display: Custom
+        -
+          handle: css
+          field:
+            type: css_editor
+            display: CSS

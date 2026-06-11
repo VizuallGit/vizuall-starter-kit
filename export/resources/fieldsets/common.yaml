@@ -1,0 +1,352 @@
+title: Common
+fields:
+  -
+    handle: settings
+    field:
+      type: tabby
+      display: Settings
+      localizable: false
+      fields:
+        -
+          handle: tab_colors
+          field:
+            type: tab
+            display: Farver
+        -
+          handle: color_scheme
+          field:
+            type: color_scheme_selector
+            display: Farveskema
+        -
+          handle: tab_spacing
+          field:
+            type: tab
+            display: Spacing
+        -
+          handle: padding
+          field: common.section_spacing
+          config:
+            display: Padding
+        -
+          handle: custom_css
+          field:
+            type: tab
+            display: 'Custom css'
+        -
+          handle: css
+          field:
+            type: css_editor
+            display: Css
+            instructions: 'Skriv :root for at taget section id/class'
+  -
+    handle: spacing
+    field:
+      max: 6
+      type: spacing
+      display: Spacing
+      localizable: false
+  -
+    handle: font_weight
+    field:
+      options:
+        -
+          key: 300
+          value: Light
+        -
+          key: 400
+          value: Regular
+        -
+          key: 500
+          value: Medium
+        -
+          key: 600
+          value: Semibold
+        -
+          key: 700
+          value: Bold
+        -
+          key: 800
+          value: 'Extra bold'
+      default: '400'
+      type: select
+      display: 'Font weight'
+      localizable: false
+  -
+    handle: line_height
+    field:
+      options:
+        -
+          key: leading-none
+          value: 1%
+        -
+          key: leading-flat
+          value: 1.15%
+        -
+          key: leading-tight
+          value: 1.25%
+        -
+          key: leading-snug
+          value: 1.375%
+        -
+          key: leading-normal
+          value: '1.5'
+        -
+          key: leading-relaxed
+          value: 1.625%
+        -
+          key: leading-loose
+          value: 2%
+      default: leading-normal
+      type: select
+      display: 'Line height'
+      localizable: false
+  -
+    handle: position
+    field:
+      options:
+        -
+          key: relative
+          value: Normal
+        -
+          key: fixed
+          value: Fixed
+        -
+          key: sticky
+          value: Sticky
+      type: button_group
+      display: Position
+      default: relative
+      localizable: false
+  -
+    handle: font_family
+    field:
+      type: font_family_selector
+      display: 'Font family'
+      localizable: false
+  -
+    handle: opacity
+    field:
+      options:
+        -
+          key: 0%
+          value: 0%
+        -
+          key: 10%
+          value: 10%
+        -
+          key: 20%
+          value: 20%
+        -
+          key: 30%
+          value: 30%
+        -
+          key: 40%
+          value: 40%
+        -
+          key: 50%
+          value: 50%
+        -
+          key: 60%
+          value: 60%
+        -
+          key: 70%
+          value: 70%
+        -
+          key: 80%
+          value: 80%
+        -
+          key: 90%
+          value: 90%
+        -
+          key: 100%
+          value: 100%
+      type: select
+      display: Opacity
+      default: 50%
+      localizable: false
+  -
+    handle: aspect_ratio
+    field:
+      options:
+        -
+          key: aspect-1/1
+          value: '1/1 - Firekantet'
+        -
+          key: aspect-4/3
+          value: 4/3
+        -
+          key: aspect-16/9
+          value: '16/9 - Video format'
+        -
+          key: aspect-3/4
+          value: 3/4
+      default: aspect-4/3
+      type: select
+      display: 'Aspect ratio'
+      localizable: false
+  -
+    handle: offset
+    field:
+      options:
+        -
+          key: none
+          value: None
+        -
+          key: sm
+          value: Small
+        -
+          key: md
+          value: Medium
+        -
+          key: lg
+          value: Large
+      default: none
+      type: select
+      display: Offset
+      localizable: false
+  -
+    handle: simple_text
+    field:
+      buttons:
+        - h1
+        - h2
+        - h3
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - anchor
+        - horizontalrule
+        - title
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: 'Simple text'
+      localizable: false
+  -
+    handle: section_heading
+    field:
+      buttons:
+        - h2
+        - h3
+        - bold
+        - italic
+        - removeformat
+        - quote
+        - anchor
+        - title
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: 'Section heading'
+      localizable: false
+  -
+    handle: section_spacing
+    field:
+      max: 12
+      step: 3
+      type: spacing
+      display: 'Section spacing'
+      localizable: false
+  -
+    handle: main_content
+    field:
+      buttons:
+        - h1
+        - h2
+        - h3
+        - h4
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - quote
+        - anchor
+        - image
+        - table
+        - title
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: 'Main content'
+      localizable: false
+      sets:
+        main:
+          display: Main
+          sets:
+            menukort:
+              display: Menukort
+              fields:
+                -
+                  handle: images
+                  field:
+                    container: assets
+                    type: assets
+                    display: 'Menukort sider'
+                    instructions: 'Upload sider i rækkefølge (A4-format anbefales)'
+                    localizable: false
+            image:
+              display: Image
+              fields:
+                -
+                  import: image
+            accordion:
+              display: Accordion
+              fields:
+                -
+                  import: accordion
+            form_picker:
+              display: 'Form picker'
+              fields:
+                -
+                  handle: form_picker
+                  field:
+                    max_items: 1
+                    type: form
+                    display: 'Form picker'
+                    localizable: false
+            employees_list:
+              display: 'Employees list'
+              fields:
+                -
+                  import: employees_list
+  -
+    handle: font_width
+    field:
+      options:
+        -
+          key: 50
+          value: 'Ultra narrow'
+        -
+          key: 60
+          value: 'Extra narrow'
+        -
+          key: 70
+          value: Narrow
+        -
+          key: 90
+          value: Tight
+        -
+          key: 100
+          value: Normal
+        -
+          key: 110
+          value: Relaxed
+        -
+          key: 120
+          value: Loss
+        -
+          key: 130
+          value: Wide
+        -
+          key: 140
+          value: 'Extra wide'
+        -
+          key: 150
+          value: 'Ultra wide'
+      default: '100'
+      type: select
+      display: 'Font width'
+      localizable: false
