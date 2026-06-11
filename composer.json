@@ -1,6 +1,7 @@
 {
     "name": "vizuallgit/vizuall-starter-kit",
     "type": "statamic-starter-kit",
+    "license": "proprietary",
     "extra": {
         "statamic": {
             "name": "Vizuall Starter Kit",
