@@ -1,0 +1,4 @@
+<a class="btn {{ outline ?= 'ring-1 ring-inset' }} {{ class }}" target="{{ target_blank == 'true' ? '_blank' : '_self' }}" {{ if live_preview }}data-field-item="{{ index }}" data-focus-field="text"{{ else }}href="{{ url }}"{{ /if }}>
+    {{ text or 'Læs mere' }}
+</a>
+

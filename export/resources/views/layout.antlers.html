@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="{{ site:short_locale }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noindex, nofollow">
+        {{ partial:meta_info }}
+        {{ vite src="resources/css/site.css" }}
+        {{ if theme_settings.adobe_kits }}
+            {{ theme_settings.adobe_kits }}
+                {{ if url }}<link rel="stylesheet" href="{{ url }}">{{ /if }}
+            {{ /theme_settings.adobe_kits }}
+        {{ /if }}
+        {{ yield_minified }}
+        {{ if theme_settings.custom_css }}
+            <style>
+                {{ theme_settings.custom_css }}
+            </style>
+        {{ endif }}
+        <script type="speculationrules">
+            {
+                "prerender": [{
+                "where": {
+                    "and": [
+                    { "href_matches": "/*" },
+                    { "not": {"href_matches": "/logout"}}
+                    ]
+                },
+                "eagerness": "moderate"
+                }]
+            }
+        </script>
+    </head>
+    <body class="">
+        {{ partial:site_head }}
+        <main class="">
+            {{ template_content }}
+        </main>
+        {{ vite src="resources/js/site.js" }}
+        {{ yield_scripts }}
+        {{ if live_preview }}{{ partial:live_preview }}{{ /if }}
+    </body>
+</html>
+
+{{ partial:layout_style_push }}

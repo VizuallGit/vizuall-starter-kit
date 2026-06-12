@@ -1,0 +1,46 @@
+{{ form:create :in="formpicker" class="grid grid-cols-12 gap-200" :redirect="form_redirect" }}
+{{ if (form:errors) }}
+    <p>Der var desværre noget der gik forkert:</p>
+    <ul>
+        {{ form:errors }}
+            <li>{{ value }}</li>
+        {{ /form:errors }}
+    </ul>
+{{ /if }}
+
+{{ fields }}
+    {{ if type == "checkboxes" }}
+    <div class="col-span-12 [&_div]:grid [&_div]:grid-cols-2 ">
+        <span class=" mb-2 block">{{ display }}</span>
+        <div class="text-xs">
+            {{ field }}
+        </div>
+        
+    </div>
+    {{ else }}
+    <div class="col-span-12 {{ width == '25' ?= 'md:col-span-3' }}{{ width == '33' ?= 'md:col-span-4' }}{{ width == '50' ?= 'md:col-span-6' }}{{ width == '66' ?= 'md:col-span-8' }}{{ width == '75' ?= 'md:col-span-9' }}{{ width == '100' ?= 'md:col-span-12' }}">
+        <label class="leading-none">
+            <span class="text-xxs gap-1 mb-1.5 font-bold flex items-start">
+                {{ display }}
+                {{ if validate | contains:required }}
+                    <sup class=" text-[1.2em] top-3.5">*</sup>
+                {{ /if }}
+            </span>
+            <div class="relative">
+                {{ field }}
+
+            </div>
+        </label>
+        {{ if error }}
+            <p class="text-gray-500">{{ error }}</p>
+        {{ /if }}
+    </div>
+    {{ endif }}
+   
+
+{{ /fields }}
+<div class="col-span-12">
+    <button class="btn {{ btn_class }}">{{ button_text ?? 'Send besked' }}</button>
+</div>
+<input type="text" name="adresse" class="hidden" />
+{{ /form:create }}

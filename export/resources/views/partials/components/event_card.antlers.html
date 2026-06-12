@@ -1,0 +1,18 @@
+<li class="[ event-card ] relative @container flex flex-col group">
+    <div class="aspect-[4/3] relative p-100 overflow-clip">
+        <div class="relative z-10 bg-(--color-bg) text-(--color-text) p-200 leading-flat w-max pt-2 pb-3 px-5 text-center">
+            <time class="font-heading font-medium uppercase flex flex-col" datetime="">
+                <span class="text-400">{{ date iso_format='D' }}</span>
+                <span class="text-sm">{{ date iso_format='MMMM' }}</span>
+            </time>
+        </div>
+        {{ partial:components/image :imagePath="featured_media" class="w-full h-full object-cover absolute inset-0 group-hover:scale-110 transition-transform duration-700 ease-in-out" }}
+    </div>
+    <div class="bg-(--color-inner-bg) p-200 space-y-200 grow flex flex-col">
+        <h3 class="text-[8cqi]"><a class="link-parent" href="{{ url }}">{{ title }}</a></h3>
+        <div class="flex gap-200 justify-between mt-auto uppercase font-heading font-medium text-200">
+            <time datetime="{{ date iso_format='HH:mm' }}">Kl. {{ date iso_format="HH:mm" }}</time>
+            <span class="text-(--color-button-one) ">Læs mere</span>
+        </div>
+    </div>
+</li>

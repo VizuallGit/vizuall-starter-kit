@@ -1,0 +1,13 @@
+{{ if links }}
+    <div class="inline-flex flex-wrap gap-100 {{ class }}" {{ visual_edit }}>
+        {{ links }}
+            {{ _color = switch(
+                (first and ! outline) => 'bg-(--color-button-one) text-(--color-button-one-text)',
+                (first and outline) => 'text-(--color-button-one) ring-curent',
+                (last and ! outline) => 'bg-(--color-button-two) text-(--color-button-two-text)',
+                (last and outline) => 'text-(--color-button-two) ring-curent',
+            ) }}
+            {{ partial:components/btn class="{_color}" }}
+        {{ /links }}
+    </div>
+{{ endif }}

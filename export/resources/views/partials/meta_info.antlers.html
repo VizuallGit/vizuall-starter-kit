@@ -1,0 +1,13 @@
+<title>{{ site_settings:site_name }}: {{ meta_title ? meta_title : title }}</title>
+<link rel="canonical" href="{{ current_url }}" />
+
+<meta property="og:site_name" content="{{ global_settings:name }}" />
+<meta property="og:title" content="{{ meta_title }}" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ current_url }}" />
+
+<meta name="description" content="{{ meta_description }}" />
+<meta name="twitter:description" content="{{ meta_description }}" />
+<meta property="og:description" content="{{ meta_description }}" />
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />

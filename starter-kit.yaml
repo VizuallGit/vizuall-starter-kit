@@ -19,7 +19,22 @@ export_paths:
   - resources/views/utilities/component-exporter.blade.php
   - public/fonts
   - resources/users/roles.yaml
-  - resources/fieldsets
+  - resources/fieldsets/common.yaml
+  - resources/fieldsets/code_block.yaml
+  - resources/fieldsets/links.yaml
+  - resources/fieldsets/meta.yaml
+  - resources/fieldsets/socialmedia_links.yaml
+  - resources/views/default.antlers.html
+  - resources/views/layout.antlers.html
+  - resources/views/partials/components
+  - resources/views/partials/color_scheme_style.antlers.html
+  - resources/views/partials/layout_style_push.antlers.html
+  - resources/views/partials/meta_info.antlers.html
+  - resources/views/partials/spacing_props.antlers.html
+  - resources/views/partials/spacing_sides_css.antlers.html
+  - resources/views/partials/mobil_menu.antlers.html
+  - resources/views/partials/site_foot.antlers.html
+  - resources/views/partials/site_head.antlers.html
   - resources/blueprints/collections/pages
   - resources/blueprints/globals/site_settings.yaml
   - resources/blueprints/globals/theme_settings.yaml

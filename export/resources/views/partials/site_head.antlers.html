@@ -1,0 +1,28 @@
+<header >
+    {{ if theme_settings.show_topbar }}
+        {{ partial:site_topbar }}
+    {{ endif }}
+    <div id="{{ id }}" class="[ site-head ] wrapper flex items-center gap-gutter">
+        {{ theme_settings.header.widgets }}
+            {{ partial src="widgets/{type}" }}
+        {{ /theme_settings.header.widgets }}
+    </div>
+    
+</header>
+
+
+{{ style_push }}
+<style>
+    @scope(.site-head){
+        :scope{
+            --color-button-one: {{ theme_settings.header.settings.color_scheme:button_one_color }};
+            --color-button-one-text: {{ theme_settings.header.settings.color_scheme:button_one_text_color }};
+            background-color: {{ theme_settings.header.settings.color_scheme.background_color }};
+            color: {{ theme_settings.header.settings.color_scheme.text_color }};
+            font-family: var({{ theme_settings.header.settings.font }});
+            font-size: var({{ theme_settings.header.settings.font_size }});
+            {{ partial:spacing_sides_css :padding="theme_settings.header.settings.padding" }}
+        }
+    }
+</style>
+{{ /style_push }}

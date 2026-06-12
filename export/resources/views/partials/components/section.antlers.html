@@ -1,0 +1,3 @@
+<section {{ if live_preview }}style="{{ partial:color_scheme_style }}"{{ endif }} id="id-{{ id }}" class="{{ class }} bg-(--color-bg) text-(--color-text)" aria-labelledby="{{ headline | slugify }}">
+    {{ slot }}
+</section>

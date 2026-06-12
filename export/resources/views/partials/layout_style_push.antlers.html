@@ -1,0 +1,124 @@
+
+{{ style_push }}
+    <style>
+        :root {
+            /* --- Container width --- */
+            --container-width: {{ theme_settings.container_width | replace('em', 'rem') }};
+
+            /* --- Theme typography --- */
+            --font-base: '{{ theme_settings.font_family.base }}','Helvetica','Arial','Lucida','sans-serif';
+            --font-heading: '{{ theme_settings.font_family.headings }}','Helvetica','Arial','Lucida','sans-serif';
+            --heading-text-transform: {{ theme_settings.font_family.headings_uppercase == true ? 'uppercase' : 'none' }};
+            --line-height: var(--{{ theme_settings.line_height }});
+
+            /* --- Font scale --- */
+            {{ if theme_settings.font_scale_preview }}
+                --font-size-h1: var(--{{ theme_settings.font_scale_preview:h1 }});
+                --font-size-h2: var(--{{ theme_settings.font_scale_preview:h2 }});
+                --font-size-h3: var(--{{ theme_settings.font_scale_preview:h3 }});
+                --font-size-h4: var(--{{ theme_settings.font_scale_preview:h4 }});
+                --font-size-h5: var(--{{ theme_settings.font_scale_preview:h5 }});
+                --font-size-h6: var(--{{ theme_settings.font_scale_preview:h6 }});
+                --font-size:  var(--{{ theme_settings.font_scale_preview:p }});
+            {{ /if }}
+
+
+
+            /* --- Sizes --- */
+            --size-xxs: .8125rem;
+            --size-xs: .875rem;
+            --size-sm: .9375rem;
+            --size-base: 1rem;
+            {{ if theme_settings.fluid_sizes:sizes_css }}
+                {{ theme_settings.fluid_sizes:sizes_css }}
+                    --{{ handle }}: {{ value }};
+                {{ /theme_settings.fluid_sizes:sizes_css }}
+            {{ /if }}
+
+            /* --- Theme button --- */
+            --button-font: var({{ theme_settings.button_font }});
+            --button-size: var({{ theme_settings.button_size }});
+            --button-weight: var({{ theme_settings.button_weight }});
+            --button-width: {{ theme_settings.button_width }};
+            --button-radius: {{ theme_settings.button_radius }};
+            --button-transform: {{ theme_settings.button_uppercase == true ? 'uppercase' : 'none' }};
+            --btn-radius: {{ theme_settings.button_radius }};
+
+            /* --- Theme color --- */
+            {{ theme_color_scale }}
+            --contrast-light: {{ theme_settings.contrast_light }};
+            --contrast-dark:  {{ theme_settings.contrast_dark }};
+
+            --gray-50:   #fafafa;
+            --gray-100:  #f5f5f5;
+            --gray-200:  #e5e5e5;
+            --gray-300:  #d4d4d4;
+            --gray-400:  #a3a3a3;
+            --gray-500:  #737373;
+            --gray-600:  #525252;
+            --gray-700:  #404040;
+            --gray-800:  #262626;
+            --gray-900:  #171717;
+            --gray-950:  #0a0a0a;
+        }
+
+        body{
+            line-height: {{ theme_settings.line_height }};
+            {{ if theme_settings.font_family.base_wdth or theme_settings.font_family.base_ital }}
+            font-variation-settings:
+                {{ if theme_settings.font_family.base_wdth }}'wdth' {{ theme_settings.font_family.base_wdth }}{{ /if }}
+                {{ if theme_settings.font_family.base_wdth and theme_settings.font_family.base_ital }},{{ /if }}
+                {{ if theme_settings.font_family.base_ital }}'ital' 1{{ /if }};
+            {{ /if }}
+        }
+
+        h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6, .font-heading, .title{
+            line-height: var(--leading-flat);
+            {{ if theme_settings.font_family.heading_wdth or theme_settings.font_family.heading_ital }}
+            font-variation-settings:
+                {{ if theme_settings.font_family.heading_wdth }}'wdth' {{ theme_settings.font_family.heading_wdth }}{{ /if }}
+                {{ if theme_settings.font_family.heading_wdth and theme_settings.font_family.heading_ital }},{{ /if }}
+                {{ if theme_settings.font_family.heading_ital }}'ital' 1{{ /if }};
+            {{ /if }}
+            font-weight: {{ theme_settings.font_family.headline_font_weight }};
+        }
+
+        {{ _base_is_custom = false }}
+        {{ _heading_is_custom = false }}
+        {{ theme_settings.custom_fonts }}
+            {{ if file | font_family | lower == theme_settings.font_family.base | lower }}{{ _base_is_custom = true }}{{ /if }}
+            {{ if file | font_family | lower == theme_settings.font_family.headings | lower }}{{ _heading_is_custom = true }}{{ /if }}
+        {{ /theme_settings.custom_fonts }}
+
+        {{ if !_base_is_custom }}
+        @font-face {
+            font-family: "{{ theme_settings.font_family.base }}";
+            src: url("/fonts/{{ theme_settings.font_family.base | lower }}.woff2") format("woff2-variations");
+            font-weight: 100 900;
+            font-display: swap;
+        }
+        {{ /if }}
+
+        {{ if !_heading_is_custom }}
+        @font-face {
+            font-family: "{{ theme_settings.font_family.headings }}";
+            src: url("/fonts/{{ theme_settings.font_family.headings | lower }}.woff2") format("woff2-variations");
+            font-weight: 100 900;
+            font-display: swap;
+        }
+        {{ /if }}
+
+        {{ if theme_settings.custom_fonts }}
+            {{ theme_settings.custom_fonts }}
+                {{ _family = file | font_family }}
+                {{ if _family | lower == theme_settings.font_family.base | lower }}{{ _display_family = theme_settings.font_family.base }}{{ elseif _family | lower == theme_settings.font_family.headings | lower }}{{ _display_family = theme_settings.font_family.headings }}{{ else }}{{ _display_family = _family }}{{ /if }}
+                @font-face {
+                    font-family: "{{ _display_family }}";
+                    src: url("/fonts/{{ file | rawurlencode }}") format("{{ if variable }}woff2-variations{{ else }}woff2{{ /if }}");
+                    font-weight: {{ if variable }}100 900{{ else }}{{ weight ?? '400' }}{{ /if }};
+                    font-display: swap;
+                }
+            {{ /theme_settings.custom_fonts }}
+        {{ endif }}
+    </style>
+{{ /style_push }}

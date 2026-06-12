@@ -1,0 +1,15 @@
+<img 
+    {{ if _id }}
+        id="{{ _id }}"
+    {{ endif }}
+    class="max-w-full {{ class }}"
+    {{ if style }}
+        style="{{ style }}"
+    {{ endif }}
+    loading="{{ loading ? loading : 'lazy'  }}"
+    width="{{ w or "500" }}"
+    height="{{ h or "500" }}"
+    srcset="{{ glide:imagePath width="{{ w or "500" }}" height="{{ h or "500" }}" quality="{{ q or '70' }}" fit="crop_focal" format="{{ format or 'webp' }}" }} 1x, {{ glide:imagePath width="{{ w or "500" }}" height="{{ h or "500" }}" quality="{{ q or '60' }}" fit="crop_focal" format="{{ format or 'webp' }}" dpr="2" }} 2x"
+    src="{{ glide:imagePath width="{{ w or "500" }}" height="{{ h or "500" }}" quality="{{ q or '70' }}" fit="crop_focal" format="{{ format or 'webp' }}" }}"
+    alt="{{ imagePath:alt }}"
+>

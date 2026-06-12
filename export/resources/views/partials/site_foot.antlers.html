@@ -1,0 +1,20 @@
+<footer class="[ site-foot ] wrapper py-900!">
+    {{ theme_settings.footer.footer_widgets }}
+        {{ partial src="widgets/{type}" }}
+    {{ /theme_settings.footer.footer_widgets }}
+</footer>
+
+{{ style_push }}
+<style>
+    @scope(.site-foot){
+        :scope{
+            --color-button-one: {{ theme_settings.footer.settings.color_scheme:button_one_color }};
+            --color-button-one-text: {{ theme_settings.footer.settings.color_scheme:button_one_text_color }};
+           background-color: {{ theme_settings.footer.settings.color_scheme.background_color }};
+           color: {{ theme_settings.footer.settings.color_scheme.text_color }};
+           padding-block-start: var(--size-{{ theme_settings.footer.settings.pt }}00);
+           padding-block-end: var(--size-{{ theme_settings.footer.settings.pb }}00);
+        }
+    }
+</style>
+{{ /style_push }}

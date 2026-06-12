@@ -1,0 +1,10 @@
+<article class="wrapper flex flex-wrap gap-x-lg gap-y-gutter items-start py-950">
+    <div class="min-w-[50%] grow-[999] basis-0 page-content @container flow-y lg:sticky lg:top-gutter {{ aside_position == 'left' ?= 'order-2' }}">
+        {{ slot:content }}
+    </div>
+    {{ unless aside == 'false' or hide_sidebar }}
+        <aside class="basis-[22rem] grow lg:sticky lg:top-gutter space-y-gutter {{ aside_position == 'left' ?= 'order-1' }} {{ media_top_banner ?= 'xl:-mt-[calc(var(--size-950)+var(--size-900))]' }}">
+            {{ slot:aside }}
+        </aside>
+    {{ /unless }}
+</article>
