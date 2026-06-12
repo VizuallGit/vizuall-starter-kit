@@ -1,3 +1,4 @@
+updatable: false
 export_paths:
   - app/Http/Middleware/InjectStyles.php
   - app/Http/Controllers/CP/ComponentExporterController.php
