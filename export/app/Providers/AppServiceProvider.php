@@ -112,7 +112,10 @@ class AppServiceProvider extends ServiceProvider
             ->routes(function ($router) {
                 $router->get('items', [ComponentExporterController::class, 'items']);
                 $router->post('export', [ComponentExporterController::class, 'export']);
+                $router->post('import/check', [ComponentExporterController::class, 'check']);
                 $router->post('import', [ComponentExporterController::class, 'import']);
+                $router->get('selection', [ComponentExporterController::class, 'selection']);
+                $router->post('selection/toggle', [ComponentExporterController::class, 'toggleSelection']);
             });
 
         Statamic::booted(function () {

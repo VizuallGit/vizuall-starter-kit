@@ -15,7 +15,38 @@ class ComponentExporterController
             'page_sections' => $this->getPageSections(),
             'blueprints'    => $this->getBlueprints(),
             'collections'   => $this->getCollections(),
+            'selection'     => $this->loadSelection(),
         ]);
+    }
+
+    public function selection(): \Illuminate\Http\JsonResponse
+    {
+        return response()->json($this->loadSelection());
+    }
+
+    public function toggleSelection(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $data = $this->loadSelection();
+
+        if ($request->has('set')) {
+            // Erstat hele arrayet (bruges af "Vælg alle")
+            $data['page_sections'] = array_values((array) $request->input('set', []));
+        } else {
+            // Toggle enkelt handle
+            $handle   = $request->input('handle', '');
+            $sections = $data['page_sections'] ?? [];
+            $idx      = array_search($handle, $sections, true);
+            if ($idx !== false) {
+                array_splice($sections, $idx, 1);
+            } else {
+                $sections[] = $handle;
+            }
+            $data['page_sections'] = array_values($sections);
+        }
+
+        $this->saveSelection($data);
+
+        return response()->json($data);
     }
 
     public function export(Request $request)
@@ -31,6 +62,7 @@ class ComponentExporterController
                 $files["resources/fieldsets/{$fsHandle}.yaml"] = $fsPath;
                 $this->collectDeps($fsHandle, $files, $visited);
             }
+            $this->collectViewFiles($handle, $files);
         }
 
         foreach ($selected['blueprints'] ?? [] as $path) {
@@ -68,7 +100,7 @@ class ComponentExporterController
         return response()->download($tmpPath, 'components-export.zip')->deleteFileAfterSend(true);
     }
 
-    public function import(Request $request)
+    public function check(Request $request): \Illuminate\Http\JsonResponse
     {
         $request->validate(['zip' => 'required|file']);
 
@@ -77,10 +109,56 @@ class ComponentExporterController
             return response()->json(['error' => 'Ugyldig ZIP-fil'], 422);
         }
 
-        $zip->extractTo(base_path());
+        $conflicts = [];
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            $name = $zip->getNameIndex($i);
+            if (File::exists(base_path($name))) {
+                $conflicts[] = $name;
+            }
+        }
         $zip->close();
 
-        return response()->json(['message' => 'Import gennemført.']);
+        return response()->json(['conflicts' => $conflicts]);
+    }
+
+    public function import(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate(['zip' => 'required|file']);
+
+        $zip = new ZipArchive();
+        if ($zip->open($request->file('zip')->getPathname()) !== true) {
+            return response()->json(['error' => 'Ugyldig ZIP-fil'], 422);
+        }
+
+        $resolutions = json_decode($request->input('resolutions', '{}'), true) ?? [];
+        $written = 0;
+        $skipped = 0;
+
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            $name    = $zip->getNameIndex($i);
+            $content = $zip->getFromIndex($i);
+            $action  = $resolutions[$name] ?? 'overwrite';
+            $dest    = base_path($name);
+
+            if ($action === 'keep') {
+                $skipped++;
+                continue;
+            }
+
+            if ($action === 'copy') {
+                $dest = $this->resolveUniquePath($dest);
+            }
+
+            File::ensureDirectoryExists(dirname($dest));
+            File::put($dest, $content);
+            $written++;
+        }
+
+        $zip->close();
+
+        return response()->json([
+            'message' => "Import gennemført. {$written} skrevet, {$skipped} beholdt.",
+        ]);
     }
 
     // ─────────────────────────────────────────────────────────────────────────
@@ -211,9 +289,66 @@ class ComponentExporterController
     // Helpers
     // ─────────────────────────────────────────────────────────────────────────
 
+    private function selectionPath(): string
+    {
+        return storage_path('app/export-selection.json');
+    }
+
+    private function loadSelection(): array
+    {
+        $path = $this->selectionPath();
+        if (!File::exists($path)) return ['page_sections' => []];
+        return json_decode(File::get($path), true) ?? ['page_sections' => []];
+    }
+
+    private function saveSelection(array $data): void
+    {
+        File::put($this->selectionPath(), json_encode($data, JSON_PRETTY_PRINT));
+    }
+
+    private function resolveUniquePath(string $dest): string
+    {
+        if (!File::exists($dest)) return $dest;
+
+        $dir  = dirname($dest);
+        $ext  = pathinfo($dest, PATHINFO_EXTENSION);
+        $base = pathinfo($dest, PATHINFO_FILENAME);
+
+        $n = 2;
+        do {
+            $candidate = "{$dir}/{$base}_{$n}.{$ext}";
+            $n++;
+        } while (File::exists($candidate));
+
+        return $candidate;
+    }
+
     private function sectionToFieldset(string $handle): string
     {
         return str_replace('/', '_', $handle);
+    }
+
+    private function collectViewFiles(string $handle, array &$files): void
+    {
+        $base    = resource_path('views/partials/page_sections');
+        $zipBase = 'resources/views/partials/page_sections';
+
+        // Direct view file: e.g. hero/style_1 → hero/style_1.antlers.html
+        $viewPath = "{$base}/{$handle}.antlers.html";
+        if (File::exists($viewPath)) {
+            $files["{$zipBase}/{$handle}.antlers.html"] = $viewPath;
+        }
+
+        // Sub-directory partials for handles without slashes (e.g. code_block → code_block/)
+        if (!str_contains($handle, '/')) {
+            $subDir = "{$base}/{$handle}";
+            if (File::isDirectory($subDir)) {
+                foreach (File::allFiles($subDir) as $file) {
+                    $rel = $file->getRelativePathname();
+                    $files["{$zipBase}/{$handle}/{$rel}"] = $file->getPathname();
+                }
+            }
+        }
     }
 
     private function buildFilteredPageSections(array $selectedHandles): string

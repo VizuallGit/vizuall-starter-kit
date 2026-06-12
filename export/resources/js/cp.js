@@ -26,6 +26,9 @@
                 importMsg: '',
                 importOk: true,
                 importFile: null,
+                importStep: 'select',   // 'select' | 'review' | 'done'
+                conflicts: [],          // paths med konflikt
+                resolutions: {},        // path → 'overwrite'|'keep'|'copy'
             };
         },
 
@@ -80,6 +83,7 @@
                     this.sections    = data.page_sections || [];
                     this.blueprints  = data.blueprints    || [];
                     this.collections = data.collections   || [];
+                    this.selSections = data.selection?.page_sections ?? [];
                     this.loading     = false;
                 })
                 .catch(() => {
@@ -97,8 +101,36 @@
                 arr.splice(0);
                 if (checked) arr.push(...items.map(i => i[key]));
             },
+
+            async toggleSection(handle) {
+                this.toggle(this.selSections, handle);
+                const base = window.location.pathname.replace(/\/$/, '');
+                await fetch(base + '/selection/toggle', {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': this.csrf() },
+                    body:    JSON.stringify({ handle }),
+                });
+            },
+
+            async selectAllSections(checked) {
+                this.selectAll(this.selSections, this.sections, 'handle', checked);
+                const base = window.location.pathname.replace(/\/$/, '');
+                await fetch(base + '/selection/toggle', {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': this.csrf() },
+                    body:    JSON.stringify({ set: this.selSections }),
+                });
+            },
             onFileChange(e) {
                 this.importFile = e.target.files[0] ?? null;
+                this.importStep = 'select';
+                this.conflicts  = [];
+                this.resolutions = {};
+                this.importMsg  = '';
+            },
+
+            shortPath(path) {
+                return path.replace(/^resources\//, '');
             },
 
             async doExport() {
@@ -136,23 +168,49 @@
                 }
             },
 
-            async doImport() {
+            async doCheck() {
                 if (!this.importFile) {
                     this.importMsg = 'Vælg en ZIP-fil først.';
                     this.importOk  = false;
                     return;
                 }
                 this.importing = true;
-                this.importMsg = 'Importerer…';
+                this.importMsg = '';
                 const base = window.location.pathname.replace(/\/$/, '');
                 const form = new FormData();
                 form.append('zip', this.importFile);
                 form.append('_token', this.csrf());
                 try {
+                    const res  = await fetch(base + '/import/check', { method: 'POST', body: form });
+                    const data = await res.json();
+                    if (!res.ok) throw new Error(data.error ?? 'Tjek fejlede.');
+                    this.conflicts = data.conflicts ?? [];
+                    // Sæt standard-valg: overwrite for alt
+                    this.resolutions = {};
+                    this.conflicts.forEach(p => { this.resolutions[p] = 'overwrite'; });
+                    this.importStep = 'review';
+                } catch (e) {
+                    this.importMsg = e.message;
+                    this.importOk  = false;
+                } finally {
+                    this.importing = false;
+                }
+            },
+
+            async doImport() {
+                this.importing = true;
+                this.importMsg = 'Importerer…';
+                const base = window.location.pathname.replace(/\/$/, '');
+                const form = new FormData();
+                form.append('zip', this.importFile);
+                form.append('_token', this.csrf());
+                form.append('resolutions', JSON.stringify(this.resolutions));
+                try {
                     const res  = await fetch(base + '/import', { method: 'POST', body: form });
                     const data = await res.json();
                     this.importMsg = res.ok ? '✓ ' + data.message : (data.error ?? 'Import fejlede.');
                     this.importOk  = res.ok;
+                    if (res.ok) this.importStep = 'done';
                 } catch {
                     this.importMsg = 'Fejl under import. Prøv igen.';
                     this.importOk  = false;
@@ -176,13 +234,13 @@
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
                             <h2 style="font-size:1.1rem;font-weight:700;margin:0">Page Sections</h2>
                             <label style="font-size:.85rem;cursor:pointer;display:flex;align-items:center;gap:.4rem">
-                                <input type="checkbox" :checked="allSectionsSelected" @change="selectAll(selSections, sections, 'handle', $event.target.checked)">
+                                <input type="checkbox" :checked="allSectionsSelected" @change="selectAllSections($event.target.checked)">
                                 Vælg alle
                             </label>
                         </div>
                         <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:.4rem">
                             <label v-for="s in sections" :key="s.handle" class="ce-item">
-                                <input type="checkbox" :checked="selSections.includes(s.handle)" @change="toggle(selSections, s.handle)">
+                                <input type="checkbox" :checked="selSections.includes(s.handle)" @change="toggleSection(s.handle)">
                                 <span>{{ s.title }}</span>
                             </label>
                         </div>
@@ -248,12 +306,47 @@
                     <div class="card p-6">
                         <h2 style="font-size:1.1rem;font-weight:700;margin:0 0 .4rem">Importer</h2>
                         <p style="font-size:.85rem;color:#6b7280;margin:0 0 1rem">Upload en ZIP-fil eksporteret fra et andet site.</p>
-                        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+
+                        <div v-if="importStep === 'select'" style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
                             <input type="file" accept=".zip" style="font-size:.85rem" @change="onFileChange">
-                            <button class="btn-default btn" :disabled="importing" @click="doImport">
-                                {{ importing ? 'Importerer…' : 'Importer' }}
+                            <button class="btn-default btn" :disabled="importing || !importFile" @click="doCheck">
+                                {{ importing ? 'Analyserer…' : 'Analysér ZIP' }}
                             </button>
                         </div>
+
+                        <div v-if="importStep === 'review'">
+                            <div v-if="conflicts.length === 0" style="font-size:.85rem;color:#16a34a;margin-bottom:1rem">
+                                ✓ Ingen konflikter — alle filer er nye.
+                            </div>
+                            <div v-else style="margin-bottom:1rem">
+                                <p style="font-size:.85rem;font-weight:600;margin:0 0 .5rem">{{ conflicts.length }} fil(er) eksisterer allerede — vælg hvad der skal ske:</p>
+                                <div style="border:1px solid #e5e7eb;border-radius:.5rem;overflow:hidden">
+                                    <div v-for="(path, idx) in conflicts" :key="path"
+                                         :style="{ background: idx % 2 === 0 ? '#f9fafb' : '#fff', padding:'.5rem .75rem', display:'flex', alignItems:'center', gap:'.75rem', flexWrap:'wrap' }">
+                                        <code style="flex:1;font-size:.78rem;color:#374151">{{ shortPath(path) }}</code>
+                                        <div style="display:flex;gap:.4rem">
+                                            <label v-for="opt in [{v:'keep',l:'Behold'},{v:'overwrite',l:'Overskriv'},{v:'copy',l:'Gem kopi'}]"
+                                                   :key="opt.v"
+                                                   :style="{ display:'flex', alignItems:'center', gap:'.25rem', fontSize:'.8rem', cursor:'pointer',
+                                                             padding:'.2rem .5rem', borderRadius:'.3rem', border:'1px solid',
+                                                             borderColor: resolutions[path]===opt.v ? '#3b82f6' : '#d1d5db',
+                                                             background: resolutions[path]===opt.v ? '#eff6ff' : 'transparent',
+                                                             color: resolutions[path]===opt.v ? '#1d4ed8' : '#374151' }">
+                                                <input type="radio" :name="'res_'+idx" :value="opt.v" v-model="resolutions[path]" style="display:none">
+                                                {{ opt.l }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style="display:flex;align-items:center;gap:.75rem">
+                                <button class="btn-primary btn" :disabled="importing" @click="doImport">
+                                    {{ importing ? 'Importerer…' : 'Gennemfør import' }}
+                                </button>
+                                <button class="btn-default btn" @click="importStep = 'select'">Tilbage</button>
+                            </div>
+                        </div>
+
                         <div v-if="importMsg" style="margin-top:.75rem;font-size:.85rem" :style="{ color: importOk ? '#16a34a' : '#dc2626' }">{{ importMsg }}</div>
                     </div>
 
