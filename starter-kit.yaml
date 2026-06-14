@@ -24,6 +24,9 @@ export_paths:
   - resources/fieldsets/links.yaml
   - resources/fieldsets/meta.yaml
   - resources/fieldsets/socialmedia_links.yaml
+  - resources/fieldsets/widgets.yaml
+  - resources/fieldsets/sidebar_widgets.yaml
+  - resources/fieldsets/footer_widgets.yaml
   - resources/views/default.antlers.html
   - resources/views/layout.antlers.html
   - resources/views/partials/components

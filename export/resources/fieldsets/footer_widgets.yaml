@@ -1,0 +1,46 @@
+title: 'Footer widgets'
+fields:
+  -
+    handle: footer_widgets
+    field:
+      type: replicator
+      display: 'Footer widgets'
+      sets:
+        items:
+          display: Items
+          sets:
+            contact_info:
+              display: 'Contact info'
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Title
+            navigation:
+              display: Navigation
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Title
+                -
+                  handle: navigation_picker
+                  field:
+                    type: navs
+                    display: 'Navigation picker'
+            form:
+              display: Form
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Title
+                -
+                  handle: form_picker
+                  field:
+                    max_items: 1
+                    type: form
+                    display: 'Form picker'
