@@ -52,11 +52,15 @@ export_paths:
 dependencies:
   eminos/statamic-iconify: ^2.1
   statamic-addon/bard-style: ^1.0
+  statamic-addon/border-radius: ^1.0
   statamic-addon/code-editor: ^1.0
   statamic-addon/color-scheme: ^1.0
   statamic-addon/column-builder: ^1.0
   statamic-addon/fluid-size: ^1.0
   statamic-addon/modifiers: ^1.0
+  statamic-addon/popup: ^1.0
+  statamic-addon/popup-group: ^1.0
   statamic-addon/sections: ^1.0
   statamic-addon/spacing: ^1.0
   statamic-addon/tabs: ^1.0
+  statamic-addon/visual-editor: ^1.0

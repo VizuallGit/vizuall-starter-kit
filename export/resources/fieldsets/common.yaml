@@ -350,3 +350,32 @@ fields:
       type: select
       display: 'Font width'
       localizable: false
+  -
+    handle: size
+    field:
+      options:
+        - key: sm
+          value: Small
+        - key: md
+          value: Medium
+        - key: lg
+          value: Large
+      default: md
+      type: select
+      display: Size
+  -
+    handle: animations
+    field:
+      options:
+        - key: none
+          value: None
+        - key: fadce-in
+          value: 'Fade in'
+        - key: fade-up
+          value: 'Fade up'
+        - key: fade-down
+          value: 'Fade down'
+      type: select
+      display: Animations
+      localizable: false
+      default: none

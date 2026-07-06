@@ -14,7 +14,7 @@ return [
 
     'devices' => [
         'Laptop' => ['width' => 1440, 'height' => 900],
-        'Tablet' => ['width' => 1024, 'height' => 786],
+        'Tablet' => ['width' => 810, 'height' => 1080],
         'Mobile' => ['width' => 375, 'height' => 812],
     ],
 
