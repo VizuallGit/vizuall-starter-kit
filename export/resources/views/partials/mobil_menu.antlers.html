@@ -12,12 +12,12 @@
     x-transition:leave-start="opacity-100"
     x-transition:leave-end="opacity-0"
 >
-    <div class="fixed top-0 right-0 h-full w-full max-w-[30rem] bg-light text-dark-shade z-10 shadow-custom_medium  opacity-100 translate-x-0 delay-200 duration-300 ease-[cubic-bezier(0,0.55,0.45,1)] flex flex-col" x-on:click.outside="showMobilMenu = false">
+    <div class="fixed top-0 right-0 h-full w-full max-w-[30rem] bg-gray-100 text-gray-900 z-10 shadow-custom_medium  opacity-100 translate-x-0 delay-200 duration-300 ease-[cubic-bezier(0,0.55,0.45,1)] flex flex-col" x-on:click.outside="showMobilMenu = false">
         <div class="flex gap-2 p-700">
             {{ partial:components/socialmedia  }}
             {{ partial:widgets/multisite }}
             <button 
-                class="bg-primary-700 ml-auto text-primary-50 size-700 flex items-center justify-center text-light-glare cursor-pointer"
+                class="bg-primary-700 ml-auto text-primary-50 size-700 flex items-center justify-center cursor-pointer"
                 aria-label="Luk primær navigation"
                 type="button"   
                 @click="showMobilMenu = false" 
@@ -39,18 +39,3 @@
         
     </div>
 </div>
-
-{{ style_push }}
-    <style>
-        @scope(.mobil_menu){
-            :scope{
-                background-color: color-mix(in oklch, {{ theme_settings.header.settings.color_scheme.text_color }}, transparent 10% );
-                color: {{ theme_settings.header.settings.color_scheme.text_color }};
-
-                > div{
-                    background-color: {{ theme_settings.header.settings.color_scheme.background_color }};
-                }
-            }
-        }
-    </style>
-{{ /style_push }}

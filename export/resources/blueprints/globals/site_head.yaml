@@ -1,0 +1,192 @@
+title: Header
+tabs:
+  header:
+    display: Header
+    sections:
+      -
+        fields:
+          -
+            handle: content_tab
+            field: common.content_tab
+            config:
+              display: Content
+          -
+            handle: blocks
+            field:
+              unique_sets:
+                - topbar
+                - main_content
+                - main_header
+              type: replicator
+              display: Blocks
+              collapse: true
+              locked_rows: true
+              default:
+                - type: main_header
+                - type: topbar
+              sets:
+                block:
+                  display: Block
+                  sets:
+                    topbar:
+                      display: Topbar
+                      icon: align-object-top
+                      fields:
+                        -
+                          handle: content_tab
+                          field: common.content_tab
+                          config:
+                            display: Content
+                        -
+                          handle: widgets
+                          field:
+                            type: replicator
+                            display: Widgets
+                            unique_sets:
+                              - search
+                              - socialmedia
+                            default:
+                              - type: socialmedia
+                              - type: search
+                            sets:
+                              widget:
+                                display: Widget
+                                icon: add-bookmark
+                                sets:
+                                  search:
+                                    display: Search
+                                    fields:
+                                      - import: widgets.search
+                                  socialmedia:
+                                    display: Socialmedia
+                                    icon: social-dropbox-logo
+                                    fields: {}
+                        -
+                          handle: style_tab
+                          field: common.style_tab
+                          config:
+                            display: Style
+                        -
+                          handle: colors_tab
+                          field: common.colors_tab
+                          config:
+                            display: Colors
+                        -
+                          handle: bg_color
+                          field:
+                            type: theme_color_picker
+                            display: 'Bg color'
+                        -
+                          handle: spacing_tab
+                          field: common.spacing_tab
+                          config:
+                            display: Spacing
+                        -
+                          handle: padding
+                          field:
+                            max: 8
+                            type: spacing
+                            display: Padding
+                        -
+                          handle: gap
+                          field:
+                            max: 8
+                            type: gap
+                            display: Gap
+                    main_header:
+                      display: 'Main header'
+                      icon: align-object-center
+                      fields:
+                        -
+                          handle: content_tab
+                          field: common.content_tab
+                          config:
+                            display: Content
+                        -
+                          handle: widgets
+                          field:
+                            type: replicator
+                            display: Widgets
+                            collapse: true
+                            unique_sets:
+                              - logo
+                              - navigation
+                              - search
+                            default:
+                              - type: logo
+                              - type: navigation
+                            sets:
+                              widget:
+                                display: Widget
+                                sets:
+                                  logo:
+                                    display: Logo
+                                    fields:
+                                      - import: widgets.logo
+                                  navigation:
+                                    display: Navigation
+                                    icon: navigation
+                                    fields:
+                                      - import: widgets.navigation
+                                  search:
+                                    display: Search
+                                    icon: search-magnifying-glass
+                                    fields:
+                                      - import: widgets.search
+                        -
+                          handle: style_tab
+                          field: common.style_tab
+                          config:
+                            display: Style
+                        -
+                          handle: colors_tab
+                          field: common.colors_tab
+                          config:
+                            display: Colors
+                        -
+                          handle: bg_color
+                          field:
+                            type: theme_color_picker
+                            display: 'Bg color'
+                        -
+                          handle: spacing_tab
+                          field: common.spacing_tab
+                          config:
+                            display: Spacing
+                        -
+                          handle: padding
+                          field:
+                            max: 9
+                            type: spacing
+                            display: Padding
+                        -
+                          handle: gap
+                          field:
+                            max: 9
+                            type: gap
+                            display: Gap
+          -
+            handle: style_tab
+            field: common.style_tab
+            config:
+              display: Style
+          -
+            handle: colors_tab
+            field: common.colors_tab
+            config:
+              display: Colors
+          -
+            handle: bg_color
+            field:
+              type: theme_color_picker
+              display: 'Bg color'
+          -
+            handle: spacing_tab
+            field: common.spacing_tab
+            config:
+              display: Spacing
+          -
+            handle: padding
+            field: common.section_spacing
+            config:
+              display: Padding

@@ -1,0 +1,10 @@
+{{#
+    Gradient-stops ud af et opacity-grid, som én værdi der kan stå i en custom property.
+
+    Kaldes med rækkerne for ét breakpoint:
+        {{ partial:cms_styles/opacity_stops :stops="background_opacity.laptop.background_opacity" }}
+
+    Tomt grid giver `transparent, transparent` og ikke ingenting. En custom property
+    uden værdi gør hele `linear-gradient()` ugyldig, og så falder baggrunden væk —
+    her bliver den bare usynlig, hvilket er det man bad om.
+#}}{{ if stops }}{{ stops }}color-mix(in oklch, var(--color-bg), transparent {{ opacity }}){{ last ? '' : ', ' }}{{ /stops }}{{ else }}transparent, transparent{{ /if }}

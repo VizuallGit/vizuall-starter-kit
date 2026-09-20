@@ -1,133 +1,11 @@
 title: 'Theme settings'
 tabs:
-  site_sections:
-    display: 'Sites sections'
-    sections:
-      -
-        display: Topbar
-        fields:
-          -
-            handle: show_topbar
-            field:
-              type: toggle
-              display: 'Show topbar'
-          -
-            handle: topbar
-            field:
-              type: group
-              display: Topbar
-              if:
-                show_topbar: 'equals true'
-              fields:
-                - import: widgets
-                -
-                  handle: show_settings
-                  field:
-                    type: revealer
-                    display: 'Show settings'
-                -
-                  handle: settings
-                  field:
-                    type: group
-                    display: Settings
-                    if:
-                      show_settings: 'equals true'
-                    fields:
-                      -
-                        handle: color_scheme
-                        field:
-                          type: color_scheme_selector
-                          display: 'Color Scheme'
-                      -
-                        handle: pt
-                        field: common.spacing
-                        config:
-                          display: 'Padding top'
-                          width: 50
-                      -
-                        handle: pb
-                        field: common.spacing
-                        config:
-                          display: 'Padding bottom'
-                          width: 50
-                          side: bottom
-      -
-        display: Header
-        fields:
-          -
-            handle: header
-            field:
-              type: group
-              display: Header
-              fields:
-                - import: widgets
-                -
-                  handle: show_settings
-                  field:
-                    type: revealer
-                    display: 'Show settings'
-                -
-                  handle: settings
-                  field:
-                    type: group
-                    display: Settings
-                    if:
-                      show_settings: 'equals true'
-                    fields:
-                      -
-                        handle: color_scheme
-                        field:
-                          type: color_scheme_selector
-                          display: 'Color Scheme'
-                      -
-                        handle: padding
-                        field:
-                          max: 9
-                          type: spacing
-                          display: Padding
-      -
-        display: Footer
-        fields:
-          -
-            handle: footer
-            field:
-              type: group
-              display: Footer
-              fields:
-                - import: footer_widgets
-                -
-                  handle: show_settings
-                  field:
-                    type: revealer
-                    display: 'Show settings'
-                    localizable: false
-                -
-                  handle: settings
-                  field:
-                    type: group
-                    display: Settings
-                    if:
-                      show_settings: 'equals true'
-                    localizable: false
-                    fields:
-                      -
-                        handle: color_scheme
-                        field:
-                          type: color_scheme_selector
-                          display: 'Color Scheme'
-                          localizable: false
-                      -
-                        handle: padding
-                        field: common.spacing
-                        config:
-                          max: 9
-                          display: Padding
-                          width: 100
   colors:
     display: Colors
     sections:
       -
         display: Primary
+        collapsible: true
         fields:
           -
             handle: primary_color
@@ -145,6 +23,7 @@ tabs:
               max: 50
               default: 0
               width: 33
+              always_save: true
               if:
                 primary_color: 'not empty'
           -
@@ -156,6 +35,7 @@ tabs:
               min: -100
               default: 0
               width: 33
+              always_save: true
               if:
                 primary_color: 'not empty'
           -
@@ -169,6 +49,8 @@ tabs:
                 primary_color: 'not empty'
       -
         display: Secondary
+        collapsible: true
+        collapsed: true
         fields:
           -
             handle: secondary_color
@@ -210,6 +92,8 @@ tabs:
                 secondary_color: 'not empty'
       -
         display: Tertiary
+        collapsible: true
+        collapsed: true
         fields:
           -
             handle: tertiary_color
@@ -251,6 +135,8 @@ tabs:
                 tertiary_color: 'not empty'
       -
         display: Quaternary
+        collapsible: true
+        collapsed: true
         fields:
           -
             handle: quaternary_color
@@ -306,93 +192,6 @@ tabs:
               display: 'Mørk kontrasttekst'
               instructions: 'Bruges automatisk som tekstfarve på lyse knapper.'
               width: 50
-          -
-            handle: color_schemes
-            field:
-              type: replicator
-              display: 'Color Schemes'
-              button_label: 'Tilføj farveskema'
-              collapse: accordion
-              sets:
-                main:
-                  display: Main
-                  sets:
-                    color_scheme:
-                      display: Farveskema
-                      fields:
-                        -
-                          handle: preview
-                          field:
-                            type: color_scheme_preview
-                            display: Forhåndsvisning
-                        -
-                          handle: handle
-                          field:
-                            type: slug
-                            display: Handle
-                            from: label
-                            visibility: hidden
-                        -
-                          handle: label
-                          field:
-                            type: text
-                            display: Navn
-                            validate:
-                              - required
-                        -
-                          handle: background_color
-                          field:
-                            type: theme_color_picker
-                            display: Baggrundsfarve
-                            width: 25
-                        -
-                          handle: text_color
-                          field:
-                            type: theme_color_picker
-                            display: Tekstfarve
-                            width: 25
-                        -
-                          handle: inner_background_color
-                          field:
-                            type: theme_color_picker
-                            display: 'Inner bagrundsfarve'
-                            width: 25
-                        -
-                          handle: inner_text_color
-                          field:
-                            type: theme_color_picker
-                            display: 'Inner tekstfarve'
-                            width: 25
-                        -
-                          handle: button_one_color
-                          field:
-                            type: theme_color_picker
-                            display: 'Button One Color'
-                            width: 25
-                        -
-                          handle: button_one_hover_color
-                          field:
-                            type: theme_color_picker
-                            display: 'Button one hover color'
-                            width: 25
-                        -
-                          handle: button_two_color
-                          field:
-                            type: theme_color_picker
-                            display: 'Button Two Color'
-                            width: 25
-                        -
-                          handle: button_two_hover_color
-                          field:
-                            type: theme_color_picker
-                            display: 'Button two hover color'
-                            width: 25
-                        -
-                          handle: highlighted_color
-                          field:
-                            type: theme_color_picker
-                            display: 'Highlighted color'
-                            width: 25
   sizes:
     display: Sizes
     sections:
@@ -633,11 +432,6 @@ tabs:
             field:
               type: toggle
               display: Uppercase
-          -
-            handle: button_preview
-            field:
-              type: button_preview
-              display: Forhåndsvisning
   media:
     display: Media
     sections:
@@ -654,73 +448,6 @@ tabs:
             field: common.opacity
             config:
               width: 75
-  sektioner:
-    display: Sektioner
-    sections:
-      -
-        instructions: 'Ændringer gemmes automatisk i page_sections fieldset ved tryk på Save.'
-        fields:
-          -
-            handle: section_manager
-            field:
-              type: section_manager
-              display: Sektioner
-  collections:
-    display: Kollektioner
-    sections:
-      -
-        instructions: 'Slå kollektioner til/fra i CP-menuen. Kollektioner der er slået fra forsvinder fra sidenavigationen.'
-        fields:
-          -
-            handle: show_blog
-            field:
-              type: toggle
-              display: Blog
-              default: true
-              width: 25
-          -
-            handle: show_employees
-            field:
-              type: toggle
-              display: Employees
-              default: true
-              width: 25
-          -
-            handle: show_services
-            field:
-              type: toggle
-              display: Services
-              width: 25
-          -
-            handle: show_cases
-            field:
-              type: toggle
-              display: Cases
-              width: 25
-          -
-            handle: show_events
-            field:
-              type: toggle
-              display: Events
-              width: 25
-          -
-            handle: show_products
-            field:
-              type: toggle
-              display: Products
-              width: 25
-          -
-            handle: show_testimonials
-            field:
-              type: toggle
-              display: Testimonials
-              width: 25
-          -
-            handle: show_reusable_sections
-            field:
-              type: toggle
-              display: 'Reusable sections'
-              width: 25
   css_script:
     display: 'Css & script'
     sections:
@@ -729,5 +456,8 @@ tabs:
           -
             handle: custom_css
             field:
-              type: css_editor
+              type: code
+              mode: css
+              mode_selectable: false
+
               display: 'Custom css'

@@ -4,7 +4,9 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="robots" content="noindex, nofollow">
+        {{ if environment != 'production' }}
+            <meta name="robots" content="noindex, nofollow">
+        {{ /if }}
         {{ partial:meta_info }}
         {{ vite src="resources/css/site.css" }}
         {{ if theme_settings.adobe_kits }}
@@ -37,10 +39,11 @@
         <main class="">
             {{ template_content }}
         </main>
+        {{ partial:site_foot }}
         {{ vite src="resources/js/site.js" }}
         {{ yield_scripts }}
-        {{# {{ if live_preview }}{{ partial:live_preview }}{{ /if }} #}}
+
     </body>
 </html>
 
-{{ partial:layout_style_push }}
+{{ sve_cache src="cms_styles/layout_style_push" globals="theme_settings" }}

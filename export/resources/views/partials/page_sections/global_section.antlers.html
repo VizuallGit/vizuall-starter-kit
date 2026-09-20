@@ -1,0 +1,20 @@
+{{# A referenced global section: render the source's CURRENT sections, so editing
+    the source updates every page that references it. Mirrors reusable_sections —
+    the referenced entry's page_sections are augmented and looped like a page's own,
+    so bard, assets and {{ style_push }} all work. #}}
+{{# This row's OWN id, from the page's page_sections — not the source's. It has to
+    be read out here, before the loop below switches context to the referenced
+    entry. Everything the editor does TO the section on this page (move, remove,
+    settings) acts on this id; the source's id only says what to render. #}}
+<span hidden data-sve-global-row="{{ _visual_id }}"></span>
+{{ global_section }}
+    {{# display:contents — no layout box. Wraps every section from the synced
+        source so the editor can badge/focus them without tagging following
+        (non-global) page sections as global too. #}}
+    <div data-sve-global-root="{{ id }}" style="display:contents">
+        {{ page_sections }}
+            {{ _class = type | replace('/', '-') | replace('_', '-') }}
+            {{ partial src="partials/page_sections/{ type }" id="{{ id }}" :class="_class" :_class="_class" }}
+        {{ /page_sections }}
+    </div>
+{{ /global_section }}

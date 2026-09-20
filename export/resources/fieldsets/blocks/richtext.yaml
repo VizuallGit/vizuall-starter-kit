@@ -1,0 +1,47 @@
+title: 'Block - Richtext'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: richtext
+    field:
+      buttons:
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - anchor
+        - color
+      toolbar_mode: floating
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: Richtext
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  -
+    handle: font_size_tab
+    field: common.font_size_tab
+    config:
+      display: 'Font size'
+  -
+    handle: font_size
+    field: common.font_size
+    config:
+      sve_responsive: true
+      sve_sync_siblings: true
+  - handle: flow_space_tab
+    field: common.flow_space_tab
+  - handle: flow_space
+    field: common.flow_space
+    config:
+      # Ingen default her: en gemt værdi ville altid vinde over sektionens
+      # blocks_cfg, og så kunne stedet aldrig bestemme sin egen afstand.
+      default: null

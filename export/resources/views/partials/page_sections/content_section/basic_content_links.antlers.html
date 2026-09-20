@@ -1,0 +1,53 @@
+{{# sve-unlocked #}}
+{{# Overskrift, brødtekst og knapper i én spalte. Sektionens eneste egen
+    indstilling er justeringen: teksten og knapperne følges ad, venstre, midt
+    eller højre — pr. skærmstørrelse. #}}
+<section id="id-{{ id }}" class="[ {{ _class }} ]" data-auto-contrast {{ visual_edit outline_inside="true" section_orderable="true" }}>
+    <div class="[ content ] wrapper flow-y prose-headings:max-w-[35ch] prose-p:max-w-[85ch]" {{ visual_edit field="content_block" outline_inside="true" insertable="true" }}>
+        {{ content_block }}
+            {{# Stedets start-værdier, grupperet pr. bloktype. "class" er klasser
+                blokken får netop her — link-group er den justeringen nedenfor
+                hænger på. #}}
+            {{ partial src="blocks/{type}" :blocks_cfg='[
+                "headline" => ["tag" => "h2", "size" => "text-600", "placeholder" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Bibendum amet at molestie mattis."],
+                "richtext" => ["flow_space" => "flow-space-400", "placeholder" => "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua, quis nostrud exercitation ullamco laboris. Lorem ipsum dolor sit amet, consectetur adipiscing elit."],
+                "links" => ["class" => "link-group", "flow_space" => "flow-space-500"],
+            ]' }}
+        {{ /content_block }}
+    </div>
+</section>
+
+{{ sve_tw }}
+
+{{ style_push }}
+<style>
+{{# align_text skriver text-align (og align-items) ud på sektionen selv,
+        pr. skærmstørrelse — se partials/responsive/align_text. text-align
+        arves ned i overskrift og brødtekst af sig selv. #}}
+    {{# Farverne har ingen fallback her — startværdierne står som Default Value
+        på felterne selv (bg_color gray-200, knapperne gray-700), så de kan
+        klikkes i feltindstillingerne i stedet for at skrives i skabelonen. #}}
+    {{ responsive_css }}
+        --color-bg: {{ bg_color }};
+    {{ /responsive_css }}
+
+    @scope(.{{ _class }}) {
+        :scope {
+            background-color: var(--color-bg);
+        }
+
+        {{# Knapperækken er en flex-boks i fuld bredde, og en blok-boks kan ikke
+            flyttes af text-align. Som inline-flex bliver den en linje-boks i
+            stedet — så følger den justeringen sammen med teksten, uden at
+            sektionen skal kende værdien én gang til. #}}
+        .link-group {
+            display: inline-flex;
+            inline-size: auto;
+            vertical-align: top;
+        }
+
+        .content {
+        }
+    }
+</style>
+{{ /style_push }}

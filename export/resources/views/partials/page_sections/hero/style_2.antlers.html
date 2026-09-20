@@ -1,0 +1,132 @@
+<section id="id-{{ id }}" class="[ {{ _class }} ] relative" data-auto-contrast {{ visual_edit outline_inside="true" section_orderable="true" }} aria-label="fdsdsad">
+    {{ blocks }}
+        {{ if type == 'content' }}
+            <div class="[ content ] wrapper prose-headings:max-w-[25ch] prose-p:max-w-[65ch] flow-y prose-p:text-current/70" {{ visual_edit field="content_block" outline_inside="true" insertable="true" }}>
+
+                {{ content_block }}
+                    {{ partial src="blocks/{type}" :blocks_cfg='[
+                        "headline" => ["tag" => "h1", "size" => "text-800", "placeholder" => "Trine Rosendal din psykolog & hypnotisør"],
+                        "richtext" => ["placeholder" => "Jeg har gennem de sidste 15 år arbejdet og studeret følelser og tanker. I den proces har jeg lært, på egen krop, hvad det vil sige at give slip. Den bgdfg evne kan jeg lære dig."],
+                    ]' }}
+                {{ /content_block }}
+            </div>
+        {{ elseif type == 'list' }}
+            <ul class="[ list ] wrapper" data-auto-contrast {{ visual_edit field="list" outline_inside="true" insertable="true" }}>
+                {{ list }}
+                    <li class="flex gap-100" id="fd-{{ id }}" {{ visual_edit orderable="true" inline_edit="true" toolbar="true" }}>
+                        {{ blocks }}
+                            {{ if type == 'icon' }}
+                                {{ partial src="blocks/icon" }}
+                            {{ /if }}
+                        {{ /blocks }}
+                        <div>
+                            {{ blocks }}
+                                {{ if type == 'title' }}
+                                    <p class="font-heading leading-normal!" id="fs-{{ id }}" {{ visual_edit field="title" inline_edit="true" }}>{{ title }}</p>
+                                {{ elseif type == 'text' }}
+                                    <p {{ visual_edit field="text" inline_edit="true" }}>{{ text }}</p>
+                                {{ /if }}
+                            {{ /blocks }}
+                        </div>
+                    </li>
+                {{ /list }}
+            </ul>
+        {{ endif }}
+    {{ /blocks }}
+    <div class="[ media ]" {{ visual_edit field="media" outline_inside="true" inline_edit="true" }}>
+        {{ if media }}
+            {{ unless media | ends_with('.mp4') }}
+                {{ partial:components/image :imagePath="media" :width_pct="media_width.laptop.media_width" class="h-full w-full object-cover" }}
+            {{ /unless }}
+        {{ else }}
+            {{ partial:components/media_placeholder }}
+        {{ /if }}
+    </div>
+</section>
+
+{{ sve_tw }}
+
+{{ style_push }}
+<style>
+{{ responsive_css except="padding" }}
+        --color-bg: {{ bg_color ?? 'var(--gray-600)' }};
+        --list-grid: {{ (blocks | where('type', 'list') | pluck('list')) | first | count }};
+
+        .media { inline-size: var(--media-width, 40%); }
+        .icon  { --icon-size: var(--icon-size-l); }
+
+        @media (width < 64em) { .icon { --icon-size: var(--icon-size-t); } }
+        @media (width < 48em) { .icon { --icon-size: var(--icon-size-m); } }
+    {{ /responsive_css }}
+
+    {{ responsive_css selector="#id-{{ id }} .content" only="padding" }}
+    {{ /responsive_css }}
+
+    {{ responsive_css selector="#id-{{ id }} .list" only="padding,flow_space,bg_opacity" from="list" }}
+        --color-bg-inner: color-mix(in oklch, {{ bg_color }}, transparent var(--bg-opacity, 0%));
+        background-color: var(--color-bg-inner);
+    {{ /responsive_css }}
+
+    {{ partial:responsive/font_size }}
+    {{ partial:responsive/flex_direction }}
+
+    @scope(.{{ _class }}) {
+        :scope {
+            background-color: var(--color-bg);
+        }
+
+        .content {
+            position: relative;
+            z-index: 10;
+            max-inline-size: max-content;
+
+ 
+        }
+
+        .list {
+            position: relative;
+            z-index: 10;
+            display: grid;
+            grid-template-columns: repeat(var(--list-grid), 1fr);
+            align-items: start;
+            container-type: inline-size;
+            container-name: hero-list;
+        }
+
+        @container hero-list (width < 36rem) {
+            li {
+                grid-column: 1 / -1;
+            }
+        }
+
+        .icon {
+            --icon-sm: var(--size-600);
+            --icon-md: var(--size-700);
+            --icon-lg: var(--size-800);
+            inline-size: var(--icon-size);
+            block-size: var(--icon-size);
+        }
+
+        .media {
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1;
+            block-size: 100%;
+            overflow: clip;
+
+            &::after {
+                content: "";
+                position: absolute;
+                z-index: 1;
+                inset: 0;
+                pointer-events: none;
+                background: linear-gradient(
+                    to var(--background-position, right),
+                    var(--background-opacity, transparent, transparent)
+                );
+            }
+        }
+    }
+</style>
+{{ /style_push }}

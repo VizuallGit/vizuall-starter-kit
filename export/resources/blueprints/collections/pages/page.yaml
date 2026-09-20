@@ -5,10 +5,9 @@ tabs:
     sections:
       -
         fields:
-          -
-            import: page_sections
+          - import: page_sections
   sidebar:
-    display: Sidebar
+    display: 'Page Settings'
     sections:
       -
         fields:
@@ -25,3 +24,10 @@ tabs:
               type: slug
               localizable: true
               validate: 'max:200'
+  seo:
+    display: SEO
+    sections:
+      -
+        fields:
+          - import: meta
+            prefix: meta_

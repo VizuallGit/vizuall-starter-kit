@@ -1,0 +1,19 @@
+title: 'Employees list'
+fields:
+  -
+    handle: headline
+    field:
+      type: text
+      display: Headline
+  -
+    handle: emp_list
+    field:
+      collections:
+        - employees
+      type: entries
+      display: 'Emp List'
+  -
+    handle: textarea_field
+    field:
+      type: textarea
+      display: 'Textarea Field'

@@ -1,0 +1,110 @@
+title: 'Media Form Box'
+fields:
+  -
+    handle: content
+    field:
+      type: tab
+      display: Content
+      tab_icon: text
+  -
+    handle: blocks
+    field:
+      type: replicator
+      display: Blocks
+      collapse: accordion
+      button_label: 'Add block'
+      max_sets: 2
+      unique_sets:
+        - media
+        - form
+      default:
+        - type: media
+        - type: form
+      sets:
+        items:
+          display: Items
+          sets:
+            media:
+              display: Media
+              icon: fieldtype-assets
+              fields:
+                - import: blocks.media
+            form:
+              display: Form
+              icon: form
+              fields:
+                -
+                  handle: blocks
+                  field:
+                    type: replicator
+                    display: Blocks
+                    collapse: accordion
+                    button_label: 'Add block'
+                    default:
+                      - type: headline
+                      - type: richtext
+                    sets:
+                      block:
+                        display: Block
+                        sets:
+                          headline:
+                            display: Headline
+                            icon: fieldtype-text
+                            fields:
+                              - import: blocks.headline
+                          richtext:
+                            display: Richtext
+                            icon: fieldtype-bard
+                            fields:
+                              -
+                                handle: richtext
+                                field: blocks.richtext.richtext
+                -
+                  handle: form_picker
+                  field:
+                    max_items: 1
+                    type: form
+                    display: Form
+                -
+                  handle: button_text
+                  field:
+                    type: text
+                    display: 'Button text'
+                    default: 'Send besked'
+  -
+    handle: design
+    field:
+      type: tab
+      display: Style
+      tab_icon: 'codicon:color-mode'
+  -
+    handle: farver
+    field:
+      type: tab
+      display: Farver
+      style: accordion
+      tab_icon: 'material-symbols:invert-colors-outline'
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Background color'
+      default: 'var(--gray-200)'
+  -
+    handle: text_color
+    field:
+      type: theme_color_picker
+      display: 'Text color'
+  -
+    handle: spacing
+    field:
+      type: tab
+      display: Spacing
+      style: accordion
+      tab_icon: spacing
+  -
+    handle: padding
+    field: common.section_spacing
+    config:
+      display: Padding
+      sve_responsive: true

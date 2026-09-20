@@ -1,0 +1,13 @@
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: email
+            field:
+              input_type: email
+              placeholder: 'Indtast din email'
+              type: text
+              display: Email

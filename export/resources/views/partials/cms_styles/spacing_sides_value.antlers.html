@@ -1,0 +1,19 @@
+{{ _p = padding ?? settings.padding }}
+--{{ name ?? 'padding-list' }}-top: 0;
+--{{ name ?? 'padding-list' }}-right: 0;
+--{{ name ?? 'padding-list' }}-bottom: 0;
+--{{ name ?? 'padding-list' }}-left: 0;
+{{ _p }}
+    {{ if custom }}
+        {{ if top or (sides | contains('top')) }}--{{ name ?? 'padding-list' }}-top: {{ value }};{{ /if }}
+        {{ if right or (sides | contains('right')) }}--{{ name ?? 'padding-list' }}-right: {{ value }};{{ /if }}
+        {{ if bottom or (sides | contains('bottom')) }}--{{ name ?? 'padding-list' }}-bottom: {{ value }};{{ /if }}
+        {{ if left or (sides | contains('left')) }}--{{ name ?? 'padding-list' }}-left: {{ value }};{{ /if }}
+    {{ elseif value }}
+        {{ if top or (sides | contains('top')) }}--{{ name ?? 'padding-list' }}-top: var(--size-{{ value }}00);{{ /if }}
+        {{ if right or (sides | contains('right')) }}--{{ name ?? 'padding-list' }}-right: var(--size-{{ value }}00);{{ /if }}
+        {{ if bottom or (sides | contains('bottom')) }}--{{ name ?? 'padding-list' }}-bottom: var(--size-{{ value }}00);{{ /if }}
+        {{ if left or (sides | contains('left')) }}--{{ name ?? 'padding-list' }}-left: var(--size-{{ value }}00);{{ /if }}
+    {{ /if }}
+{{ /_p }}
+--{{ name ?? 'padding-list' }}: var(--{{ name ?? 'padding-list' }}-top) var(--{{ name ?? 'padding-list' }}-right) var(--{{ name ?? 'padding-list' }}-bottom) var(--{{ name ?? 'padding-list' }}-left);

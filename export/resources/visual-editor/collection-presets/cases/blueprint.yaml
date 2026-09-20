@@ -1,0 +1,34 @@
+title: Cases
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              required: true
+              validate:
+                - required
+          - import: page_sections
+  sidebar:
+    display: 'Page Settings'
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+  seo:
+    display: SEO
+    sections:
+      -
+        fields:
+          -
+            import: meta
+            prefix: meta_

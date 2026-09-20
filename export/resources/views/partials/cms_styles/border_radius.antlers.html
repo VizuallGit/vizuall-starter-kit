@@ -1,0 +1,8 @@
+{{ _r = border_radius ?? settings.border_radius }}
+
+{{ _r.rows }}
+    {{ if top_left or (corners | contains('top-left')) }}border-top-left-radius: {{ css }};{{ /if }}
+    {{ if top_right or (corners | contains('top-right')) }}border-top-right-radius: {{ css }};{{ /if }}
+    {{ if bottom_right or (corners | contains('bottom-right')) }}border-bottom-right-radius: {{ css }};{{ /if }}
+    {{ if bottom_left or (corners | contains('bottom-left')) }}border-bottom-left-radius: {{ css }};{{ /if }}
+{{ /_r.rows }}

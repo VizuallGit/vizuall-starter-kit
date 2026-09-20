@@ -1,0 +1,320 @@
+{{# sve-unlocked #}}
+{{# Billedgitter med overskrift over. Felterne ligger nu direkte på sektionen —
+    ikke længere inde i et settings-objekt bag en revealer — så de hedder
+    gallery_mode, image_size osv. i stedet for settings.gallery_mode. #}}
+
+{{# Glide-bredden pr. billede: containerbredden delt ud på antallet i sliderens
+    synsfelt. Højden følger det valgte format, så udsnittet bliver beskåret
+    ét sted i stedet for at browseren skalerer et for stort billede. #}}
+{{ _slider_items = slider_items ?? 3 }}
+{{ _columns = columns.laptop.columns ?? 3 }}
+{{ _per_row = gallery_mode == 'slider' ? _slider_items : _columns }}
+{{ _slider_image_width = theme_settings.container_width | remove_right('em') | multiply(16) | divide(_per_row) }}
+
+{{ _slider_image_height = switch(
+    (aspect_ratio == 'aspect-4/3') => (_slider_image_width | multiply(3) | divide(4) | ceil),
+    (aspect_ratio == 'aspect-16/9') => (_slider_image_width | multiply(9) | divide(16) | ceil),
+    (aspect_ratio == 'aspect-3/4') => (_slider_image_width | multiply(4) | divide(3) | ceil),
+    () => _slider_image_width
+) }}
+
+{{# Formatet som et rigtigt CSS-forhold. Tailwind-klassen aspect-4/3 ville kræve
+    at klassen er med i bygget, og den står kun i et fieldset — som Tailwind
+    aldrig scanner. #}}
+{{ _ratio = switch(
+    (aspect_ratio == 'aspect-1/1') => '1 / 1',
+    (aspect_ratio == 'aspect-16/9') => '16 / 9',
+    (aspect_ratio == 'aspect-3/4') => '3 / 4',
+    () => '4 / 3'
+) }}
+
+<section id="id-{{ id }}" class="[ {{ _class }} ] wrapper" data-auto-contrast {{ visual_edit outline_inside="true" section_orderable="true" }}>
+    <div class="[ content ] flow-y" {{ visual_edit field="blocks" outline_inside="true" insertable="true" }}>
+        {{ blocks }}
+            {{ partial src="blocks/{type}" :blocks_cfg='[
+                "headline" => ["tag" => "h2", "size" => "text-600", "placeholder" => "Lorem Ipsum simply dummy"],
+                "richtext" => ["placeholder" => "Indtast din tekst her..."],
+            ]' }}
+        {{ /blocks }}
+    </div>
+
+    <ul class="[ gallery ] {{ gallery_mode }}" id="gallery-{{ id }}" {{ visual_edit field="images" inline_edit="true" }}>
+        {{ if images }}
+            {{ images }}
+                <li class="[ item ]">
+                    {{ if gallery_mode == 'masonry' }}
+                        {{ glide :src="url" :width="_slider_image_width | round" }}
+                            <img loading="lazy" src="{{ url }}" width="{{ width }}" height="{{ height }}" data-index="{{ index }}" alt="{{ alt }}" class="{{ if lightbox }}gallery-thumb{{ /if }}">
+                        {{ /glide }}
+                    {{ else }}
+                        {{ glide :src="url" :width="_slider_image_width | round" :height="_slider_image_height | round" fit="crop_focal" }}
+                            <img loading="lazy" src="{{ url }}" width="{{ width }}" height="{{ height }}" data-index="{{ index }}" alt="{{ alt }}" class="{{ if lightbox }}gallery-thumb{{ /if }}">
+                        {{ /glide }}
+                    {{ /if }}
+                </li>
+            {{ /images }}
+        {{ else }}
+            {{# Tom tilstand: tre felter så sektionen har en form at vise i
+                previews og i Live Preview før der er valgt billeder. #}}
+            <li class="[ item ]">{{ partial:components/media_placeholder }}</li>
+            <li class="[ item ]">{{ partial:components/media_placeholder }}</li>
+            <li class="[ item ]">{{ partial:components/media_placeholder }}</li>
+        {{ /if }}
+    </ul>
+</section>
+
+
+
+{{ style_push }}
+<style>
+{{# except="gap": gitteret er <ul class="gallery">, ikke sektionen. #}}
+    {{ responsive_css except="gap" }}
+        --color-bg: {{ bg_color }};
+        --item-ratio: {{ _ratio }};
+        --item-radius: var(--radius-xl);
+        --slider-items: {{ _slider_items }};
+        --button-gap: var(--size-200);
+    {{ /responsive_css }}
+
+    {{ responsive_css selector="#id-{{ id }} .gallery" only="gap" }}
+    {{ /responsive_css }}
+
+    @scope(.{{ _class }}) {
+        :scope {
+            background-color: var(--color-bg);
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-block-end: var(--gutter);
+        }
+
+        .gallery {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .item {
+            overflow: clip;
+            border-radius: var(--item-radius);
+        }
+
+        /* Placeholderens stiplede kant tegnes af components/media_placeholder
+           og er firkantet. Den arver feltets radius her, så den tomme
+           tilstand ser ud som den fyldte. */
+        .item .media-placeholder {
+            border-radius: inherit;
+        }
+
+        .item img {
+            inline-size: 100%;
+            block-size: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .gallery-thumb {
+            cursor: pointer;
+            display: block;
+            transition: opacity .2s;
+        }
+
+        .gallery-thumb:hover {
+            opacity: .85;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(var(--columns, 3), 1fr);
+        }
+
+        .grid .item {
+            aspect-ratio: var(--item-ratio);
+        }
+
+        .masonry {
+            display: grid;
+            grid-template-columns: repeat(var(--columns, 3), 1fr);
+            align-items: start;
+        }
+
+        .masonry img {
+            block-size: 100%;
+        }
+
+        @supports (grid-template-rows: masonry) {
+            .masonry {
+                grid-template-rows: masonry;
+            }
+
+            .masonry img {
+                block-size: auto;
+            }
+        }
+
+        .slider {
+            --button-size: var(--size-700);
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: calc(100% / var(--slider-items));
+            scroll-behavior: smooth;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-marker-group: after;
+            anchor-name: --carousel;
+
+            &::-webkit-scrollbar { display: none; }
+
+            &::scroll-marker-group {
+                display: flex;
+                gap: 4px;
+                margin-block-start: var(--gutter);
+            }
+
+            & > li {
+                scroll-snap-align: start;
+                aspect-ratio: var(--item-ratio);
+            }
+
+            & > li::scroll-marker {
+                content: '';
+                display: block;
+                width: var(--size-850);
+                height: 5px;
+                border-radius: 2px;
+                background-color: var(--color-gray-50);
+            }
+
+            & > li::scroll-marker:target-current {
+                background-color: var(--color-primary);
+            }
+
+            &::scroll-button(*) {
+                width: var(--button-size);
+                aspect-ratio: 1/1;
+                border: 0;
+                font-family: var(--font-symbols);
+                font-size: calc(var(--button-size) / 3);
+                cursor: pointer;
+                border-radius: var(--radius-xs);
+                z-index: 99;
+                position: absolute;
+                position-anchor: --carousel;
+                background-color: var(--color-white);
+                color: var(--color-gray-900);
+                transition: all 0.3s ease-in-out;
+
+                /* anchor() resolver ikke for ::scroll-button, så top/left
+                   nedenfor bliver ugyldige og knapperne lander på deres
+                   statiske plads. Margin virker uanset hvilken af de to
+                   placeringer browseren ender med. */
+                margin-block-start: var(--button-gap);
+            }
+
+            &::scroll-button(*):hover {
+                background-color: var(--color-primary);
+                color: var(--color-contrast-light);
+            }
+
+            &::scroll-button(*):disabled { opacity: .5; }
+
+            &::scroll-button(left) {
+                content: '\e900' / 'Scroll left';
+                top: calc(anchor(top) - var(--size-950) + var(--button-gap));
+                left: calc(100% - (anchor(left) + (var(--button-size) * 2) + var(--button-gap)));
+            }
+
+            &::scroll-button(right) {
+                content: '\e901' / 'Scroll right';
+                top: calc(anchor(top) - var(--size-950) + var(--button-gap));
+                right: calc(100% - anchor(left));
+            }
+        }
+    }
+</style>
+{{ /style_push }}
+
+{{ if lightbox }}
+{{ script_push }}
+<script>
+(function () {
+    var galleryEl = document.getElementById('gallery-{{ id }}');
+    if (! galleryEl) return;
+
+    var images  = [{{ images }}{{ unless first }},{{ /unless }}'{{ url }}'{{ /images }}];
+    if (! images.length) return;
+
+    var current = 0;
+
+    var lb = document.createElement('div');
+    lb.style.cssText = 'display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);align-items:center;justify-content:center;';
+
+    function mkBtn(label, extra) {
+        var b = document.createElement('button');
+        b.type = 'button';
+        b.textContent = label;
+        b.style.cssText = 'background:rgba(255,255,255,.15);border:none;border-radius:50%;width:2.75rem;height:2.75rem;cursor:pointer;color:#fff;display:flex;align-items:center;justify-content:center;' + extra;
+        return b;
+    }
+
+    var lbImg     = document.createElement('img');
+    var lbClose   = mkBtn('✕', 'position:absolute;top:1rem;right:1rem;font-size:1.4rem;');
+    var lbPrev    = mkBtn('‹', 'position:absolute;left:1rem;font-size:2rem;');
+    var lbNext    = mkBtn('›', 'position:absolute;right:1rem;font-size:2rem;');
+    var lbCounter = document.createElement('div');
+
+    lbImg.style.cssText     = 'max-height:90vh;max-width:90vw;object-fit:contain;';
+    lbCounter.style.cssText = 'position:absolute;bottom:1rem;color:#fff;font-size:.875rem;';
+
+    lb.append(lbClose, lbPrev, lbImg, lbNext, lbCounter);
+    document.body.appendChild(lb);
+
+    function show(i) {
+        current   = (i + images.length) % images.length;
+        lbImg.src = images[current];
+        lbCounter.textContent = (current + 1) + ' / ' + images.length;
+        lb.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+        lb.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+
+    galleryEl.addEventListener('click', function (e) {
+        var thumb = e.target.closest('[data-index]');
+        if (thumb) show(parseInt(thumb.dataset.index, 10));
+    });
+
+    lbClose.addEventListener('click', close);
+    lbPrev.addEventListener('click', function () { show(current - 1); });
+    lbNext.addEventListener('click', function () { show(current + 1); });
+    lb.addEventListener('click', function (e) { if (e.target === lb) close(); });
+
+    document.addEventListener('keydown', function (e) {
+        if (lb.style.display !== 'flex') return;
+        if (e.key === 'Escape')     close();
+        if (e.key === 'ArrowLeft')  show(current - 1);
+        if (e.key === 'ArrowRight') show(current + 1);
+    });
+}());
+</script>
+{{ /script_push }}
+{{ /if }}
+
+{{ sve_tw }}
+
+{{ style_push }}
+<style>
+.content {
+}
+
+
+
+</style>
+{{ /style_push }}

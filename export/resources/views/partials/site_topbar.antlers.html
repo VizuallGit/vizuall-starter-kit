@@ -1,0 +1,17 @@
+{{# Topbar: widgets in a slim bar #}}
+<div class="[ site-topbar ] wrapper flex items-center justify-end gap-400 py-2 text-xs">
+    {{ site_head.topbar.widgets }}
+        {{ partial src="widgets/{type}" }}
+    {{ /site_head.topbar.widgets }}
+</div>
+
+{{ style_push }}
+<style>
+    @scope(.site-topbar) {
+        :scope {
+            padding-block-start: var(--size-{{ site_head.topbar.settings.pt }}00);
+            padding-block-end: var(--size-{{ site_head.topbar.settings.pb }}00);
+        }
+    }
+</style>
+{{ /style_push }}

@@ -1,0 +1,15 @@
+<div class="group relative">
+  <button class="flex items-center gap-2">
+    <span>{{ site:handle | upper }}</span>{{ svg src="arrow-down" }}
+  </button>
+  <ul class="hidden group-hover:block absolute">
+    {{ sites }}
+      <li>
+        <a class="{{ site:handle === handle ?= 'active' }}" href="{{ url }}">
+          {{ handle }}
+        </a>
+      </li>
+    {{ /sites }}
+  </ul>
+</div>
+

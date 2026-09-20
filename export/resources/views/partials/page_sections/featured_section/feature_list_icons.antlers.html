@@ -1,0 +1,90 @@
+{{# sve-unlocked #}}
+{{# En række punkter med ikon, overskrift og tekst. Item-strukturen er den
+    samme som listen i hero/style_2 — ikonet først, titel og tekst i hver sin
+    <div> — fordi responsive/flex_direction skriver sine regler på netop den
+    form (#fd-{id} > .icon og #fd-{id} > div). #}}
+<section id="id-{{ id }}" class="[ {{ _class }} ]" data-auto-contrast {{ visual_edit outline_inside="true" section_orderable="true" }}>
+    <ul class="[ list ] wrapper" {{ visual_edit field="list" outline_inside="true" insertable="true" }}>
+        {{ list }}
+            <li class="flex gap-100" id="fd-{{ id }}" {{ visual_edit orderable="true" inline_edit="true" toolbar="true" }}>
+                {{ blocks }}
+                    {{ if type == 'icon' }}
+                        {{ partial src="blocks/icon" }}
+                    {{ /if }}
+                {{ /blocks }}
+                <div>
+                    {{ blocks }}
+                        {{ if type == 'title' }}
+                            <p class="font-heading leading-normal!" id="fs-{{ id }}" {{ visual_edit field="title" inline_edit="true" }}>{{ title }}</p>
+                        {{ elseif type == 'text' }}
+                            <p {{ visual_edit field="text" inline_edit="true" }}>{{ text }}</p>
+                        {{ /if }}
+                    {{ /blocks }}
+                </div>
+            </li>
+        {{ /list }}
+    </ul>
+</section>
+
+{{ sve_tw }}
+
+{{ style_push }}
+<style>
+{{# except="gap": gitteret er <ul class="list">, ikke sektionen. En gap
+    skrevet på en blok-boks gør ingenting — den skal på det element der
+    er display:grid, og det sker i kaldet lige nedenfor. #}}
+{{ responsive_css except="gap" }}
+        --color-bg: {{ bg_color }};
+
+
+        @media (width < 64em) { .icon { --icon-size: var(--icon-size-t); } }
+        @media (width < 48em) { .icon { --icon-size: var(--icon-size-m); } }
+    {{ /responsive_css }}
+
+    {{ responsive_css selector="#id-{{ id }} .list" only="gap" }}
+    {{ /responsive_css }}
+
+    {{# Retning, justering og tekstjustering pr. punkt. Partialen kender selv
+        item-formen og skriver #fd-{id} ud med sine media queries. #}}
+    {{ list }}
+        {{ partial:responsive/flex_direction }}
+        {{ blocks }}
+            {{ if type == 'title' }}
+                {{ partial:responsive/font_size }}
+            {{ /if }}
+        {{ /blocks }}
+    {{ /list }}
+
+    @scope(.{{ _class }}) {
+        :scope {
+            background-color: var(--color-bg);
+        }
+
+        .list {
+            display: grid;
+            grid-template-columns: repeat(var(--columns, 4), 1fr);
+            align-items: start;
+            container-type: inline-size;
+            container-name: feature-list;
+        }
+
+        {{# Punkterne bliver ved med at være lige brede indtil der ikke er plads
+            til dem ved siden af hinanden — så tager hvert punkt hele rækken. #}}
+        @container feature-list (width < 36rem) {
+            li {
+                grid-column: 1 / -1;
+            }
+        }
+
+        .icon {
+            --icon-sm: var(--size-600);
+            --icon-md: var(--size-700);
+            --icon-lg: var(--size-800);
+            inline-size: var(--icon-size);
+            block-size: var(--icon-size);
+        }
+
+        .icon { --icon-size: var(--icon-size-l); }
+    }
+</style>
+{{ /style_push }}

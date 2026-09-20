@@ -1,0 +1,62 @@
+blocks:
+  -
+    id: jPQSgEIc
+    type: topbar
+    widgets:
+      - id: vJjQh2Gs
+        type: socialmedia
+        enabled: true
+      - id: GYlkvqJ5
+        type: search
+        enabled: true
+    padding:
+      -
+        sides:
+          - top
+        value: 0
+        custom: false
+    gap:
+      -
+        axes:
+          - 'y'
+          - x
+        value: 0
+        custom: false
+    enabled: true
+  -
+    id: H10tpH56
+    type: main_header
+    widgets:
+      - id: V1VMN4ht
+        type: logo
+        logo: logo.svg
+        size: 0
+        enabled: true
+      - id: NPzzCuzK
+        type: navigation
+        navigation_type: pages
+        include_homepage: true
+        active_link_style: background
+        enabled: true
+    padding:
+      -
+        sides:
+          - top
+        value: 0
+        custom: false
+    gap:
+      -
+        axes:
+          - 'y'
+          - x
+        value: 0
+        custom: false
+    enabled: true
+bg_color: var(--secondary)
+padding:
+  -
+    sides:
+      - top
+      - bottom
+    value: 6
+    custom: false

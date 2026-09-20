@@ -1,0 +1,51 @@
+title: 'Block - media'
+fields:
+  -
+    handle: content
+    field:
+      type: tab
+      display: Content
+  -
+    handle: media
+    field:
+      container: assets
+      max_files: 1
+      type: assets
+      display: Media
+  -
+    handle: caption
+    field:
+      type: textarea
+      display: Caption
+      if:
+        show_caption: 'equals true'
+  -
+    handle: style
+    field:
+      type: tab
+      display: Style
+  -
+    handle: aspect_ratio_tab
+    field:
+      style: accordion
+      tab_icon: 'fluent-mdl2:aspect-ratio'
+      type: tab
+      display: 'Aspect ratio'
+  -
+    handle: aspect_ratio
+    field: blocks.media_settings.aspect_ratio
+    config:
+      hide_display: true
+  -
+    handle: show_caption_tab
+    field:
+      style: accordion
+      tab_icon: 'flowbite:caption-solid'
+      type: tab
+      display: 'Show caption'
+  -
+    handle: show_caption
+    field:
+      type: toggle
+      display: 'Show caption'
+      hide_display: true

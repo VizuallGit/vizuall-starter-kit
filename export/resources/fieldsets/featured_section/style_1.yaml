@@ -1,0 +1,306 @@
+title: 'Featured section Style 1'
+fields:
+  -
+    handle: content
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: blocks
+    field:
+      type: replicator
+      display: Blocks
+      locked_rows: true
+      default:
+        - type: heading
+        - type: content_boxes
+      collapse: accordion
+      max_sets: 2
+      unique_sets:
+        - heading
+        - content_boxes
+      sets:
+        block:
+          display: Block
+          sets:
+            heading:
+              display: 'Section heading'
+              icon: add-circle
+              fields:
+                -
+                  handle: content
+                  field: common.content_tab
+                  config:
+                    display: Content
+                -
+                  handle: blocks
+                  field:
+                    type: replicator
+                    display: Blocks
+                    default:
+                      - type: headline
+                      - type: richtext
+                    sets:
+                      block:
+                        display: Block
+                        sets:
+                          headline:
+                            display: Headline
+                            icon: fieldtype-text
+                            fields:
+                              - import: blocks.headline
+                          richtext:
+                            display: Richtext
+                            icon: fieldtype-textarea
+                            fields:
+                              - handle: richtext
+                                field: blocks.richtext.richtext
+                -
+                  handle: style
+                  field: common.style_tab
+                  config:
+                    display: Style
+                -
+                  handle: text_aligment
+                  field:
+                    style: accordion
+                    tab_icon: 'fluent:scan-text-16-filled'
+                    type: tab
+                    display: 'Text aligment'
+                - handle: align_text
+                  field: common.align_text
+            content_boxes:
+              display: 'Content boxes'
+              icon: add-entry
+              fields:
+                -
+                  handle: content
+                  field: common.content_tab
+                  config:
+                    display: Content
+                -
+                  handle: content_boxes
+                  field:
+                    type: replicator
+                    display: 'Content boxes'
+                    default:
+                      - type: item
+                      - type: item
+                    max_sets: 2
+                    sets:
+                      items:
+                        display: Items
+                        sets:
+                          item:
+                            display: Item
+                            fields:
+                              -
+                                handle: content_tab
+                                field: common.content_tab
+                                config:
+                                  display: Content
+                              -
+                                handle: blocks
+                                field:
+                                  button_label: 'Add block'
+                                  type: replicator
+                                  display: Blocks
+                                  default:
+                                    - type: text
+                                    - type: text
+                                    - type: text
+                                    - type: heading
+                                    - type: list
+                                    - type: links
+                                  locked_rows: true
+                                  unique_sets:
+                                    - heading
+                                    - list
+                                    - links
+                                  sets:
+                                    block:
+                                      display: Block
+                                      sets:
+                                        heading:
+                                          display: Heading
+                                          fields:
+                                            -
+                                              handle: blocks
+                                              field:
+                                                type: replicator
+                                                display: Blocks
+                                                unique_sets:
+                                                  - icon
+                                                  - headline
+                                                  - richtext
+                                                default:
+                                                  - type: icon
+                                                  - type: headline
+                                                  - type: richtext
+                                                sets:
+                                                  block:
+                                                    display: Block
+                                                    sets:
+                                                      icon:
+                                                        display: Icon
+                                                        icon: edit-design-compare-ab-testing
+                                                        fields:
+                                                          - import: blocks.icon
+                                                      headline:
+                                                        display: Headline
+                                                        icon: fieldtype-text
+                                                        fields:
+                                                          - import: blocks.headline
+                                                      richtext:
+                                                        display: Richtext
+                                                        icon: fieldtype-textarea
+                                                        fields:
+                                                          - import: blocks.richtext
+                                        list:
+                                          display: List
+                                          icon: fieldtype-list
+                                          fields:
+                                            -
+                                              handle: blocks
+                                              field:
+                                                default:
+                                                  - type: text
+                                                  - type: text
+                                                  - type: text
+                                                type: replicator
+                                                display: Blocks
+                                                sets:
+                                                  block:
+                                                    display: Block
+                                                    icon: add-bookmark
+                                                    sets:
+                                                      text:
+                                                        display: Text
+                                                        icon: text-formatting-all-caps
+                                                        fields:
+                                                          -
+                                                            handle: text
+                                                            field:
+                                                              buttons:
+                                                                - bold
+                                                                - italic
+                                                                - removeformat
+                                                                - anchor
+                                                                - color
+                                                              toolbar_mode: floating
+                                                              container: assets
+                                                              remove_empty_nodes: false
+                                                              default:
+                                                                -
+                                                                  type: paragraph
+                                                                  content:
+                                                                    - type: text
+                                                                      text: 'Indtast din tekst her...'
+                                                              type: bard
+                                                              display: Text
+                                        links:
+                                          display: Links
+                                          icon: add-link
+                                          fields:
+                                            - import: links
+                              -
+                                handle: style_tab
+                                field: common.style_tab
+                                config:
+                                  display: Style
+                              -
+                                handle: colors_tab
+                                field: common.colors_tab
+                                config:
+                                  display: Colors
+                              -
+                                handle: bg_color
+                                field:
+                                  sve_sync_siblings: true
+                                  type: theme_color_picker
+                                  display: 'Bg color'
+                                  width: 50
+                              -
+                                handle: icon_bg_color
+                                field:
+                                  sve_sync_siblings: true
+                                  type: theme_color_picker
+                                  display: 'Icon bg color'
+                                  width: 50
+                              -
+                                handle: spacing_tab
+                                field: common.spacing_tab
+                                config:
+                                  display: Spacing
+                              -
+                                handle: spacing
+                                field:
+                                  max: 8
+                                  sve_sync_siblings: true
+                                  type: spacing
+                                  display: Spacing
+                              -
+                                handle: border_radius_tab
+                                field:
+                                  style: accordion
+                                  tab_icon: 'bx:border-radius'
+                                  type: tab
+                                  display: 'Border Radius'
+                              -
+                                handle: border_radius
+                                field:
+                                  sve_sync_siblings: true
+                                  type: border_radius
+                                  display: 'Border Radius'
+                -
+                  handle: style
+                  field: common.style_tab
+                  config:
+                    display: Style
+                -
+                  handle: gap_tab
+                  field:
+                    style: accordion
+                    tab_icon: 'icon-park-outline:horizontal-spacing-between-items'
+                    type: tab
+                    display: Gap
+                -
+                  handle: gap
+                  field: common.gap
+                  config:
+                    hide_display: true
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  -
+    handle: colors_tab
+    field: common.colors_tab
+    config:
+      display: Colors
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Bg color'
+  -
+    handle: spacing_tab
+    field: common.spacing_tab
+    config:
+      display: Spacing
+  -
+    handle: padding
+    field:
+      max: 12
+      step: 2
+      sve_responsive: true
+      type: spacing
+      display: Padding
+  -
+    handle: gap
+    field:
+      max: 12
+      step: 2
+      type: gap
+      display: Gap

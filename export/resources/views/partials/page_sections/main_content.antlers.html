@@ -1,0 +1,11 @@
+{{ partial:components/main_content_wrapper }}
+    {{ slot:content }}
+        {{ main_content }}
+            {{ partial src="sets/{type}" }}
+        {{ /main_content }}
+    {{ /slot:content }}
+    {{ slot:aside }}
+        {{ partial:components/aside_subnav }}
+        {{ partial:components/aside_form }}
+    {{ /slot:aside }}
+{{ /partial:components/main_content_wrapper }}

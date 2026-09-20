@@ -1,0 +1,14 @@
+title: 'Logo widget'
+fields:
+  -
+    handle: logo
+    field:
+      container: assets
+      max_files: 1
+      type: assets
+      display: Logo
+  -
+    handle: size
+    field:
+      type: range
+      display: Size

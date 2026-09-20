@@ -1,0 +1,40 @@
+{{ _is_placeholder = headline | is_default('blocks.headline') }}
+{{# Semantisk tag fra `tag`, visuel skala fra `Font_size`. Inline Bard: én linje
+    + farve via Bard color. #}}
+
+{{# Start-værdier pr. sted blokken bruges: kald partialen med headline_tag eller
+    headline_size, så gælder de indtil redaktøren selv vælger noget. De samme to
+    gives videre til toolbaren nedenfor, så panel, bar og side er enige. Sendes de
+    ikke, bestemmer feltets egen default i blocks/headline.yaml.
+
+    Navnene bærer blokkens eget navn foran, fordi sektionen kalder alle sine
+    blokke gennem ét partial-kald ({{ partial src="blocks/{type}" }}) og derfor
+    sender de samme parametre til dem alle. Uden præfikset ville et `size` ment
+    for richtext også lande her. #}}
+{{# Alle tre kan komme fra ét samlet `blocks_cfg` på sektionen, grupperet pr.
+    bloktype, i stedet for et præfikset navn hver:
+
+      {{ blocks_cfg = [
+          "headline" => ["tag" => "h1", "size" => "text-800", "placeholder" => "…"],
+          "richtext" => ["placeholder" => "…"],
+      ] }}
+
+    De gamle `headline_tag` / `headline_size` / `headline_placeholder` virker
+    stadig og bruges når gruppen ikke siger noget. Rækkefølgen er altid: hvad
+    redaktøren har valgt, så stedet, så blokkens eget fallback. #}}
+{{ _cfg = blocks_cfg.headline }}
+{{ _tag = tag ?: _cfg.tag ?: headline_tag ?: 'h2' }}
+{{ _font_size = Font_size ?: _cfg.size ?: headline_size ?: 'text-700' }}
+{{ _placeholder = _cfg.placeholder ?: headline_placeholder ?: 'Indtast din overskrift' }}
+{{# Ekstra klasser pr. sted — fra _cfg, aldrig fra et blot `class`, som
+    allerede bærer sektionens egen klasse. #}}
+{{ _block_class = _cfg.class ?: headline_class }}
+{{# Afstanden op til blokken foran. Samme kaskade som resten: gemt værdi,
+    så stedets, så det almindelige auto. #}}
+{{ _flow_space = flow_space ?: _cfg.flow_space ?: 'flow-space-auto' }}
+
+{{# The caller can switch moving off (locked_rows replicators); orderable otherwise. #}}
+{{ _orderable = orderable ?? 'true' }}
+<{{ _tag }} class=" {{ _font_size }} {{ _flow_space }} {{ _block_class }} {{ _size_class }}{{ if _is_placeholder }} opacity-50{{ /if }}" {{ visual_edit field="headline" inline_edit="true" controls="tag:{headline_tag}|font_size:{headline_size}" placeholder="{_placeholder}" orderable="{_orderable}" toolbar="true" scope="{{ id }}"  }}>{{ if _is_placeholder }}{{ _placeholder }}{{ else }}{{ headline }}{{ /if }}</{{ _tag }}>
+
+{{ sve_tw handle="view/partials/blocks/headline" }}

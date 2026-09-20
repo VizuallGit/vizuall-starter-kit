@@ -1,0 +1,171 @@
+{{# sve-unlocked #}}
+<section id="id-{{ id }}" class="[ {{ _class }} ] wrapper relative"{{ unless text_color }} data-auto-contrast{{ /unless }} {{ visual_edit outline_inside="true" section_orderable="true" }}>
+    {{ section_id = id }}
+    <div class="[ content ] flow-y" {{ visual_edit field="blocks" insertable="true" }}>
+        {{ blocks }}
+            {{# Stedets start-værdier, grupperet pr. bloktype — samme form som
+                de øvrige sektioner. #}}
+            {{ partial src="blocks/{type}" :blocks_cfg='[
+                "headline" => ["tag" => "h2", "size" => "text-600", "placeholder" => "Bibendum amet at molestie mattis."],
+                "richtext" => ["placeholder" => "Indtast din tekst her..."],
+            ]' }}
+        {{ /blocks }}
+    </div>
+    <div class="[ list ]" {{ visual_edit field="items" insertable="true" }}>
+        {{ items }}
+            <details id="id-{{ id }}" class="[ item ]" name="accordion-{{ section_id }}" {{ visual_edit orderable="true" }}>
+                <summary>
+                    <span class="[ question ]" {{ visual_edit field="headline" inline_edit="true" }}>{{ headline }}</span>
+                    <svg class="[ icon ]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
+                        <line x1="5" y1="12" x2="19" y2="12" />
+                        <line class="[ icon-bar ]" x1="12" y1="5" x2="12" y2="19" />
+                    </svg>
+                </summary>
+                <div class="[ answer ]" {{ visual_edit field="text" inline_edit="true" toolbar="true" scope="{{ id }}" }}>{{ text }}</div>
+            </details>
+        {{ /items }}
+    </div>
+</section>
+
+{{ sve_tw }}
+
+{{ style_push }}
+<style>
+{{# responsive_css finder selv sektionens responsive felter og skriver dem ud
+      med hver sin media query — padding i dag, og hvad der måtte komme til.
+      Farverne er ikke responsive og står derfor som almindelige linjer her.
+      Deres startværdier er Default Value på felterne selv — ingen fallback
+      i skabelonen. #}}
+  {{ responsive_css }}
+    --color-bg: {{ bg_color }};
+    --color-accordion: {{ accordion_color }};
+    {{ if text_color }}
+    --color-text: {{ text_color }};
+    {{ /if }}
+  {{ /responsive_css }}
+
+  @scope(.{{ _class }}) {
+    :scope {
+      background-color: var(--color-bg);
+      {{ if text_color }}
+      color: var(--color-text);
+      {{ /if }}
+      {{ if list_width == "full" }}
+      --list-max: none;
+      {{ elseif list_width == "ultra_narrow" }}
+      --list-max: 32rem;
+      {{ else }}
+      --list-max: var(--container-width-narrow);
+      {{ /if }}
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-block-end: var(--gutter);
+    }
+
+    .list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--size-200);
+        max-inline-size: var(--list-max);
+        margin-inline: auto;
+        .item {
+            display: block;
+            list-style: none;
+            background-color: var(--color-accordion);
+            border-radius: 2px;
+            .question {
+            }
+            .icon {
+                inline-size: var(--size-400);
+                block-size: var(--size-400);
+                flex-shrink: 0;
+                pointer-events: none;
+            }
+            .answer {
+                padding-inline: var(--size-400);
+                padding-block-end: var(--size-400);
+                color: color-mix(in oklch, currentColor 72%, transparent);
+            }
+        }
+    }
+
+    .content > p {
+      font-size: var(--size-200);
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* Selectorerne er skrevet ud i stedet for :is(). Minifieren fjerner
+       mellemrum omkring ':' og ville lave 'X :is(y)' om til 'X:is(y)',
+       som aldrig matcher noget. Se InjectAssets.php i style-push. */
+    .content h1,
+    .content h2,
+    .content h3,
+    .content h4,
+    .content h5,
+    .content h6 {
+      max-inline-size: 24ch;
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--size-200);
+      max-inline-size: var(--list-max);
+      margin-inline: auto;
+    }
+
+    .item {
+      display: block;
+      list-style: none;
+      background-color: var(--color-accordion);
+      border-radius: 2px;
+    }
+
+    .item::marker {
+      content: none;
+    }
+
+    .item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--size-400);
+      padding-block: var(--size-300);
+      padding-inline: var(--size-400);
+      cursor: pointer;
+      font-weight: 700;
+      list-style: none;
+    }
+
+    .item summary::marker,
+    .item summary::-webkit-details-marker {
+      display: none;
+      content: none;
+    }
+
+    .icon {
+      inline-size: var(--size-400);
+      block-size: var(--size-400);
+      flex-shrink: 0;
+      pointer-events: none;
+    }
+
+    /* Åbent punkt: den lodrette streg forsvinder, og plus bliver til minus. */
+    .item[open] .icon-bar {
+      opacity: 0;
+    }
+
+    .answer {
+      padding-inline: var(--size-400);
+      padding-block-end: var(--size-400);
+      color: color-mix(in oklch, currentColor 72%, transparent);
+    }
+  }
+</style>
+{{ /style_push }}

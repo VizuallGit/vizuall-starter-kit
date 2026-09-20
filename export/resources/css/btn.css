@@ -18,22 +18,22 @@
 
 .btn[data-style='primary']{
   background-color: var(--color-primary);
-  color: var(--color-dark-shade)
+  color: var(--color-contrast-dark)
 }
 
 .btn[data-style='dark']{
-  background-color: var(--color-dark-shade);
-  color: var(--color-light-glare)
+  background-color: var(--color-gray-900);
+  color: var(--color-contrast-light)
 }
 
 .btn[data-style='light']{
-  background-color: var(--color-light-shade);
-  color: var(--color-dark);
+  background-color: var(--color-gray-200);
+  color: var(--color-gray-800);
 }
 
 .btn[data-style='white']{
-  background-color: var(--color-light-glare);
-  color: var(--color-dark);
+  background-color: var(--color-white);
+  color: var(--color-gray-800);
 }
 
 .btn[data-style='primary-outline']{
@@ -42,17 +42,17 @@
 }
 
 .btn[data-style='light-outline']{
-  box-shadow: 0px 0px 0px 1px var(--color-light-glare) inset;
-  color: var(--color-light-glare);
+  box-shadow: 0px 0px 0px 1px var(--color-contrast-light) inset;
+  color: var(--color-contrast-light);
 
   &:hover{
     background-color: var(--color-primary);
-    color: var(--color-dark-shade);
+    color: var(--color-contrast-dark);
     box-shadow: 0px 0px 0px 0px;
   }
 }
 
 .btn[data-style='dark-outline'] {
-  box-shadow: 0px 0px 0px 2px var(--color-dark-shade) inset;
-  color: var(--color-dark-shade);
+  box-shadow: 0px 0px 0px 2px var(--color-gray-900) inset;
+  color: var(--color-gray-900);
 }

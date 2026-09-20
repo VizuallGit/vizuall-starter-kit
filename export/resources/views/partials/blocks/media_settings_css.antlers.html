@@ -1,0 +1,19 @@
+{{#
+    CSS for én settings-gruppe i en media-blok.
+    Base-kald (desktop): base="true" :settings="settings" :legacy_aspect_ratio="aspect_ratio" :legacy_auto_height="auto_height"
+    Override-kald:       :settings="settings_t" (eller settings_m)
+    Tomme felter udelades, så breakpoint-overrides arver fra desktop.
+    Nye settings-felter (block_media_settings.yaml) mappes til CSS her.
+#}}
+{{ _aspect   = settings.aspect_ratio ?? legacy_aspect_ratio }}
+{{ _autoH    = settings.auto_height ?? legacy_auto_height }}
+
+#id-{{ id }}{
+    {{ partial:cms_styles/border_radius }}
+
+    {{ if _autoH }}
+    height: 100%;
+    {{ elseif _aspect && _aspect != 'original' }}
+    aspect-ratio: {{ _aspect | replace('aspect-', '') | replace('/', ' / ') }};
+    {{ /if }}
+}

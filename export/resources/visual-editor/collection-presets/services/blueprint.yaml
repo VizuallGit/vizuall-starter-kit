@@ -1,0 +1,58 @@
+title: Service
+tabs:
+  main:
+    display: Main
+    sections:
+      -
+        fields:
+          -
+            handle: title
+            field:
+              type: text
+              display: Title
+              required: true
+              validate:
+                - required
+          -
+            handle: teaser
+            field:
+              type: textarea
+              display: Teaser
+          -
+            handle: image
+            field:
+              type: assets
+              display: Image
+              container: assets
+              max_files: 1
+          -
+            handle: content
+            field:
+              type: bard
+              display: Content
+              container: assets
+              buttons:
+                - h2
+                - h3
+                - bold
+                - italic
+                - unorderedlist
+                - orderedlist
+                - anchor
+  sidebar:
+    display: 'Page Settings'
+    sections:
+      -
+        fields:
+          -
+            handle: slug
+            field:
+              type: slug
+              localizable: true
+              validate: 'max:200'
+    sections:
+      -
+        fields:
+          -
+            import: meta
+            prefix: meta_

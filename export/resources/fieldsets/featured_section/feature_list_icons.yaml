@@ -1,0 +1,230 @@
+title: 'Feature list with icons'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: list
+    field:
+      type: replicator
+      display: List
+      collapse: true
+      button_label: 'Tilføj punkt'
+      default:
+        - type: item
+        - type: item
+        - type: item
+        - type: item
+      sets:
+        item:
+          display: Item
+          sets:
+            item:
+              display: Item
+              icon: add-item
+              fields:
+                -
+                  handle: content_tab
+                  field: common.content_tab
+                  config:
+                    display: Content
+                -
+                  handle: blocks
+                  field:
+                    type: replicator
+                    display: Blocks
+                    collapse: true
+                    button_label: 'Add block'
+                    unique_sets:
+                      - icon
+                      - title
+                      - text
+                    default:
+                      - type: icon
+                      - type: title
+                      - type: text
+                    sets:
+                      block:
+                        display: block
+                        sets:
+                          icon:
+                            display: Icon
+                            icon: edit-design-compare-ab-testing
+                            fields:
+                              - import: blocks.icon
+                          title:
+                            display: Title
+                            icon: text-formatting-layer-style
+                            fields:
+                              -
+                                handle: title
+                                field:
+                                  type: text
+                                  display: Title
+                                  default: 'Eu libero'
+                              -
+                                handle: font_size
+                                field: common.font_size
+                                config:
+                                  default: text-300
+                                  sve_responsive: true
+                                  sve_sync_siblings: true
+                          text:
+                            display: Text
+                            icon: fieldtype-text
+                            fields:
+                              -
+                                handle: text
+                                field:
+                                  buttons:
+                                    - bold
+                                    - italic
+                                    - removeformat
+                                    - anchor
+                                    - color
+                                  container: assets
+                                  remove_empty_nodes: false
+                                  type: bard
+                                  display: Text
+                                  default:
+                                    -
+                                      type: paragraph
+                                      content:
+                                        - type: text
+                                          text: 'Cras consectetur orci donec nec mattis laoreet elit.'
+                -
+                  handle: style_tab
+                  field: common.style_tab
+                  config:
+                    display: Style
+                -
+                  handle: flex_direction_tab
+                  field:
+                    style: accordion
+                    tab_icon: 'fa7-solid:arrows-up-down-left-right'
+                    type: tab
+                    display: 'Flex direction'
+                -
+                  handle: flex_direction
+                  field:
+                    options:
+                      - key: flex-row
+                        iconify: 'fa6-solid:arrows-left-right'
+                      - key: flex-col
+                        iconify: 'boxicons:move-vertical-filled'
+                    type: icon_button_group
+                    display: 'Flex direction'
+                    hide_display: true
+                    default: flex-col
+                    sve_responsive: true
+                    sve_sync_siblings: true
+                -
+                  handle: flex_wrap
+                  field:
+                    options:
+                      - key: wrap
+                        label: Wrap
+                        iconify: 'mdi:wrap'
+                    clearable: true
+                    type: icon_button_group
+                    display: Wrap
+                    sve_sync_siblings: true
+                    if:
+                      flex_direction: 'equals flex-row'
+                -
+                  handle: align_items
+                  field:
+                    options:
+                      - key: start
+                        value: Start
+                      - key: center
+                        value: Center
+                      - key: end
+                        value: End
+                    default: center
+                    type: button_group
+                    display: 'Align items'
+                    sve_responsive: true
+                    sve_sync_siblings: true
+                    if:
+                      flex_direction: 'equals flex-row'
+                -
+                  handle: justify_content
+                  field:
+                    options:
+                      - key: start
+                        value: Start
+                      - key: center
+                        value: Center
+                      - key: end
+                        value: End
+                    default: center
+                    type: button_group
+                    display: 'Justify content'
+                    sve_responsive: true
+                    sve_sync_siblings: true
+                    if:
+                      flex_direction: 'equals flex-col'
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  -
+    handle: layout_tab
+    field:
+      style: accordion
+      tab_icon: 'material-symbols:stacks-outline'
+      type: tab
+      display: Layout
+  -
+    handle: columns
+    field:
+      min: 1
+      max: 6
+      default: 4
+      sve_defaults:
+        tablet: 2
+        mobile: 1
+      type: range
+      display: Kolonner
+      sve_responsive: true
+  -
+    handle: colors_tab
+    field: common.colors_tab
+    config:
+      display: Colors
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Background color'
+      default: 'var(--gray-300)'
+  -
+    handle: spacing_tab
+    field: common.spacing_tab
+    config:
+      display: Spacing
+  -
+    handle: padding
+    field: common.section_spacing
+    config:
+      display: Padding
+      sve_responsive: true
+  -
+    handle: gap
+    field:
+      max: 10
+      step: 2
+      sve_responsive: true
+      type: gap
+      display: Gap
+      default:
+        -
+          axes:
+            - 'y'
+            - x
+          value: 6
+          custom: false

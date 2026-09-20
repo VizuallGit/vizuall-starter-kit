@@ -1,0 +1,26 @@
+<ul id="id-{{ id }}" class="gap-100 {{ flow_space }}" {{ visual_edit orderable="true" }}>
+    {{ list }}
+        <li class="flex items-center gap-[1em] px-3 py-1 rounded-md" data-auto-contrast {{ visual_edit inline_edit="true" orderable="true" }}>
+            {{ if icon }} 
+                {{ iconify:icon }}
+            {{ endif }}
+            <p {{ visual_edit field="text" inline_edit="true" }}>{{ text }}</p>
+        </li>
+    {{ /list }}
+</ul>
+
+{{ style_push }}
+    <style>
+        #id-{{ id }}{
+            display: grid;
+            grid-template-columns: repeat({{ list | count }}, 1fr);
+            & li{
+                background-color: {{ color }};
+            }
+            
+        }
+        .dd{
+           
+        }
+    </style>
+{{ /style_push }}

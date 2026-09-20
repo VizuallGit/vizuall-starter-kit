@@ -1,0 +1,11 @@
+{{ _g = gap ?? settings.gap }}
+
+{{ _g }}
+    {{ _x = x or (axes | contains('x')) }}
+    {{ _y = y or (axes | contains('y')) }}
+    {{ if custom }}
+        {{ if _x and _y }}gap: {{ value }};{{ elseif _y }}row-gap: {{ value }};{{ elseif _x }}column-gap: {{ value }};{{ /if }}
+    {{ elseif value or value === 0 }}
+        {{ if _x and _y }}gap: var(--size-{{ value }}00);{{ elseif _y }}row-gap: var(--size-{{ value }}00);{{ elseif _x }}column-gap: var(--size-{{ value }}00);{{ /if }}
+    {{ /if }}
+{{ /_g }}

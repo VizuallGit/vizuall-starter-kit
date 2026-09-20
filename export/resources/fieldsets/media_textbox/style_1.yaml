@@ -1,0 +1,83 @@
+title: 'Media textbox style 1'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: blocks
+    field:
+      type: replicator
+      display: Blocks
+      sve_breakpoint_order: true
+      default:
+        - type: content
+        - type: media
+      collapse: accordion
+      button_label: 'Add block'
+      max_sets: 2
+      sets:
+        new_set_group:
+          display: 'New Set Group'
+          sets:
+            content:
+              display: Content
+              fields:
+                - import: media_textbox.content
+            media:
+              display: Media
+              icon: media-image-photo-focus-frame
+              fields:
+                - import: media_textbox.media
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  -
+    handle: colors_tab
+    field: common.colors_tab
+    config:
+      display: Colors
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Bg color'
+      default: var(--gray-600)
+  -
+    handle: spacing_tab
+    field: common.spacing_tab
+    config:
+      display: Spacing
+  -
+    handle: padding
+    field: common.section_spacing
+    config:
+      display: Padding
+      sve_responsive: true
+  -
+    handle: alignment_tab
+    field:
+      style: accordion
+      tab_icon: 'boxicons:align-horizontal-space-between-filled'
+      type: tab
+      display: Alignment
+  -
+    handle: alignment
+    field:
+      options:
+        - id: L2QobjWGcs6kXEtKFaTYz
+          key: top
+          iconify: 'fluent:align-top-32-filled'
+        - id: 9elSq1dkZ9zsAEocvyO4i
+          key: center
+          iconify: 'icon-park-solid:align-horizontal-center-two'
+        - id: LxZoSz1B0xIvlQqQlbWQ3
+          key: bottom
+          iconify: 'fluent:align-bottom-32-filled'
+      default: center
+      type: icon_button_group
+      display: Alignment
+      hide_display: true

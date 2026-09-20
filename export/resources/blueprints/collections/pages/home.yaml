@@ -13,32 +13,9 @@ tabs:
               required: true
               validate:
                 - required
-          -
-            handle: bard_field
-            field:
-              buttons:
-                - bard-group-sizes-dropdown
-                - bard-group-flow-spacing-dropdown
-                - h2
-                - h3
-                - bold
-                - italic
-                - unorderedlist
-                - color
-                - orderedlist
-                - removeformat
-                - quote
-                - anchor
-                - image
-                - table
-                - bard-two-columns
-                - bard-three-columns
-              container: assets
-              remove_empty_nodes: false
-              type: bard
-              display: 'Bard Field'
+          - import: page_sections
   sidebar:
-    display: Sidebar
+    display: 'Page Settings'
     sections:
       -
         fields:
@@ -48,3 +25,11 @@ tabs:
               type: slug
               localizable: true
               validate: 'max:200'
+  seo:
+    display: SEO
+    sections:
+      -
+        fields:
+          -
+            import: meta
+            prefix: meta_

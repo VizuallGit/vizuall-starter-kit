@@ -1,0 +1,207 @@
+<section id="id-{{ id }}" class="[ {{ _class }} ] wrapper relative"{{ unless text_color }} data-auto-contrast{{ /unless }} {{ visual_edit outline_inside="true" section_orderable="true" }}>
+    <div class="[ layout ]" {{ visual_edit field="blocks" insertable="true" }}>
+        {{ blocks }}
+            <div id="block-{{ id }}" class="[ {{ type }} ]" data-block="{{ type }}" {{ visual_edit orderable="true" }}{{ if type == "media" }} {{ visual_edit field="media" inline_edit="true" }}{{ /if }}>
+                {{ if type == 'media' }}
+                    {{ if media }}
+                        {{ if media | ends_with('.mp4') }}
+                            <video loop autoplay muted playsinline src="{{ media }}"></video>
+                        {{ else }}
+                            {{ partial:components/picture :imagePath="media" }}
+                        {{ /if }}
+                    {{ else }}
+                        <span class="[ media-placeholder ]" aria-hidden="true">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <rect width="18" height="18" x="3" y="3" rx="2"/>
+                                <circle cx="9" cy="9" r="2"/>
+                                <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/>
+                            </svg>
+                        </span>
+                    {{ /if }}
+                {{ elseif type == 'form' }}
+                    <div class="[ content ] flow-y" {{ visual_edit field="blocks" insertable="true" }}>
+                        {{ blocks }}
+                            {{# Stedets start-værdier, grupperet pr. bloktype. #}}
+                            {{ partial src="blocks/{type}" :blocks_cfg='[
+                                "headline" => ["tag" => "h2", "size" => "text-700", "placeholder" => "Get In Touch"],
+                                "richtext" => ["placeholder" => "Rhoncus morbi et augue nec, in id ullamcorper at sit."],
+                            ]' }}
+                        {{ /blocks }}
+                    </div>
+                    {{ if form_picker }}
+                        <div class="[ form-wrap ]">
+                            {{ partial:components/form :formpicker="form_picker" :button_text="button_text" }}
+                        </div>
+                    {{ /if }}
+                {{ /if }}
+            </div>
+        {{ /blocks }}
+    </div>
+</section>
+
+{{ style_push }}
+<style>
+  {{# responsive_css finder selv sektionens responsive felter — padding i dag -
+      og skriver hver sin media query. Farven har ingen fallback her: dens
+      startværdi står som Default Value på feltet selv. #}}
+  {{ responsive_css }}
+    --color-bg: {{ bg_color }};
+    {{ if text_color }}
+    --color-text: {{ text_color }};
+    {{ /if }}
+    --layout-gap: var(--gutter);
+    --media-placeholder: color-mix(in oklch, currentColor 10%, transparent);
+    --color-field: var(--color-white);
+    --color-field-line: var(--gray-400);
+    --color-button: var(--gray-700);
+    --color-button-text: var(--gray-50);
+  {{ /responsive_css }}
+
+  @scope(.{{ _class }}) {
+    :scope {
+      background-color: var(--color-bg);
+      {{ if text_color }}
+      color: var(--color-text);
+      {{ /if }}
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: stretch;
+      gap: var(--layout-gap);
+    }
+
+    [data-block="media"] {
+      position: relative;
+      min-inline-size: 0;
+      min-block-size: 20rem;
+      overflow: clip;
+    }
+
+    /* Selectorerne er skrevet ud i stedet for :is(). Minifieren fjerner
+       mellemrum omkring ':' og ville lave 'X :is(y)' om til 'X:is(y)',
+       som aldrig matcher noget. Se InjectAssets.php i style-push. */
+    [data-block="media"] img,
+    [data-block="media"] video,
+    [data-block="media"] picture,
+    [data-block="media"] .media-placeholder {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+    }
+
+    [data-block="media"] img,
+    [data-block="media"] video {
+      object-fit: cover;
+    }
+
+    .media-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--media-placeholder);
+      border: 1px dashed color-mix(in oklch, currentColor 28%, transparent);
+    }
+
+    .media-placeholder svg {
+      inline-size: var(--size-800);
+      block-size: var(--size-800);
+      opacity: 0.35;
+    }
+
+    [data-block="form"] {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-inline-size: 0;
+      gap: var(--size-500);
+    }
+
+    [data-block="form"] .content p {
+      max-inline-size: 42ch;
+      color: color-mix(in oklch, currentColor 72%, transparent);
+    }
+
+    /* Felterne. components/form er delt med resten af sitet, så udseendet
+       bor her i sektionens scope og ikke i komponenten.
+       Selectorerne er skrevet ud — se noten længere oppe om minifieren. */
+    .form-wrap input,
+    .form-wrap select,
+    .form-wrap textarea {
+      inline-size: 100%;
+      /* Højden følger tekstens egen størrelse. --size-skalaen starter først
+         ved ~17px og kan ikke give et lavere felt end det. */
+      padding-block: 0.65em;
+      padding-inline: var(--size-300);
+      background-color: var(--color-field);
+      border: 0;
+      border-block-end: 1px solid var(--color-field-line);
+      border-radius: 0;
+      color: inherit;
+      font: inherit;
+    }
+
+    /* Luft mellem label og felt. Komponentens egen mb-1.5 er for lidt her. */
+    .form-wrap label > span {
+      margin-block-end: 0.6rem;
+    }
+
+    .form-wrap input::placeholder,
+    .form-wrap textarea::placeholder {
+      color: color-mix(in oklch, currentColor 45%, transparent);
+    }
+
+    .form-wrap input:focus,
+    .form-wrap select:focus,
+    .form-wrap textarea:focus {
+      outline: 0;
+      border-block-end-color: currentColor;
+    }
+
+    /* Afkrydsning: ikke et fuldbredde-felt. */
+    .form-wrap input[type="checkbox"],
+    .form-wrap input[type="radio"] {
+      inline-size: var(--size-300);
+      block-size: var(--size-300);
+      padding: 0;
+      border: 1px solid var(--color-field-line);
+      background-color: var(--color-field);
+    }
+
+    .form-wrap input[type="radio"] {
+      border-radius: 50%;
+    }
+
+    .form-wrap button,
+    .form-wrap .btn {
+      margin-inline-start: auto;
+      background-color: var(--color-button);
+      color: var(--color-button-text);
+    }
+
+    .form-wrap .col-span-12:has(> button) {
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    @media (width < 48em) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      [data-block="media"] {
+        min-block-size: 16rem;
+        aspect-ratio: 1;
+      }
+    }
+  }
+</style>
+{{ /style_push }}
+
+{{ script_push }}
+<script>
+
+</script>
+{{ /script_push }}

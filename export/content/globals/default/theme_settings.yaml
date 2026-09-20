@@ -1,0 +1,139 @@
+primary_color: '#11122C'
+primary_tones_bias: 0
+primary_saturation: 0
+secondary_color: '#254446'
+secondary_tones_bias: 0
+secondary_saturation: 0
+tertiary_color: '#D6A485'
+tertiary_tones_bias: 0
+tertiary_saturation: 0
+quaternary_color: '#DE4F3F'
+quaternary_tones_bias: 0
+quaternary_saturation: 0
+container_width: 80em
+fluid_sizes:
+  max_viewport: 1280
+  unit: vw
+  sizes:
+    - handle: size-100
+      min: 15
+      max: 16
+      id: default-0
+    - handle: size-200
+      min: 16
+      max: 18
+      id: default-1
+    - handle: size-300
+      min: 18
+      max: 22
+      id: default-2
+    - handle: size-400
+      min: 21
+      max: 26
+      id: default-3
+    - handle: size-500
+      min: 24
+      max: 34
+      id: default-4
+    - handle: size-600
+      min: 31
+      max: 44
+      id: default-5
+    - handle: size-700
+      min: 38
+      max: 56
+      id: default-6
+    - handle: size-800
+      min: 48
+      max: 70
+      id: default-7
+    - handle: size-900
+      min: 60
+      max: 86
+      id: default-8
+    - handle: size-1000
+      min: 72
+      max: 110
+      id: default-9
+    - handle: size-1100
+      min: 84
+      max: 135
+      id: default-10
+    - handle: size-1200
+      min: 90
+      max: 150
+      id: default-11
+  sizes_css:
+    - handle: size-100
+      value: 'clamp(0.9375rem, 0.9167rem + 0.1042vw, 1rem)'
+    - handle: size-200
+      value: 'clamp(1rem, 0.9583rem + 0.2083vw, 1.125rem)'
+    - handle: size-300
+      value: 'clamp(1.125rem, 1.0417rem + 0.4167vw, 1.375rem)'
+    - handle: size-400
+      value: 'clamp(1.3125rem, 1.2083rem + 0.5208vw, 1.625rem)'
+    - handle: size-500
+      value: 'clamp(1.5rem, 1.2917rem + 1.0417vw, 2.125rem)'
+    - handle: size-600
+      value: 'clamp(1.9375rem, 1.6667rem + 1.3542vw, 2.75rem)'
+    - handle: size-700
+      value: 'clamp(2.375rem, 2rem + 1.875vw, 3.5rem)'
+    - handle: size-800
+      value: 'clamp(3rem, 2.5417rem + 2.2917vw, 4.375rem)'
+    - handle: size-900
+      value: 'clamp(3.75rem, 3.2083rem + 2.7083vw, 5.375rem)'
+    - handle: size-1000
+      value: 'clamp(4.5rem, 3.7083rem + 3.9583vw, 6.875rem)'
+    - handle: size-1100
+      value: 'clamp(5.25rem, 4.1875rem + 5.3125vw, 8.4375rem)'
+    - handle: size-1200
+      value: 'clamp(5.625rem, 4.375rem + 6.25vw, 9.375rem)'
+custom_fonts:
+  - id: 3WBAz_tVNW3sJHOq7haNg
+    file: BarlowCondensed-Bold-3.woff2
+    weight: '700'
+    variable: false
+    _visual_id: 994f18e1-4d9d-4a37-8a84-fd28b77365f6
+  - id: n822ArsqY1KBDKQa9fLQm
+    file: BarlowCondensed-Medium-1.woff2
+    weight: '500'
+    variable: false
+    _visual_id: c9ff618f-b02b-4686-aa59-fe6d288d66c3
+  - id: bWsabp8XvITZJMNuKv3eo
+    file: BarlowCondensed-Regular.woff2
+    weight: '400'
+    variable: false
+    _visual_id: 22858e98-00e4-4736-80c6-ad6b4101b2d1
+font_family:
+  base: Inter
+  base_font_weight: 400
+  base_wdth: '100'
+  headings: Merriweather
+  headline_font_weight: 700
+  heading_wdth: '100'
+  headings_uppercase: false
+line_height: leading-normal
+font_scale_preview:
+  h1: size-700
+  h2: size-600
+  h3: size-500
+  h4: size-400
+  h5: size-300
+  h6: size-200
+  p: size-100
+button_font: '--font-base'
+button_size: '--size-sm'
+button_weight: '--font-weight-bold'
+button_width: '100'
+button_radius: var(--radius-sm)
+button_uppercase: false
+media_color_overlay: var(--tertiary)
+opacity: 20%
+custom_css: |-
+  .entries-style-1 .list-item,.media-textbox-style-1 .media-wrapper{
+      border-top-left-radius: 1.5rem;
+      border-top-right-radius: 3px;
+      border-bottom-right-radius: 1.5rem;
+      border-bottom-left-radius: 3px;
+      overflow: clip;
+  }

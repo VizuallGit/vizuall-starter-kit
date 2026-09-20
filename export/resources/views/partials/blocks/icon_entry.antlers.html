@@ -1,0 +1,10 @@
+<div id="id-{{ id }}" class="{{ col }} flow-y flow-space-05em flex flex-col items-center text-center" {{ visual_edit popup="true" }}>
+    {{ svg src="icons/{icon}" class="{{ partial:partials/sizes }} w-auto" }}
+    <h3>{{ headline }}</h3>
+    <div class="text-current/70 text-[.875em]">
+        {{ text }}
+    </div>
+    {{ if show_link and link != empty }}
+        <a href="">{{ link_text ?? 'Læs mere' }}</a>
+    {{ endif }}
+</div>

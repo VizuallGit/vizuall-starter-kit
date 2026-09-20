@@ -4,7 +4,7 @@
     "extra": {
         "statamic": {
             "name": "Starter Kit",
-            "description": "Starter kit med custom addons, color scheme, sections og Live Preview"
+            "description": "Starter kit med Visual Editor, color scheme, sections og Live Preview"
         }
     }
 }

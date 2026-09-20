@@ -1,4 +1,56 @@
-<img 
+{{#sve_props
+[
+    {
+        "handle": "image",
+        "type": "media",
+        "label": "Image",
+        "default": ""
+    },
+    {
+        "handle": "width",
+        "type": "text",
+        "label": "Width",
+        "default": "500"
+    },
+    {
+        "handle": "height",
+        "type": "text",
+        "label": "Height",
+        "default": "500"
+    },
+    {
+        "handle": "quality",
+        "type": "text",
+        "label": "Quality",
+        "default": "70"
+    }
+]
+#}}
+
+{{ sve_defaults props_image="" props_width="500" props_height="500" props_quality="70" }}
+{{#
+    Billedet: imagePath fra kaldet (et felt, fx :imagePath="media"),
+    ellers det billede der er valgt i sidebaren (image).
+    Crop-størrelse til Glide: width × height (default 500×500).
+    Eller width_pct: 50 = 1000×1000, 100 = 2000×1000, højden er altid 1000.
+    aspect (fx aspect-16/9) regner højden ud fra bredden.
+    Select er LabeledValue — tekst først.
+#}}
+{{ _src = imagePath or props_image }}
+{{ _pct = '{width_pct}' }}
+{{ _aspect = '{aspect}' | replace('aspect-', '') }}
+{{ _w = _pct ? (_pct * 20) : props_width }}
+{{ _h = _pct ? 1000 : props_height }}
+{{ if _aspect }}
+    {{ _h = switch(
+        (_aspect == '1/1') => _w,
+        (_aspect == '4/3') => ((_w * 3 / 4) | round),
+        (_aspect == '16/9') => ((_w * 9 / 16) | round),
+        (_aspect == '3/4') => ((_w * 4 / 3) | round),
+        () => _h
+    ) }}
+{{ /if }}
+<img
     {{ if _id }}
         id="{{ _id }}"
     {{ endif }}
@@ -7,9 +59,12 @@
         style="{{ style }}"
     {{ endif }}
     loading="{{ loading ? loading : 'lazy'  }}"
-    width="{{ w or "500" }}"
-    height="{{ h or "500" }}"
-    srcset="{{ glide:imagePath width="{{ w or "500" }}" height="{{ h or "500" }}" quality="{{ q or '70' }}" fit="crop_focal" format="{{ format or 'webp' }}" }} 1x, {{ glide:imagePath width="{{ w or "500" }}" height="{{ h or "500" }}" quality="{{ q or '60' }}" fit="crop_focal" format="{{ format or 'webp' }}" dpr="2" }} 2x"
-    src="{{ glide:imagePath width="{{ w or "500" }}" height="{{ h or "500" }}" quality="{{ q or '70' }}" fit="crop_focal" format="{{ format or 'webp' }}" }}"
-    alt="{{ imagePath:alt }}"
+    width="{{ _w }}"
+    height="{{ _h }}"
+    srcset="{{ glide :src="_src" width="{{ _w }}" height="{{ _h }}" quality="{{ props_quality }}" fit="crop_focal" format="{{ format or 'webp' }}" }} 1x, {{ glide :src="_src" width="{{ _w }}" height="{{ _h }}" quality="{{ props_quality }}" fit="crop_focal" format="{{ format or 'webp' }}" dpr="2" }} 2x"
+    src="{{ glide :src="_src" width="{{ _w }}" height="{{ _h }}" quality="{{ props_quality }}" fit="crop_focal" format="{{ format or 'webp' }}" }}"
+    alt="{{ if imagePath }}{{ imagePath:alt }}{{ elseif props_image }}{{ asset :url="props_image" }}{{ alt }}{{ /asset }}{{ /if }}"
 >
+
+{{ sve_tw handle="view/partials/components/image" }}
+{{ /sve_defaults }}

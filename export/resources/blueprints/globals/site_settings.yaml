@@ -12,6 +12,11 @@ tabs:
               type: text
               display: 'Site name'
           -
+            handle: keywords
+            field:
+              type: taggable
+              display: Keywords
+          -
             handle: phone
             field:
               input_type: tel
@@ -36,13 +41,24 @@ tabs:
               type: text
               always_save: false
           -
+            handle: city
+            field:
+              display: By
+              type: text
+              always_save: false
+          -
+            handle: country
+            field:
+              display: Land
+              type: text
+              always_save: false
+          -
             handle: cvr
             field:
               display: Cvr
               type: text
               always_save: false
-          -
-            import: socialmedia_links
+          - import: socialmedia_links
           -
             handle: opening_hours
             field:

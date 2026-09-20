@@ -1,0 +1,19 @@
+/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host {
+    --font-base: var(--font-base);
+    --font-heading: var(--font-heading);
+  }
+}
+@layer utilities {
+  .w-auto {
+    width: auto;
+  }
+  .shrink-0 {
+    flex-shrink: 0;
+  }
+  .text-current {
+    color: currentcolor;
+  }
+}

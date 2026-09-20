@@ -1,0 +1,88 @@
+title: 'Block - Text'
+fields:
+  -
+    handle: text
+    field:
+      buttons:
+        - h2
+        - h3
+        - bold
+        - italic
+        - unorderedlist
+        - orderedlist
+        - removeformat
+        - quote
+        - anchor
+        - horizontalrule
+        - title
+        - uppercase
+        - color
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: Text
+      localizable: false
+      sets:
+        links:
+          display: Links
+          sets:
+            links:
+              display: Links
+              fields:
+                - import: links
+            list:
+              display: List
+              fields: {}
+  -
+    handle: show_settings
+    field:
+      type: toggle
+      display: 'Show settings'
+      localizable: false
+  -
+    handle: _cb_bp
+    field:
+      type: column_breakpoint
+      display: 'Breakpoint (auto)'
+      default: desktop
+      visibility: hidden
+      listable: false
+      localizable: false
+  -
+    handle: settings
+    field:
+      type: tabby
+      display: Settings
+      localizable: false
+      always_save: true
+      fields:
+        - import: blocks.text_settings
+      if:
+        show_settings: 'equals true'
+        _cb_bp: 'custom cbBpDesktop'
+  -
+    handle: settings_t
+    field:
+      type: tabby
+      display: 'Settings — Tablet'
+      instructions: 'Tomme felter arver fra desktop.'
+      localizable: false
+      always_save: true
+      fields:
+        - import: blocks.text_settings
+      if:
+        show_settings: 'equals true'
+        _cb_bp: 'equals tablet'
+  -
+    handle: settings_m
+    field:
+      type: tabby
+      display: 'Settings — Mobil'
+      instructions: 'Tomme felter arver fra tablet/desktop.'
+      localizable: false
+      always_save: true
+      fields:
+        - import: blocks.text_settings
+      if:
+        show_settings: 'equals true'
+        _cb_bp: 'equals mobile'

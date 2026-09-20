@@ -1,0 +1,15 @@
+title: Logo
+fields:
+  -
+    handle: logo
+    field:
+      container: assets
+      max_files: 1
+      type: assets
+      display: Logo
+  -
+    handle: height
+    field:
+      step: 10
+      type: range
+      display: Height

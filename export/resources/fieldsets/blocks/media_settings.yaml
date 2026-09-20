@@ -1,0 +1,44 @@
+title: 'Block media settings'
+# Delt mellem settings (desktop), settings_t (tablet) og settings_m (mobil)
+# i blocks/media.yaml — nye felter her dukker automatisk op på alle tre
+# breakpoints. CSS-output til nye felter tilføjes ét sted:
+# partials/blocks/media_settings_css.antlers.html
+fields:
+  -
+    handle: main
+    field:
+      type: tab
+      display: Main
+      localizable: false
+  - handle: animations
+    field: common.animations
+  -
+    handle: auto_height
+    field:
+      type: toggle
+      display: 'Auto height'
+      instructions: 'Billedes højde bliver sat ud fra sektionens højde'
+      localizable: false
+  -
+    handle: aspect_ratio
+    field: common.aspect_ratio
+    config:
+      options:
+        - key: aspect-1/1
+          value: '1/1 - Kvadratisk'
+        - key: aspect-4/3
+          value: 4/3
+        - key: aspect-16/9
+          value: '16/9 - Video format'
+        - key: aspect-3/4
+          value: 3/4
+        - key: original
+          value: Orginal
+      unless:
+        auto_height: 'equals true'
+  -
+    handle: border_radius
+    field:
+      type: border_radius
+      display: 'Border Radius'
+      localizable: false

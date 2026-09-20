@@ -1,0 +1,43 @@
+title: 'Event list'
+fields:
+  -
+    handle: section_heading
+    field: common.section_heading
+  -
+    handle: show_all_events
+    field:
+      type: toggle
+      display: 'Show all events'
+  -
+    handle: list
+    field:
+      collections:
+        - events
+      type: entries
+      display: List
+      unless:
+        show_all_events: 'equals true'
+  -
+    handle: list_size
+    field:
+      options:
+        -
+          key: sm
+          value: Small
+        -
+          key: md
+          value: Medium
+        -
+          key: large
+          value: Large
+      default: md
+      type: select
+      display: 'List size'
+  -
+    handle: pagination_items
+    field:
+      min: 1
+      max: 20
+      default: 10
+      type: range
+      display: 'Pagination items'

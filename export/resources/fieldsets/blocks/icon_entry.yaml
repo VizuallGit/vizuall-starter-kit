@@ -1,0 +1,58 @@
+title: 'Block - Icon entry'
+fields:
+  -
+    handle: icon
+    field:
+      path: svg/icons
+      type: iconamic
+      display: Icon
+      localizable: false
+      width: 50
+  -
+    handle: size
+    field: common.size
+    config:
+      width: 50
+  -
+    handle: headline
+    field:
+      type: text
+      display: Headline
+      localizable: false
+  -
+    handle: text
+    field:
+      buttons:
+        - bold
+        - italic
+        - removeformat
+        - color
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: Text
+      localizable: false
+  -
+    handle: show_link
+    field:
+      type: toggle
+      display: 'Show link'
+      localizable: false
+  -
+    handle: link
+    field:
+      type: link
+      display: Link
+      localizable: false
+      width: 50
+      if:
+        show_link: 'equals true'
+  -
+    handle: link_text
+    field:
+      type: text
+      display: 'Link text'
+      localizable: false
+      width: 50
+      if:
+        show_link: 'equals true'

@@ -1,0 +1,26 @@
+<div>
+    <ul class="auto-grid auto-grid-lg gap-500 my-400!">
+        {{ list }}
+            <li class="flex flex-col">
+                {{ partial:components/image :imagePath="profile_image" props_height="400" class="m-0!" }}
+                <div class="mt-100 text-sm">
+                    <p class="h5 mb-1">{{ name }}</p>
+                    {{ if text }}
+                        <div class="opacity-70">{{ text }}</div>
+                    {{ endif }}
+                    {{ if phone or email }}
+                        <ul class="flex flex-col mt-2 leading-flat space-y-2">
+                            {{ if phone }}
+                                <li>Tlf: <a class="underline" href="tel:{{ phone }}">{{ phone }}</a></li>
+                            {{ endif }}
+                            {{ if email }}
+                                <li>Email: <a class="underline" href="mailto:{{ email }}">{{ email }}</a></li>
+                            {{ endif }}
+                        </ul>
+                    {{ endif }}
+                </div>
+            </li>
+        {{ /list }}
+    </ul>
+
+</div>

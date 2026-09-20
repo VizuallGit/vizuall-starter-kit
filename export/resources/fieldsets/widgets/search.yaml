@@ -1,0 +1,7 @@
+title: 'Search widget'
+fields:
+  -
+    handle: label
+    field:
+      type: text
+      display: Label

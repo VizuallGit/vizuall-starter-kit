@@ -40,7 +40,7 @@ textarea:-webkit-autofill:focus,
 select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus {
--webkit-text-fill-color: var(--color-dark-shade);
+-webkit-text-fill-color: var(--color-contrast-dark);
 -webkit-box-shadow: 0 0 0px 1000px rgba(0, 0, 0, 0) inset;
 transition: background-color 5000s ease-in-out 0s;
 }
@@ -60,7 +60,7 @@ transition: background-color 5000s ease-in-out 0s;
 input[type=text], input[type=email], textarea, select{
       appearance: none;
       background-color: var(--color-white);
-      color: var(--color-dark);
+      color: var(--color-gray-800);
       padding-inline: 1.2em;
       padding-block: .9em;
 
@@ -94,9 +94,6 @@ button{
   border-right: solid var(--gutter);
 }
 
-.case-card{
-  @apply lg:col-span-3 @container;
-}
 
 .case-card:not([style]):first-child ~ .case-card, 
 .case-card[style] + .case-card:not([style]) ~ .case-card{
@@ -221,3 +218,13 @@ button{
 .flow-space-gutter {
   --flow-space: var(--gutter);
 }
+/* Inline Bard inside h1–h3 may render a temporary <p> wrapper in Live Preview. */
+:is(h1, h2, h3) > p {
+    display: contents;
+    margin: 0;
+}
+
+/* Headline block size control (sibling field `size`: small | large). */
+h1.headline--large { font-size: calc(var(--font-size-h1) * 1.35); }
+h2.headline--large { font-size: calc(var(--font-size-h2) * 1.35); }
+h3.headline--large { font-size: calc(var(--font-size-h3) * 1.35); }

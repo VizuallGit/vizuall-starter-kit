@@ -8,7 +8,7 @@
       font-weight: 700;
       font-size: var(--size-300);
       line-height: var(--leading-normal);
-      background: linear-gradient(to right, var(--color-light-shade), var(--color-light));
+      background: linear-gradient(to right, var(--color-gray-200), var(--color-gray-100));
     }
 
     & > p:not([class]){

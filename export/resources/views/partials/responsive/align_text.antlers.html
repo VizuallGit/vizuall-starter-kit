@@ -1,0 +1,17 @@
+{{#
+    align_text → text-align + align-items.
+
+    Overskrifter har max-width, så text-align alene rykker ikke blokken.
+    Parent er flex-col: align-items styrer vandret (start / center / end).
+
+    1) responsive_css kalder med value (left | center | right)
+    2) Genbrug: common.align_text + dette partial
+#}}
+{{ if value }}
+text-align: {{ value }};
+align-items: {{ switch(
+    (value == 'center') => 'center',
+    (value == 'right') => 'end',
+    () => 'start'
+) }};
+{{ /if }}

@@ -1,0 +1,91 @@
+title: 'Basic content with links'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: content_block
+    field: content_block.content_block
+    config:
+      display: Blocks
+      default:
+        - type: headline
+        - type: richtext
+        - type: links
+      sets:
+        items:
+          display: Block
+          sets:
+            headline:
+              display: Headline
+              icon: fieldtype-text
+              fields:
+                - import: blocks.headline
+            richtext:
+              display: Richtext
+              icon: fieldtype-bard
+              fields:
+                - import: blocks.richtext
+            links:
+              display: Links
+              icon: 'lucide:square-stack'
+              fields:
+                -
+                  import: links
+                  # Antallet af knapper kan kun komme fra data — skabelonen kan
+                  # sende en starttekst, men ikke en ekstra række. Overriden
+                  # gælder kun dette importsted, så links-fieldsettet selv
+                  # står urørt i alle andre sektioner.
+                  config:
+                    links:
+                      default:
+                        -
+                          type: link
+                          text: 'Primary Action'
+                          color: 'var(--gray-700)'
+                        -
+                          type: link
+                          text: 'Secondary Action'
+                          color: 'var(--gray-700)'
+                          outline: true
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  -
+    handle: align_text_tab
+    field:
+      style: accordion
+      tab_icon: 'fluent:text-align-center-24-regular'
+      type: tab
+      display: 'Text alignment'
+  -
+    handle: align_text
+    field: common.align_text
+    config:
+      display: 'Text alignment'
+  -
+    handle: colors_tab
+    field: common.colors_tab
+    config:
+      display: Colors
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Background color'
+      default: 'var(--gray-200)'
+  -
+    handle: spacing_tab
+    field: common.spacing_tab
+    config:
+      display: Spacing
+  -
+    handle: padding
+    field: common.section_spacing
+    config:
+      display: Padding
+      sve_responsive: true

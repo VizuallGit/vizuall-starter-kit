@@ -14,24 +14,93 @@
 @import "./btn" layer(base);
 
 @import "./colors" layer(base);
-
-@source inline("pt-{{100..900..100},lg,xl,xxl,huge}");
-@source inline("pb-{{100..900..100},lg,xl,xxl,huge}");
+@import "./test" layer(base);
+@import "./tttt" layer(base);
 
 @theme {
     --color-*: initial;
-    --color-primary-glare: var(--primary-glare);
-    --color-primary: var(--primary);
-    --color-primary-shade: var(--primary-shade);
+    --color-transparent: transparent;
+    --color-current: currentColor;
+    --color-inherit: inherit;
     --color-white: #FFFFFF;
-    --color-light-glare: var(--light-glare);
-    --color-light: var(--light);
-    --color-light-shade: var(--light-shade);
-    --color-dark-glare: var(--dark-glare);
-    --color-dark: var(--dark);
-    --color-dark-shade: var(--dark-shade);
     --color-black: #000000;
-    --color-secondary: #000000;
+    --color-contrast-light: var(--contrast-light);
+    --color-contrast-dark: var(--contrast-dark);
+
+    --color-primary: var(--primary);
+    --color-primary-50: var(--primary-50);
+    --color-primary-100: var(--primary-100);
+    --color-primary-200: var(--primary-200);
+    --color-primary-300: var(--primary-300);
+    --color-primary-400: var(--primary-400);
+    --color-primary-500: var(--primary-500);
+    --color-primary-600: var(--primary-600);
+    --color-primary-700: var(--primary-700);
+    --color-primary-800: var(--primary-800);
+    --color-primary-900: var(--primary-900);
+    --color-primary-950: var(--primary-950);
+
+    --color-secondary: var(--secondary);
+    --color-secondary-50: var(--secondary-50);
+    --color-secondary-100: var(--secondary-100);
+    --color-secondary-200: var(--secondary-200);
+    --color-secondary-300: var(--secondary-300);
+    --color-secondary-400: var(--secondary-400);
+    --color-secondary-500: var(--secondary-500);
+    --color-secondary-600: var(--secondary-600);
+    --color-secondary-700: var(--secondary-700);
+    --color-secondary-800: var(--secondary-800);
+    --color-secondary-900: var(--secondary-900);
+    --color-secondary-950: var(--secondary-950);
+
+    --color-tertiary: var(--tertiary);
+    --color-tertiary-50: var(--tertiary-50);
+    --color-tertiary-100: var(--tertiary-100);
+    --color-tertiary-200: var(--tertiary-200);
+    --color-tertiary-300: var(--tertiary-300);
+    --color-tertiary-400: var(--tertiary-400);
+    --color-tertiary-500: var(--tertiary-500);
+    --color-tertiary-600: var(--tertiary-600);
+    --color-tertiary-700: var(--tertiary-700);
+    --color-tertiary-800: var(--tertiary-800);
+    --color-tertiary-900: var(--tertiary-900);
+    --color-tertiary-950: var(--tertiary-950);
+
+    --color-quaternary: var(--quaternary);
+    --color-quaternary-50: var(--quaternary-50);
+    --color-quaternary-100: var(--quaternary-100);
+    --color-quaternary-200: var(--quaternary-200);
+    --color-quaternary-300: var(--quaternary-300);
+    --color-quaternary-400: var(--quaternary-400);
+    --color-quaternary-500: var(--quaternary-500);
+    --color-quaternary-600: var(--quaternary-600);
+    --color-quaternary-700: var(--quaternary-700);
+    --color-quaternary-800: var(--quaternary-800);
+    --color-quaternary-900: var(--quaternary-900);
+    --color-quaternary-950: var(--quaternary-950);
+
+    --color-gray-50: var(--gray-50);
+    --color-gray-100: var(--gray-100);
+    --color-gray-200: var(--gray-200);
+    --color-gray-300: var(--gray-300);
+    --color-gray-400: var(--gray-400);
+    --color-gray-500: var(--gray-500);
+    --color-gray-600: var(--gray-600);
+    --color-gray-700: var(--gray-700);
+    --color-gray-800: var(--gray-800);
+    --color-gray-900: var(--gray-900);
+    --color-gray-950: var(--gray-950);
+    --color-neutral-50: var(--gray-50);
+    --color-neutral-100: var(--gray-100);
+    --color-neutral-200: var(--gray-200);
+    --color-neutral-300: var(--gray-300);
+    --color-neutral-400: var(--gray-400);
+    --color-neutral-500: var(--gray-500);
+    --color-neutral-600: var(--gray-600);
+    --color-neutral-700: var(--gray-700);
+    --color-neutral-800: var(--gray-800);
+    --color-neutral-900: var(--gray-900);
+    --color-neutral-950: var(--gray-950);
 
 
     --text-*: initial;
@@ -108,6 +177,11 @@
     padding-right: calc(((100% - var(--container-width)) / 2) - var(--gutter));
     border-left: var(--gutter) solid transparent;
     border-right: var(--gutter) solid transparent;
+}
+
+@utility card {
+    padding: var(--size-900);
+    background-color: red;
 }
 
 @utility flow-y {

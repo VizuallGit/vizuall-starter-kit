@@ -1,0 +1,124 @@
+{{ cols = 6 }}
+{{ cols_mobile = 2 }}
+
+{{ colsTablet = switch(
+    (cols_tablet == true) => cols_tablet,
+    () => cols
+) }}
+
+{{ colsMobile = switch(
+    (cols_mobile == true) => cols_mobile,
+    (cols_tablet == true) => cols_tablet,
+    () => cols
+) }}
+
+{{ _alignment = switch(
+    (alignment == 'top') => 'items-top',
+    (alignment == 'bottom') => 'items-end',
+    () => 'items-center'
+) }}
+
+<section id="id-{{ id }}" class="[ media-textbox-style-1 ] wrapper" data-auto-contrast {{ visual_edit outline_inside="true" section_orderable="true" }}>
+    <div class="[ blocks ] {{ _alignment }}" {{ visual_edit field="blocks" insertable="true" outline="always" grid_view="true" :grid="cols" grid_min="1" grid_resize="free" grid_handles="both" grid_preview="outline" }}>
+        {{ blocks }}
+            <div id="block-{{ id }}" data-block="{{ type }}" style="--order:{{ index }};{{ if span.laptop.span }}--span-l:{{ span.laptop.span }};{{ /if }}{{ if span.tablet.span }}--span-t:{{ span.tablet.span }};{{ /if }}{{ if span.mobile.span }}--span-m:{{ span.mobile.span }};{{ /if }}" {{ visual_edit orderable="true" }}>
+                {{ partial src="blocks/{type}" }}
+            </div>
+        {{ /blocks }}
+    </div>
+</section>
+
+
+
+{{ style_push }}
+    <style>
+        {{ responsive_css }}
+
+        #id-{{ id }}{
+            background-color: {{ bg_color }};
+
+        }
+
+        @scope(.media-textbox-style-1) {
+            :scope {
+                .blocks{
+                    --grid-cols: {{ cols }};
+
+                    display: grid;
+                    grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+                    gap: var(--size-1000);
+                }
+
+                {{# Bredden læses indefra og ud: først hvad redaktøren har trukket
+                    på netop dette breakpoint, så arven opad, så blokkens eget
+                    standardlayout — og til sidst hele rækken, så et tal der
+                    mangler aldrig kan give en blok bredden nul. #}}
+                {{# Rækkefølgen er blokkens plads i feltet, medmindre en
+                    skærmstørrelse siger andet længere nede. Så står en blok der
+                    lige er tilføjet præcis hvor sidebaren viser den — i stedet
+                    for at falde tilbage på nul og springe forrest. #}}
+                [data-block]{
+                    order: var(--order, 0);
+                    grid-column: span var(--span-l, var(--span-default, var(--grid-cols)));
+                }
+
+                [data-block="content"]{ --span-default: 4; }
+                [data-block="media"]{ --span-default: 2; }
+
+                {{# Gitteret selv må også skifte pr. skærmstørrelse. En bredde
+                    gemt for et bredere gitter klipper browseren af sig selv ned
+                    til rækken, så en blok kan ikke blive bredere end der er. #}}
+                @media (max-width: 1023.98px){
+                    .blocks{ --grid-cols: {{ colsTablet }}; }
+
+                    [data-block]{
+                        grid-column: span var(--span-t, var(--span-l, var(--span-default, var(--grid-cols))));
+                    }
+                }
+
+                @media (max-width: 767.98px){
+                    .blocks{ --grid-cols: {{ colsMobile }}; }
+
+                    [data-block]{
+                        grid-column: span var(--span-m, var(--span-t, var(--span-l, var(--span-default, var(--grid-cols)))));
+                    }
+                }
+            }
+
+        }
+
+        {{# Rækkefølgen pr. skærmstørrelse: blokkenes id'er i den rækkefølge de
+            blev trukket, én liste pr. skærmstørrelse, sat af visual editor. Er
+            en liste tom, står den media query der ikke, og skærmstørrelsen
+            arver den ovenover af sig selv.
+
+            Laptop står ikke her. Feltets egen rækkefølge *er* laptops — visual
+            editor sorterer arrayet om ved hvert enhedsskift — og listen skrives
+            kun på vej ud af laptop. Skrev vi den ud som CSS, ville en blok
+            tilføjet eller slettet mens man står på laptop blive overstyret af en
+            liste fra før ændringen, og preview'et ville vise noget andet end
+            sidebaren. Listen bliver stående i filen: den er hvad JS'en henter
+            arrayet tilbage til, når man kommer hjem fra tablet eller mobil.
+
+            En liste gælder kun hvis den beskriver præcis de blokke der findes
+            nu. Den skrives først når man forlader skærmstørrelsen, så tilføjer
+            eller sletter man en blok imens, taler den om noget andet end det
+            der står på siden — og en halv rækkefølge er værre end ingen. Passer
+            sættene ikke, springes overstyringen over, og feltets egen
+            rækkefølge gælder: den sidebaren viser. Første træk skriver listen
+            frisk, og så gælder den igen. #}}
+        {{ blocks_now = blocks | pluck('id') | sort | join(',') }}
+
+        {{ if (block_order_tablet | sort | join(',')) == blocks_now }}
+            @media (max-width: 1023.98px){
+                {{ block_order_tablet }}#block-{{ value }}{ order: {{ index }}; }{{ /block_order_tablet }}
+            }
+        {{ /if }}
+
+        {{ if (block_order_mobile | sort | join(',')) == blocks_now }}
+            @media (max-width: 767.98px){
+                {{ block_order_mobile }}#block-{{ value }}{ order: {{ index }}; }{{ /block_order_mobile }}
+            }
+        {{ /if }}
+    </style>
+{{ /style_push }}

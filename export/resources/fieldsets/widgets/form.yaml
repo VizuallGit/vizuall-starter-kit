@@ -1,0 +1,39 @@
+title: 'Form widget'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: title
+    field:
+      type: text
+      display: Overskrift
+      localizable: false
+  -
+    handle: intro
+    field:
+      buttons:
+        - bold
+        - italic
+        - removeformat
+        - anchor
+      toolbar_mode: floating
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: Tekst
+  -
+    handle: form_picker
+    field:
+      max_items: 1
+      type: form
+      display: Formular
+      localizable: false
+  -
+    handle: button_text
+    field:
+      type: text
+      display: Knaptekst
+      default: Send

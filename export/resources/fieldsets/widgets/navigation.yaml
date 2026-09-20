@@ -1,0 +1,56 @@
+title: 'Navigation widget'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: navigation_type
+    field:
+      options:
+        - key: pages
+          value: Pages
+        - key: custom
+          value: 'Custom nav'
+      default: pages
+      type: button_group
+      display: 'Navigation type'
+  -
+    handle: include_homepage
+    field:
+      type: toggle
+      display: 'Include homepage'
+      if:
+        navigation_type: 'equals pages'
+  -
+    handle: nav_picker
+    field:
+      max_items: 1
+      type: navs
+      display: 'Navigation picker'
+      if:
+        navigation_type: 'equals custom'
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  -
+    handle: active_color
+    field:
+      type: theme_color_picker
+      display: 'Active color'
+  -
+    handle: active_link_style
+    field:
+      options:
+        - key: underline
+          value: Underline
+        - key: background
+          value: Background
+        - key: text
+          value: Text
+      default: background
+      type: select
+      display: 'Active link style'

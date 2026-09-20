@@ -1,0 +1,34 @@
+title: Search
+fields:
+  -
+    handle: text
+    field:
+      type: text
+      display: Text
+  -
+    handle: button_input
+    field:
+      options:
+        -
+          key: text
+          value: Text
+        -
+          key: icon
+          value: Icon
+      type: button_group
+      display: 'Button input'
+  -
+    handle: button_text
+    field:
+      type: text
+      display: 'Button text'
+      if:
+        button_input: 'equals text'
+  -
+    handle: icon
+    field:
+      store_as: svg_data
+      type: iconify
+      display: Icon
+      if:
+        button_input: 'equals icon'

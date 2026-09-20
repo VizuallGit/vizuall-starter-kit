@@ -1,0 +1,29 @@
+title: Heading
+fields:
+  -
+    handle: heading
+    field:
+      buttons:
+        - h1
+        - h2
+        - h3
+        - bold
+        - italic
+        - removeformat
+        - bard-uppercase
+        - color
+      toolbar_mode: floating
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: Heading
+      duplicate: false
+      default:
+        -
+          type: heading
+          attrs:
+            level: 1
+          content:
+            -
+              type: text
+              text: 'Indtast din tekst'

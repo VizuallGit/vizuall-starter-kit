@@ -5,42 +5,31 @@ fields:
     field:
       type: replicator
       display: 'Footer widgets'
+      collapse: accordion
+      button_label: 'Tilføj widget'
+      localizable: false
+      max_sets: 4
       sets:
-        items:
-          display: Items
+        widget:
+          display: Widget
           sets:
             contact_info:
               display: 'Contact info'
+              icon: 'lucide:contact'
               fields:
-                -
-                  handle: title
-                  field:
-                    type: text
-                    display: Title
+                - import: widgets.contact_info
             navigation:
               display: Navigation
+              icon: 'lucide:link'
               fields:
-                -
-                  handle: title
-                  field:
-                    type: text
-                    display: Title
-                -
-                  handle: navigation_picker
-                  field:
-                    type: navs
-                    display: 'Navigation picker'
+                - import: widgets.footer_navigation
+            opening_hours:
+              display: Åbningstider
+              icon: 'lucide:clock'
+              fields:
+                - import: widgets.opening_hours
             form:
               display: Form
+              icon: 'lucide:send'
               fields:
-                -
-                  handle: title
-                  field:
-                    type: text
-                    display: Title
-                -
-                  handle: form_picker
-                  field:
-                    max_items: 1
-                    type: form
-                    display: 'Form picker'
+                - import: widgets.form

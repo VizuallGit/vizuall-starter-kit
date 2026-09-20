@@ -1,0 +1,151 @@
+<section id="id-{{ id }}" class="[ {{ _class }} ] bg-primary py-900 wrapper" data-auto-contrast {{ visual_edit outline_inside="true" section_orderable="true" }}>
+    <div class="inner-wrapper" {{ visual_edit field="blocks" insertable="true" }}>
+        {{ blocks }}
+            {{ if type == "heading" }}
+                <div class="[ section-heading ] flex flex-col prose-headings:max-w-[25ch] prose-p:max-w-[65ch] flow-y" {{ visual_edit }}>
+                    {{ heading_sets = blocks }}
+                    {{ heading_sets }}
+                        {{ partial src="blocks/{type}" headline_tag="h2" headline_size="text-600" }}
+                    {{ /heading_sets }}
+                </div>
+            {{ elseif type == 'content_boxes' }}
+               <div class="[ list ]" {{ visual_edit field="content_boxes" insertable="true" orderable="true"  }}>
+                    {{ content_boxes }}
+                        <div id="id-{{ id }}" class="[ list-item ] flex flex-col" style="--color-inner-bg: {{ bg_color }}; {{ partial:cms_styles/spacing_sides_css :padding="spacing" }}; {{ partial:cms_styles/border_radius }};" data-auto-contrast {{ visual_edit orderable="true" }}>
+                            {{ blocks }}
+                                {{ if type == 'heading' }}
+                                    {{ heading_blocks = blocks }}
+                                    <div class="flex gap-300" id="fd-{{ id }}">
+                                        {{ heading_blocks }}
+                                            {{ if type == 'icon' }}
+                                                {{ partial src="blocks/icon" }}
+                                            {{ /if }}
+                                        {{ /heading_blocks }}
+                                        <div class="flow-y flow-space-05em prose-p:opacity-80">
+                                            {{ heading_blocks }}
+                                                {{ if type == 'headline' }}
+                                                    {{ partial src="blocks/{type}" headline_tag="h3" headline_size="text-400" }}
+                                                {{ elseif type == 'richtext' }}
+                                                    {{ partial src="blocks/richtext" }}
+                                                {{ /if }}
+                                            {{ /heading_blocks }}
+                                        </div>
+                                    </div>
+                                {{ elseif type == 'list' }}
+                                    {{ list_items = blocks }}
+                                    <ul class=" divide-y divide-black/6">
+                                        {{ list_items }}
+                                            <li class="not-first:pt-[.8em] not-last:pb-[.8em]" {{ visual_edit field="text" inline_edit="true" }}>{{ text }}</li>
+                                        {{ /list_items }}
+                                    </ul>
+                                {{ elseif type == 'links' }}
+                                    {{ partial src="blocks/links" }}
+                                {{ /if }}
+                            {{ /blocks }}
+                        </div>
+                    {{ /content_boxes }}
+                </div>
+            {{ /endif }}
+        {{ /blocks }}
+    </div>
+</section>
+
+{{ sve_tw }}
+
+{{ style_push }}
+<style>
+#id-{{ id }}{
+                --color-bg: {{ bg_color ?? 'var(--gray-600)' }};
+                --list-grid: {{ (blocks | where('type', 'content_boxes') | pluck('content_boxes')) | first | count }};
+
+                {{ partial:cms_styles/spacing_sides_css :padding="padding.laptop.padding" }}
+
+                {{ blocks }}
+                    {{ if type == "heading" }}
+                .section-heading{
+                    {{ partial:responsive/align_text :value="align_text.laptop.align_text" }}
+                }
+                    {{ /if }}
+                {{ /blocks }}
+
+                .inner-wrapper{
+                    display: grid;
+                    {{ partial:cms_styles/gap_css }}
+                }
+
+                .list{
+                    {{ partial:cms_styles/gap_css :gap="(blocks | where('type', 'content_boxes') | pluck('gap')) | first" }}
+                }
+
+                .icon { --icon-size: var(--icon-size-l); }
+
+                @media (width < 64em) {
+                    --list-grid: 1;
+                    .icon { --icon-size: var(--icon-size-t); }
+                    
+                    {{ partial:cms_styles/spacing_sides_css :padding="padding.tablet.padding" }}
+                    {{ blocks }}
+                        {{ if type == "heading" and align_text.tablet.align_text }}
+                    .section-heading{
+                        {{ partial:responsive/align_text :value="align_text.tablet.align_text" }}
+                    }
+                        {{ /if }}
+                    {{ /blocks }}
+                }
+
+                @media (width < 48em) {
+                    {{ partial:cms_styles/spacing_sides_css :padding="padding.mobile.padding" }}
+                    {{ blocks }}
+                        {{ if type == "heading" and align_text.mobile.align_text }}
+                    .section-heading{
+                        {{ partial:responsive/align_text :value="align_text.mobile.align_text" }}
+                    }
+                        {{ /if }}
+                    {{ /blocks }}
+                }
+            }
+
+            @scope(.{{ _class }}) {
+                :scope {
+                    background-color: var(--color-bg);
+                }
+
+                .list{
+                    display: grid;
+                    grid-template-columns: repeat(var(--list-grid), 1fr);
+                    position: relative;
+                    z-index: 1;
+                    background-color: var(--benefits-color-bg);
+
+                    ul{
+                        margin: 0;
+                        list-style: none;
+                    }
+                }
+
+                .list-item{
+                    display: flex;
+                    background-color: var(--color-inner-bg);
+                    row-gap: var(--size-400);
+                }
+
+                .icon {
+                    --icon-sm: var(--size-600);
+                    --icon-md: var(--size-700);
+                    --icon-lg: var(--size-800);
+                    --icon-size: var(--icon-size-l);
+                    inline-size: var(--icon-size);
+                    block-size: var(--icon-size);
+                    flex-shrink: 0;
+                }
+
+                @media (width < 64em) {
+                    .icon { --icon-size: var(--icon-size-t); }
+                }
+
+                @media (width < 48em) {
+                    .icon { --icon-size: var(--icon-size-m); }
+                }
+            }
+</style>
+{{ /style_push }}

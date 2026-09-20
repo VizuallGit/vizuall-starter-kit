@@ -1,0 +1,66 @@
+title: 'Icon block'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: icon
+    field:
+      store_as: svg_data
+      type: iconify
+      display: Icon
+      default: 'ant-design:plus-circle-outlined'
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+      default_open: true
+  -
+    handle: colors_tab
+    field: common.colors_tab
+    config:
+      display: Colors
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Bg color'
+      width: 50
+      sve_sync_siblings: true
+  -
+    handle: text_color
+    field:
+      type: theme_color_picker
+      display: 'Text color'
+      width: 50
+      sve_sync_siblings: true
+  -
+    handle: size_tab
+    field:
+      style: accordion
+      tab_icon: 'gg:size'
+      type: tab
+      display: Size
+  -
+    handle: size
+    field: common.size
+    config:
+      sve_responsive: true
+      sve_sync_siblings: true
+  -
+    handle: border_radius_tab
+    field:
+      style: accordion
+      tab_icon: 'bx:border-radius'
+      type: tab
+      display: 'Border radius'
+  -
+    handle: border_radius
+    field:
+      sve_sync_siblings: true
+      type: border_radius
+      display: 'Border Radius'
+      hide_display: true

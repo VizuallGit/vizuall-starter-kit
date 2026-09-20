@@ -1,0 +1,182 @@
+title: 'Content section - style 1'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: blocks
+    field:
+      type: replicator
+      display: Blocks
+      max_sets: 2
+      unique_sets:
+        - content
+        - media
+      default:
+        - type: content
+        - type: media
+      actions: false
+      sets:
+        block:
+          display: Block
+          sets:
+            content:
+              display: Content
+              icon: content-book-open
+              fields:
+                -
+                  handle: content_tab
+                  field: common.content_tab
+                  config:
+                    display: Content
+                -
+                  handle: content_block
+                  field: content_block.content_block
+                  config:
+                    display: Blocks
+                    default:
+                      - type: headline
+                      - type: richtext
+                      - type: links
+                    sets:
+                      items:
+                        display: Block
+                        sets:
+                          headline:
+                            display: Headline
+                            icon: fieldtype-text
+                            fields:
+                              - import: blocks.headline
+                          richtext:
+                            display: Richtext
+                            icon: fieldtype-textarea
+                            fields:
+                              - import: blocks.richtext
+                          links:
+                            display: Links
+                            icon: add-link
+                            fields:
+                              - import: links
+                    unique_sets:
+                      - headline
+                      - richtext
+                      - links
+                -
+                  handle: style_tab
+                  field: common.style_tab
+                  config:
+                    display: Style
+                -
+                  handle: bg_color
+                  field:
+                    type: theme_color_picker
+                    display: 'Bg color'
+                -
+                  handle: colors_tab
+                  field: common.colors_tab
+                  config:
+                    display: Colors
+                -
+                  handle: spacing_tab
+                  field: common.spacing_tab
+                  config:
+                    display: Spacing
+                -
+                  handle: spacing
+                  field:
+                    max: 9
+                    sve_responsive: true
+                    type: spacing
+                    display: Spacing
+                -
+                  handle: width_tab
+                  field:
+                    style: accordion
+                    tab_icon: 'ant-design:column-width-outlined'
+                    type: tab
+                    display: Width
+                -
+                  handle: span
+                  field:
+                    columns: 6
+                    sve_responsive: true
+                    type: column_span
+                    display: Width
+                    instructions: 'Klik for en bredde, eller træk hen over striben for at give blokken en fast plads i gitteret. En fast plads er det der gør overlap muligt.'
+                    hide_display: true
+                -
+                  handle: offset
+                  field:
+                    min: -2
+                    max: 2
+                    default: 0
+                    type: range
+                    display: 'Indryk indhold'
+                    instructions: 'Hold teksten fri af den blok der ligger oven på denne, målt i hele kolonner. Positivt trækker den fra højre, negativt fra venstre. Baggrunden bliver liggende — kun indholdet rykker sig.'
+                -
+                  handle: front
+                  field:
+                    type: toggle
+                    display: 'Ligger forrest'
+                    instructions: 'Tændt lægger tekstboksen oven på billedet. Slukket ligger den bagved. Kræver at overlap er slået til på sektionen.'
+            media:
+              display: Media
+              icon: media-image-picture-gallery
+              fields:
+                - import: blocks.media
+                -
+                  handle: width_tab
+                  field:
+                    style: accordion
+                    tab_icon: 'ant-design:column-width-outlined'
+                    type: tab
+                    display: Width
+                -
+                  handle: span
+                  field:
+                    columns: 6
+                    sve_responsive: true
+                    type: column_span
+                    display: Width
+                    instructions: 'Klik for en bredde, eller træk hen over striben for at give blokken en fast plads i gitteret. En fast plads er det der gør overlap muligt.'
+                    hide_display: true
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  -
+    handle: layout_tab
+    field:
+      style: accordion
+      tab_icon: 'material-symbols:stacks-outline'
+      type: tab
+      display: Layout
+  -
+    handle: overlap
+    field:
+      type: toggle
+      display: 'Tillad overlap'
+      instructions: 'Blokkene lægges i samme række, så de kan ligge oven i hinanden. Træk i en bloks venstre kant i Live Preview for at flytte den ind over naboen. Rækkefølgen i listen bestemmer hvad der ligger øverst — nederste blok ligger forrest.'
+  -
+    handle: colors_tab
+    field: common.colors_tab
+    config:
+      display: Colors
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Bg color'
+  -
+    handle: spacing_tab
+    field: common.spacing_tab
+    config:
+      display: Spacing
+  -
+    handle: padding
+    field: common.section_spacing
+    config:
+      display: Padding

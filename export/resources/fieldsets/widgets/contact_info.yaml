@@ -1,0 +1,119 @@
+title: 'Contact info widget'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: title
+    field:
+      type: text
+      display: Overskrift
+      localizable: false
+  -
+    handle: items
+    field:
+      type: replicator
+      display: Indhold
+      collapse: accordion
+      button_label: 'Tilføj'
+      localizable: false
+      default:
+        - type: logo
+        - type: address
+        - type: phone
+        - type: email
+        - type: socialmedia
+      sets:
+        item:
+          display: Item
+          sets:
+            logo:
+              display: Logo
+              icon: 'lucide:image'
+              fields:
+                -
+                  handle: logo
+                  field:
+                    container: assets
+                    max_files: 1
+                    type: assets
+                    display: Logo
+                -
+                  handle: height
+                  field:
+                    type: range
+                    display: Højde
+                    min: 10
+                    max: 200
+                    step: 10
+                    default: 40
+            company_name:
+              display: Firmanavn
+              icon: 'lucide:building-2'
+              fields: {  }
+            address:
+              display: Adresse
+              icon: 'lucide:map-pin'
+              fields:
+                -
+                  handle: show_country
+                  field:
+                    type: toggle
+                    display: 'Vis land'
+                    default: true
+            phone:
+              display: Telefon
+              icon: 'lucide:phone'
+              fields:
+                -
+                  handle: label
+                  field:
+                    type: text
+                    display: Label
+                    default: 'Tlf:'
+                    localizable: false
+            email:
+              display: Email
+              icon: 'lucide:mail'
+              fields:
+                -
+                  handle: label
+                  field:
+                    type: text
+                    display: Label
+                    default: 'Mail:'
+                    localizable: false
+            cvr:
+              display: CVR
+              icon: 'lucide:hash'
+              fields:
+                -
+                  handle: label
+                  field:
+                    type: text
+                    display: Label
+                    default: 'CVR:'
+                    localizable: false
+            socialmedia:
+              display: 'Sociale medier'
+              icon: 'lucide:share-2'
+              fields: {  }
+            text:
+              display: Tekst
+              icon: 'lucide:type'
+              fields:
+                -
+                  handle: intro
+                  field:
+                    buttons:
+                      - bold
+                      - italic
+                      - removeformat
+                      - anchor
+                    toolbar_mode: floating
+                    container: assets
+                    remove_empty_nodes: false
+                    type: bard
+                    display: Tekst

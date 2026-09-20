@@ -1,28 +1,38 @@
-<header >
-    {{ if theme_settings.show_topbar }}
-        {{ partial:site_topbar }}
-    {{ endif }}
-    <div id="{{ id }}" class="[ site-head ] wrapper flex items-center gap-gutter">
-        {{ theme_settings.header.widgets }}
-            {{ partial src="widgets/{type}" }}
-        {{ /theme_settings.header.widgets }}
+<header class="[ site-head ]" data-sve-chrome="header" data-sve-chrome-label="Header">
+    <div class=" ">
+        {{ site_head.blocks }}
+            {{ if type == 'topbar' }}
+                <div class="[ topbar ] bg-tertiary h-400" {{ visual_edit outline_inside="true" }}>
+
+                </div>
+                {{ elseif type == 'main_header' }}
+                {{ if live_preview }} <div {{ visual_edit outline_inside="true" }}>{{ /if }}
+                <div class="[ main-header ] absolute z-50 w-full text-primary-50 bg-linear-180 from-secondary/90 via-secondary/70 to-secondary/0 after:absolute after:bottom-0 after:w-full after:h-px after:bg-tertiary-50/10" >
+                    <div class="wrapper flex items-center gap-500 py-500">
+                        {{ widgets }}
+                            {{ partial src="widgets/{type}" }}
+                        {{ /widgets }}
+                        <a class="btn border border-tertiary-50 rounded-md py-[.8em] bg-tertiary-950/5 backdrop-blur-md" href="">Online booking</a>
+                    </div>
+                {{ if live_preview }}</div>{{ /if }}
+                </div>
+            {{ endif }}
+        {{ /site_head.blocks }}
     </div>
-    
 </header>
 
-
 {{ style_push }}
-<style>
-    @scope(.site-head){
-        :scope{
-            --color-button-one: {{ theme_settings.header.settings.color_scheme:button_one_color }};
-            --color-button-one-text: {{ theme_settings.header.settings.color_scheme:button_one_text_color }};
-            background-color: {{ theme_settings.header.settings.color_scheme.background_color }};
-            color: {{ theme_settings.header.settings.color_scheme.text_color }};
-            font-family: var({{ theme_settings.header.settings.font }});
-            font-size: var({{ theme_settings.header.settings.font_size }});
-            {{ partial:spacing_sides_css :padding="theme_settings.header.settings.padding" }}
+    <style>
+        @scope(.site-head){
+            :scope{
+                
+            }
+
+            .main-header{
+
+            }
+
+
         }
-    }
-</style>
+    </style>
 {{ /style_push }}

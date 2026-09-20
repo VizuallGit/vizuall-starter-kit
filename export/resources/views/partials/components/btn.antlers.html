@@ -1,4 +1,27 @@
-<a class="btn {{ outline ?= 'ring-1 ring-inset' }} {{ class }}" target="{{ target_blank == 'true' ? '_blank' : '_self' }}" {{ if live_preview }}data-field-item="{{ index }}" data-focus-field="text"{{ else }}href="{{ url }}"{{ /if }}>
-    {{ text or 'Læs mere' }}
+{{# id= bruger rækkens egen _id/id — ikke det cascaded _visual_id fra links-
+    blokken. Ellers peger "Add another" på blokken i stedet for replicator-sættet,
+    og der oprettes en ekstra Links-blok i stedet for et ekstra link.
+
+    icon_from=links: feltets ikon (samme picker som på Replicator-sets),
+    sat under feltets indstillinger i fieldsettet.
+
+    controls= kræver inline_edit på SAMME visual_edit-tag (søskende-felter i
+    tool-chip). Kun select / button_group / radio / toggle understøttes —
+    iconify kan ikke tegnes i chip-baren. #}}
+<a id="id-{{ id ?? _id }}" class="btn {{ outline ?= 'ring-1 ring-inset' }} {{ class }}" data-auto-contrast-hover target="{{ target_blank == 'true' ? '_blank' : '_self' }}" href="{{ url }}" {{ visual_edit orderable="true" id="{_id ?? id}" icon_from="links" }}>
+    <span {{ visual_edit field="text" inline_edit="true" controls="outline" toolbar="true" scope="{_id ?? id}" }}>{{ text or 'Læs mere' }}</span>
 </a>
 
+
+{{ style_push }}
+    <style>
+        #id-{{ id ?? _id }}{
+            {{ if outline  }}
+                color: {{ color ?? 'var(--primary)' }};
+                background-color: transparent;
+            {{ else }}
+                background-color: {{ color ?? 'var(--primary)' }};
+            {{ endif }}
+        }
+    </style>
+{{ /style_push }}

@@ -1,6 +1,7 @@
 import Alpine from 'alpinejs'
-import morph from '@alpinejs/morph'
+// Kontrastberegningen bor i color-scheme-addonet. Importeret fra pakken frem
+// for kopieret herind, så den følger med når addonet opdateres.
+import '../../vendor/statamic-addon/color-scheme/resources/js/auto-contrast.js'
 
 window.Alpine = Alpine
-Alpine.plugin(morph)
 Alpine.start()

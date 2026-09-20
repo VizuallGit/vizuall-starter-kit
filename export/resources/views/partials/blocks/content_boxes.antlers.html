@@ -1,0 +1,36 @@
+{{# scope binder feltet til DENNE content_boxes-blok. Uden det er opslaget
+    ubundet og rammer den første `content_boxes` i dokumentet — så alle klik i
+    den anden og tredje Featured section på en side lander i den første. #}}
+<div class="[ list ]" {{ visual_edit field="content_boxes" insertable="true" scope="{{ id }}" }}>
+    {{ content_boxes }}
+        <div id="id-{{ id }}" class="[ list-item ]" {{ visual_edit orderable="true" }}>
+            <div>
+                <span>icon {{ bg_color }} fsdfsd</span>
+                {{# Headline and text are sets of their own in content_blocks, not loose
+                    fields on the item. Each set partial annotates itself, so a click in
+                    the preview opens that one set instead of the whole box. #}}
+                {{# orderable="false": the rows are locked (locked_rows), so arrows for
+                    moving them would promise something the CP does not allow. #}}
+                {{# Niveauet skal annoteres, ikke kun blokkene i det. Uden denne
+                    findes content_blocks ikke for editoren, og der er et hul
+                    mellem Item og den blok man klikker på. #}}
+                <div {{ visual_edit field="content_blocks" insertable="true" scope="{{ id }}" }}>
+                    {{ content_blocks }}
+                        {{ partial src="blocks/{type}" orderable="false" }}
+                    {{ /content_blocks }}
+                </div>
+            </div>
+            <ul>
+                {{ blocks }}
+                    <li>
+                        {{ if type == 'link' }}
+                            <a href="">dsad</a>
+                        {{ else }}
+                            <p>fsadf</p>
+                        {{ endif }}
+                    </li>
+                {{ /blocks }}
+            </ul>
+        </div>
+    {{ /content_boxes }}
+</div>

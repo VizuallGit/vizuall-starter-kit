@@ -1,0 +1,14 @@
+/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host {
+    --radius-4xl: 2rem;
+    --font-base: var(--font-base);
+    --font-heading: var(--font-heading);
+  }
+}
+@layer utilities {
+  .rounded-4xl {
+    border-radius: var(--radius-4xl);
+  }
+}

@@ -1,0 +1,69 @@
+title: 'Basic blocks'
+fields:
+  -
+    handle: blocks
+    field:
+      type: replicator
+      display: Blocks
+      collapse: accordion
+      button_label: 'Add block'
+      sets:
+        items:
+          display: Items
+          sets:
+            title:
+              display: Title
+              icon: text
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Title
+                    default: 'Indtast title text'
+            headline:
+              display: Headline
+              icon: fieldtype-text
+              fields:
+                -
+                  handle: headline
+                  field: blocks.headline.headline
+                -
+                  handle: size
+                  field:
+                    options:
+                      - key: small
+                        value: Small
+                      - key: large
+                        value: Large
+                    default: small
+                    type: select
+                    display: Size
+                    always_save: true
+                -
+                  handle: font_tag
+                  field:
+                    options:
+                      - key: h1
+                        value: H1
+                      - key: h2
+                        value: h2
+                      - key: h3
+                        value: H3
+                    default: h1
+                    type: button_group
+                    display: 'Font tag'
+                    always_save: true
+                    if: 'custom notInLivePreview'
+            richtext:
+              display: Richtext
+              icon: fieldtype-bard
+              fields:
+                -
+                  handle: richtext
+                  field: blocks.richtext.richtext
+            links:
+              display: Links
+              icon: lucide:square-stack
+              fields:
+                - import: links

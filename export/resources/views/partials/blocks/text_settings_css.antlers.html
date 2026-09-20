@@ -1,0 +1,26 @@
+{{#
+    CSS for én settings-gruppe i en text-blok.
+    Base-kald (desktop): base="true" :settings="settings" :legacy_padding="padding"
+    Override-kald:       :settings="settings_t" (eller settings_m)
+    Tomme felter udelades, så breakpoint-overrides arver.
+    Nye settings-felter (block_text_settings.yaml) mappes til CSS her.
+#}}
+#id-{{ id }}{
+    {{ if base }}
+        {{ partial:cms_styles/spacing_sides_css :padding="settings.padding ?? legacy_padding" }}
+    {{ else }}
+        {{ partial:cms_styles/spacing_sides_css :padding="settings.padding" }}
+        {{ if settings.text_alignment }}
+        text-align: {{ switch(
+            (settings.text_alignment == 'center') => 'center',
+            (settings.text_alignment == 'right') => 'right',
+            () => 'left'
+        ) }};
+        align-items: {{ switch(
+            (settings.text_alignment == 'center') => 'center',
+            (settings.text_alignment == 'right') => 'flex-end',
+            () => 'flex-start'
+        ) }};
+        {{ /if }}
+    {{ /if }}
+}

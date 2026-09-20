@@ -1,5 +1,5 @@
 {{ if links }}
-    <div class="inline-flex flex-wrap gap-100 {{ class }}" {{ visual_edit }}>
+    <div class="inline-flex flex-wrap gap-100 {{ class }}" {{ visual_edit field="links" insertable="true" }}>
         {{ links }}
             {{ _color = switch(
                 (first and ! outline) => 'bg-(--color-button-one) text-(--color-button-one-text)',

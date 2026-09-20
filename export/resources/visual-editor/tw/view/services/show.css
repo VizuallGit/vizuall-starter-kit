@@ -1,0 +1,40 @@
+/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host {
+    --color-primary-500: var(--primary-500);
+    --color-gray-600: var(--gray-600);
+    --text-xs: .875rem;
+    --spacing-800: var(--size-800);
+    --spacing-900: var(--size-900);
+    --spacing-1200: var(--size-1200);
+    --font-base: var(--font-base);
+    --font-heading: var(--font-heading);
+  }
+}
+@layer utilities {
+  .flex {
+    display: flex;
+  }
+  .bg-gray-600 {
+    background-color: var(--color-gray-600);
+  }
+  .bg-primary-500 {
+    background-color: var(--color-primary-500);
+  }
+  .p-800 {
+    padding: var(--spacing-800);
+  }
+  .p-900 {
+    padding: var(--spacing-900);
+  }
+  .py-800 {
+    padding-block: var(--spacing-800);
+  }
+  .py-1200 {
+    padding-block: var(--spacing-1200);
+  }
+  .text-xs {
+    font-size: var(--text-xs);
+  }
+}

@@ -1,0 +1,25 @@
+<span class="[ media-placeholder ]" aria-hidden="true">{{ svg src="media-placeholder" }}</span>
+
+{{ style_push }}
+<style>
+    .media-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 100%;
+        block-size: 100%;
+        background:
+            repeating-linear-gradient(45deg,
+                color-mix(in oklch, currentColor 10%, transparent) 0 1px,
+                transparent 1px 7px),
+            color-mix(in oklch, currentColor 4%, transparent);
+        outline: 1px dashed color-mix(in oklch, currentColor 40%, transparent);
+        outline-offset: -8px;
+
+        svg {
+            inline-size: clamp(2.25rem, 16%, 5rem);
+            block-size: auto;
+        }
+    }
+</style>
+{{ /style_push }}

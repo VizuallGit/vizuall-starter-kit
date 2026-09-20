@@ -21,7 +21,6 @@ topbar:
       type: search_bar
       enabled: true
   settings:
-    color_scheme: theme-4
     pt:
       -
         sides:
@@ -56,12 +55,12 @@ header:
       links:
         -
           id: KGJ4M-ffl9HeCsbbnTm5x
+          type: link
           text: 'Kontakt os'
           outline: false
       type: cta_links
       enabled: true
   settings:
-    color_scheme: theme-1
     padding:
       -
         sides:
@@ -92,7 +91,6 @@ footer:
       enabled: true
       form_picker: contact_form
   settings:
-    color_scheme: theme-2
     pt:
       -
         sides:
@@ -112,83 +110,6 @@ quaternary_color: '#00c728'
 contrast_light: '#fafafa'
 contrast_dark: '#011656'
 neutral_color: gray
-color_schemes:
-  -
-    id: 1cn9FEwg8I1ueMFUV235e
-    handle: theme-1
-    label: 'theme 1'
-    text_color: '#fafafa'
-    background_color: '#011656'
-    button_one_color: '#4bd2bc'
-    button_two_color: '#fafafa'
-    type: color_scheme
-    enabled: true
-    inner_background_color: '#273c7c'
-    inner_text_color: '#fafafa'
-    button_one_text_color: '#011656'
-    button_two_text_color: '#011656'
-  -
-    id: 0U-RHk5NzzEAQ2VKDH6aJ
-    handle: theme-2
-    label: 'Thema 2'
-    type: color_scheme
-    enabled: true
-    text_color: '#0a0a0a'
-    background_color: '#f5f5f5'
-    button_one_color: '#011656'
-    button_two_color: '#011656'
-    inner_background_color: '#011A65'
-    inner_text_color: '#fafafa'
-  -
-    id: No-g2l7kmW_joCKv6Ma_f
-    handle: theme-3
-    label: 'Theme 3'
-    text_color: '#011656'
-    background_color: '#fafafa'
-    button_one_color: '#011656'
-    button_two_color: '#011656'
-    type: color_scheme
-    enabled: true
-    button_one_text_color: '#fafafa'
-  -
-    id: aiTyLPyBVAhDTnMY51AAa
-    handle: theme-4
-    label: 'Theme 4'
-    background_color: '#4bd2bc'
-    text_color: '#011656'
-    button_one_color: '#011656'
-    button_two_color: '#011656'
-    type: color_scheme
-    enabled: true
-    inner_background_color: '#66d9c6'
-    inner_text_color: '#011656'
-    button_one_text_color: '#fafafa'
-    button_two_text_color: '#fafafa'
-  -
-    id: exINJkgqUMRs9GAqOLjpe
-    handle: theme-6
-    label: 'Theme 6'
-    background_color: '#f5f5f5'
-    text_color: '#011656'
-    inner_background_color: '#4bd2bc'
-    inner_text_color: '#011656'
-    button_one_color: '#011656'
-    button_one_text_color: '#fafafa'
-    button_two_color: '#011656'
-    button_two_text_color: '#fafafa'
-    type: color_scheme
-    enabled: true
-  -
-    id: uVSFDRxGU9iDPrIurx2qd
-    handle: header-theme
-    label: 'Header theme'
-    background_color: '#011656'
-    text_color: '#fafafa'
-    button_one_color: '#4bd2bc'
-    button_one_text_color: '#011656'
-    button_two_text_color: '#fafafa'
-    type: color_scheme
-    enabled: true
 container_width: 80em
 fluid_sizes:
   max_viewport: 1280
@@ -332,14 +253,6 @@ button_preview:
   text: '#fafafa'
 media_color_overlay: '#E54533'
 opacity: 20%
-show_blog: true
-show_employees: true
-show_services: true
-show_cases: true
-show_events: true
-show_products: true
-show_testimonials: true
-show_reusable_sections: true
 custom_css: |-
   .entries-style-1 .list-item,.media-textbox-style-1 .media-wrapper{
       border-top-left-radius: 1.5rem;

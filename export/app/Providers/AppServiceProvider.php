@@ -2,148 +2,117 @@
 
 namespace App\Providers;
 
-use App\Fieldtypes\ButtonPreview;
-use App\Modifiers\ContrastColor;
-use App\Modifiers\ToInt;
-use App\Modifiers\WithTypeIndex;
-use App\Tags\ColorSchemesJson;
+use App\Dashboard\WidgetCatalog;
+use App\Http\Controllers\CP\DashboardWidgetsController;
 use App\Tags\FileCode;
-use App\Tags\RenderAntlers;
-use App\Tags\ScopeCss;
-use App\Tags\ScriptPush;
 use App\Tags\SectionYaml;
-use App\Tags\StylePush;
-use App\Tags\YieldMinified;
-use App\Tags\YieldScripts;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use App\Http\Controllers\CP\ComponentExporterController;
-use Statamic\Facades\CP\Nav;
-use Statamic\Facades\GlobalSet;
-use Statamic\Facades\Utility;
-use Statamic\Modifiers\Modifier;
+use Statamic\Facades\Icon;
+use Statamic\Facades\User;
 use Statamic\Statamic;
 
 class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
-        //
+        // Responsive felter på globale sæt pakkes ind af addonet selv siden
+        // visual-editor v1.1.180 (`WrapResponsiveGlobalFields` bor dér, ved
+        // siden af `ResponsiveFields`). Intet at gøre her.
     }
 
     public function boot(): void
     {
-        $this->app->extend(
-            \Statamic\Contracts\Entries\CollectionRepository::class,
-            fn ($repo) => new class($repo) {
-                public function __construct(private object $inner) {}
+        // Custom SVGs for Replicator/Bard set icons (Edit Set → Custom icon field,
+        // or filename in YAML). Does not replace Statamic's default picker list —
+        // call Sets::useIcons('vizuall', …) if you want these in the picker too.
+        Icon::register('vizuall', resource_path('svg/set-icons'));
 
-                public function all(): \Illuminate\Support\Collection
-                {
-                    $collections = $this->inner->all();
+        // ── Flyttet til visual editor-addonet ────────────────────────────────
+        //
+        // "Lås rækker" og "Kun én af hver" registreres nu af addonets
+        // `ReplicatorSettings`, kaldt fra dets RegisterPanelVisibility-middleware.
+        // Begge lægges stadig på Statamics EGNE Replicator- og Grid-klasser,
+        // præcis som her — det er dér `App\Fieldtypes\Replicator` læste dem fra,
+        // og dér addonets egen Replicator læser dem fra nu.
 
-                    $cpRoute = config('statamic.cp.route', 'cp');
-                    if (! request()->is($cpRoute) && ! request()->is($cpRoute . '/*')) {
-                        return $collections;
-                    }
 
-                    try {
-                        $global  = \Statamic\Facades\GlobalSet::find('theme_settings');
-                        $default = \Statamic\Facades\Site::default()->handle();
-                        $data    = $global?->in($default)?->data();
-                        if (! $data) return $collections;
+        // Responsive-feltet bor i visual editor-addonet
+        // (`ResponsiveFieldtype`, `ResponsiveFields`, `WrapResponsiveFields`).
+        // Ikke i app/.
 
-                        $map = [
-                            'show_blog'              => 'blog',
-                            'show_employees'         => 'employees',
-                            'show_services'          => 'services',
-                            'show_cases'             => 'cases',
-                            'show_events'            => 'events',
-                            'show_products'          => 'products',
-                            'show_testimonials'      => 'testimonials',
-                            'show_reusable_sections' => 'reusable_sections',
-                        ];
-
-                        $hidden = collect($map)
-                            ->filter(fn ($handle, $field) => $data->get($field, true) === false)
-                            ->values()
-                            ->all();
-
-                        return $collections->reject(fn ($c) => in_array($c->handle(), $hidden));
-                    } catch (\Throwable) {
-                        return $collections;
-                    }
-                }
-
-                public function __call(string $method, array $args): mixed
-                {
-                    return $this->inner->$method(...$args);
-                }
-            }
-        );
+        // CP-assets. Bemærk hvor de to ender i dokumentet — det er hele pointen:
+        //
+        // Statamic rendrer registrerede Vite-entries fra
+        // `statamic::partials.scripts`, altså i BUNDEN af <body>. For JS er det
+        // rigtigt. For CSS er det en fælde: browseren har allerede tegnet hele
+        // siden med Statamics egen CSS fra <head>, og finder først vores bagefter
+        // — så siden hopper fra CP'ets standardudseende over i vores. Det er dét
+        // man ser som "gammel CSS, så ny CSS".
+        //
+        // Derfor står CSS'en ikke her, men registreres som en <link> i <head> via
+        // `Statamic::externalStyle()` nedenfor. Samme byggede fil, samme manifest
+        // — kun placeringen i dokumentet er en anden, og en <link> i <head>
+        // blokerer for tegning, hvilket er præcis dét vi vil have.
+        //
+        // Under `npm run cp:dev` findes cp-hot: der serverer Vite CSS'en selv og
+        // injicerer den via JS, og så skal den blive stående blandt entries.
+        $cpHot = file_exists(public_path('cp-hot'));
 
         Statamic::vite('app', [
-            'input' => [
+            'input' => array_values(array_filter([
                 'resources/js/cp.js',
-                'resources/css/cp.css',
-            ],
+                $cpHot ? 'resources/css/cp.css' : null,
+            ])),
             'hotFile' => public_path('cp-hot'),
             'buildDirectory' => 'vendor/app',
         ]);
 
-        Modifier::register('contrast_color', ContrastColor::class);
-        Modifier::register('to_int', ToInt::class);
-        Modifier::register('with_type_index', WithTypeIndex::class);
-        ColorSchemesJson::register();
+        if (! $cpHot && $cpCss = $this->builtCpStylesheet()) {
+            Statamic::externalStyle($cpCss);
+        }
+
+        // contrast_color, highlight_color, to_int, with_type_index,
+        // render_antlers, scope_css, style_push,
+        // script_push, yield_minified, yield_scripts og button_preview
+        // registreres nu af hvert sit addon. Kun de to der er bundet til
+        // dette projekts egne stier bliver her.
         FileCode::register();
-        RenderAntlers::register();
-        ScopeCss::register();
         SectionYaml::register();
-        StylePush::register();
-        YieldMinified::register();
-        ScriptPush::register();
-        YieldScripts::register();
-        ButtonPreview::register();
 
-        Utility::register('component-exporter')
-            ->title('Komponent Eksport')
-            ->description('Eksporter og importer page sections, blueprints og collections som ZIP')
-            ->icon('export')
-            ->view('utilities.component-exporter')
-            ->routes(function ($router) {
-                $router->get('items', [ComponentExporterController::class, 'items']);
-                $router->post('export', [ComponentExporterController::class, 'export']);
-                $router->post('import/check', [ComponentExporterController::class, 'check']);
-                $router->post('import', [ComponentExporterController::class, 'import']);
-                $router->get('selection', [ComponentExporterController::class, 'selection']);
-                $router->post('selection/toggle', [ComponentExporterController::class, 'toggleSelection']);
-            });
-
-        Statamic::booted(function () {
-            Nav::extend(function ($nav) {
-                $global = GlobalSet::find('theme_settings');
-                if (! $global) return;
-
-                $default = \Statamic\Facades\Site::default()->handle();
-                $data = $global->in($default)?->data();
-                if (! $data) return;
-
-                $map = [
-                    'show_blog'              => 'Blog',
-                    'show_employees'         => 'Employees',
-                    'show_services'          => 'Services',
-                    'show_cases'             => 'Cases',
-                    'show_events'            => 'Events',
-                    'show_products'          => 'Products',
-                    'show_testimonials'      => 'Testimonials',
-                    'show_reusable_sections' => 'Reusable sections',
-                ];
-
-                foreach ($map as $field => $label) {
-                    if ($data->get($field, true) === false) {
-                        $nav->remove('Content', 'Collections', $label);
-                    }
-                }
-            });
+        Statamic::pushCpRoutes(function () {
+            Route::get('dashboard-widgets', [DashboardWidgetsController::class, 'show'])->name('dashboard-widgets.show');
+            Route::put('dashboard-widgets', [DashboardWidgetsController::class, 'update'])->name('dashboard-widgets.update');
+            Route::put('dashboard-widgets/default', [DashboardWidgetsController::class, 'updateDefault'])->name('dashboard-widgets.default');
+            Route::delete('dashboard-widgets', [DashboardWidgetsController::class, 'destroy'])->name('dashboard-widgets.destroy');
         });
+
+        Statamic::provideToScript([
+            'dashboardWidgets' => function () {
+                return User::current() ? app(WidgetCatalog::class)->payload() : null;
+            },
+        ]);
+    }
+
+    /**
+     * URL'en til den byggede cp.css, læst ud af CP-buildets eget manifest.
+     *
+     * Filnavnet er hashet af Vite, så det kan ikke skrives ind i hånden — og
+     * hashen er netop dét der gør en <link> i <head> forsvarlig at cache hårdt.
+     * Er der ikke bygget endnu, returneres null: en manglende stylesheet må
+     * hverken kaste eller lægge en død <link> i hovedet.
+     */
+    protected function builtCpStylesheet(): ?string
+    {
+        $manifest = public_path('vendor/app/manifest.json');
+
+        if (! is_file($manifest)) {
+            return null;
+        }
+
+        $entries = json_decode(file_get_contents($manifest), true);
+        $file = $entries['resources/css/cp.css']['file'] ?? null;
+
+        return $file ? asset('vendor/app/'.$file) : null;
     }
 }

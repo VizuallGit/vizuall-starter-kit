@@ -1,0 +1,115 @@
+title: 'Content block'
+fields:
+  -
+    handle: content
+    field:
+      type: tab
+      display: Content
+  -
+    handle: content_block
+    field:
+      type: replicator
+      display: 'Content Block'
+      collapse: accordion
+      default:
+        - type: headline
+        - type: richtext
+        - type: links
+      sets:
+        items:
+          display: Items
+          sets:
+            title:
+              display: Title
+              icon: text
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Title
+                -
+                  handle: flow_space
+                  field: common.flow_space
+                  config:
+                    display: Gap
+            headline:
+              display: Headline
+              icon: fieldtype-text
+              fields:
+                - handle: headline
+                  field: blocks.headline.headline
+                -
+                  handle: flow_space
+                  field: common.flow_space
+                  config:
+                    display: Gap
+            richtext:
+              display: Richtext
+              icon: fieldtype-bard
+              fields:
+                - handle: richtext
+                  field: blocks.richtext.richtext
+                -
+                  handle: flow_space
+                  field: common.flow_space
+                  config:
+                    display: Gap
+            links:
+              display: Links
+              icon: lucide:square-stack
+              fields:
+                - import: links
+            list:
+              display: List
+              icon: fieldtype-list
+              fields:
+                -
+                  handle: list
+                  field:
+                    type: grid
+                    display: List
+                    max_rows: 4
+                    min_rows: 1
+                    fields:
+                      -
+                        handle: text
+                        field:
+                          type: text
+                          display: Text
+                      -
+                        handle: icon
+                        field:
+                          type: iconify
+                          display: Icon
+                -
+                  handle: flow_space
+                  field: common.flow_space
+                  config:
+                    display: Gap
+  -
+    handle: style
+    field:
+      type: tab
+      display: Style
+  -
+    handle: colors
+    field:
+      type: tab
+      display: Colors
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Background Color'
+  -
+    handle: spacing
+    field:
+      style: accordion
+      type: tab
+      display: Spacing
+  -
+    handle: padding
+    field: common.spacing
+    config:
+      display: Padding

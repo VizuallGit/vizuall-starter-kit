@@ -1,0 +1,76 @@
+{{ if title }}
+    <h3 class="[ widget-title ]" {{ visual_edit field="title" inline_edit="true" :blueprint="_bp" }}>{{ title }}</h3>
+{{ /if }}
+
+{{ if items }}
+    {{# Hver linje er sit eget punkt, så rækkefølgen bestemmes i CP'et. Værdierne
+        kommer fra Site settings — kun logoet vælges i widgetten. #}}
+    <div class="[ widget-contact ]" {{ visual_edit field="items" outline_inside="true" insertable="true" :blueprint="_bp" }}>
+        {{ items }}
+            {{ if type == 'logo' }}
+                <a class="[ widget-logo ]" href="/" aria-label="Gå til {{ site_settings:site_name }} forside" style="--logo-height: calc({{ height ?? 40 }} / 16 * 1rem)">
+                    {{ if logo }}
+                        {{ if (logo | ends_with('.svg')) }}
+                            {{ svg :src="logo" class="w-auto h-full" }}
+                        {{ else }}
+                            {{ glide :src="logo" :height="height" }}
+                                <img src="{{ url }}" width="{{ width }}" height="{{ height }}" alt="{{ site_settings:site_name }}">
+                            {{ /glide }}
+                        {{ /if }}
+                    {{ else }}
+                        {{ svg src="logo" class="w-auto h-full" }}
+                    {{ /if }}
+                </a>
+
+            {{ elseif type == 'company_name' }}
+                {{ if site_settings:site_name }}
+                    <p class="[ company-name ]">{{ site_settings:site_name }}</p>
+                {{ /if }}
+
+            {{ elseif type == 'address' }}
+                <address class="[ address ]">
+                    {{ if site_settings:address }}{{ site_settings:address }}<br>{{ /if }}
+                    {{ if site_settings:zip || site_settings:city }}{{ site_settings:zip }} {{ site_settings:city }}<br>{{ /if }}
+                    {{ if show_country && site_settings:country }}{{ site_settings:country }}{{ /if }}
+                </address>
+
+            {{ elseif type == 'phone' }}
+                {{ if site_settings:phone }}
+                    <p><a href="tel:{{ site_settings:phone | replace(' ', '') }}">{{ label }} {{ site_settings:phone }}</a></p>
+                {{ /if }}
+
+            {{ elseif type == 'email' }}
+                {{ if site_settings:email }}
+                    <p><a href="mailto:{{ site_settings:email }}">{{ label }} {{ site_settings:email }}</a></p>
+                {{ /if }}
+
+            {{ elseif type == 'cvr' }}
+                {{ if site_settings:cvr }}
+                    <p>{{ label }} {{ site_settings:cvr }}</p>
+                {{ /if }}
+
+            {{ elseif type == 'socialmedia' }}
+                {{ partial:components/socialmedia }}
+
+            {{ elseif type == 'text' }}
+                <div class="[ text ]" {{ visual_edit field="intro" inline_edit="true" :blueprint="_bp" }}>{{ intro }}</div>
+            {{ /if }}
+        {{ /items }}
+    </div>
+{{ else }}
+    {{# Gamle footer-widgets uden punkter: samme liste som før. #}}
+    <div class="text-sm opacity-80 space-y-200">
+        {{ if site_settings:company_name }}
+            <p>{{ site_settings:company_name }}</p>
+        {{ /if }}
+        {{ if site_settings:address }}
+            <p>{{ site_settings:address }}</p>
+        {{ /if }}
+        {{ if site_settings:email }}
+            <p><a href="mailto:{{ site_settings:email }}">{{ site_settings:email }}</a></p>
+        {{ /if }}
+        {{ if site_settings:phone }}
+            <p><a href="tel:{{ site_settings:phone }}">{{ site_settings:phone }}</a></p>
+        {{ /if }}
+    </div>
+{{ /if }}

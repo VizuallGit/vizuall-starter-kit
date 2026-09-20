@@ -1,0 +1,54 @@
+title: 'Block - Headline'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: headline
+    field:
+      type: bard
+      display: Headline
+      inline: true
+      toolbar_mode: floating
+      buttons:
+        - color
+      container: assets
+      remove_empty_nodes: false
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  - handle: font_size_tab
+    field: common.font_size_tab
+  -
+    handle: Font_size
+    field: common.font_size
+    config:
+      hide_display: true
+  -
+    handle: headings_tag_tab
+    field: common.headings_tag_tab
+    config:
+      display: 'Heading tag'
+  -
+    handle: tag
+    field: common.h_tag
+    config:
+      display: Tag
+      hide_display: true
+      # Ingen default her: en gemt værdi ville altid vinde over sektionens
+      # blocks_cfg, og så kunne stedet aldrig bestemme sit eget heading-niveau.
+      default: null
+  -
+    handle: flow_space_tab
+    field: common.flow_space_tab
+    config:
+      display: 'Flow space'
+  -
+    handle: flow_space
+    field: blocks.richtext.flow_space
+    config:
+      sve_sync_siblings: true

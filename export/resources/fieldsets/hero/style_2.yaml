@@ -1,0 +1,411 @@
+title: 'Hero style 2'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: blocks
+    field:
+      collapse: true
+      type: replicator
+      display: Blocks
+      unique_sets:
+        - content
+        - list
+      default:
+        - type: content
+        - type: list
+      max_sets: 2
+      sets:
+        block:
+          display: Block
+          sets:
+            content:
+              display: Content
+              icon: text-formatting-image-bottom
+              fields:
+                -
+                  handle: content_block
+                  field: content_block.content_block
+                  config:
+                    sets:
+                      items:
+                        display: Items
+                        instructions: null
+                        icon: null
+                        sets:
+                          headline:
+                            display: Headline
+                            instructions: null
+                            icon: fieldtype-text
+                            image: null
+                            hide: null
+                            fields:
+                              - import: blocks.headline
+                          richtext:
+                            display: Richtext
+                            instructions: null
+                            icon: fieldtype-bard
+                            image: null
+                            hide: null
+                            fields:
+                              - import: blocks.richtext
+                          links:
+                            display: Links
+                            instructions: null
+                            icon: 'lucide:square-stack'
+                            image: null
+                            hide: null
+                            fields:
+                              - import: links
+            list:
+              display: List
+              icon: add-list
+              fields:
+                -
+                  handle: content_tab
+                  field: common.content_tab
+                  config:
+                    display: Content
+                -
+                  handle: list
+                  field:
+                    type: replicator
+                    display: List
+                    collapse: true
+                    default:
+                      - type: item
+                      - type: item
+                      - type: item
+                    max_sets: 4
+                    sets:
+                      item:
+                        display: Item
+                        sets:
+                          item:
+                            display: Item
+                            icon: add-item
+                            fields:
+                              -
+                                handle: content_tab
+                                field: common.content_tab
+                                config:
+                                  display: Content
+                              -
+                                handle: blocks
+                                field:
+                                  type: replicator
+                                  display: Blocks
+                                  collapse: true
+                                  button_label: 'Add block'
+                                  unique_sets:
+                                    - icon
+                                    - title
+                                    - text
+                                  default:
+                                    - type: icon
+                                    - type: title
+                                  sets:
+                                    block:
+                                      display: block
+                                      sets:
+                                        icon:
+                                          display: Icon
+                                          icon: edit-design-compare-ab-testing
+                                          fields:
+                                            - import: blocks.icon
+                                            -
+                                              handle: border_radius_tab
+                                              field:
+                                                style: accordion
+                                                type: tab
+                                                display: 'Border Radius'
+                                                tab_icon: 'mdi:border-radius'
+                                            -
+                                              handle: border_radius
+                                              field:
+                                                step: 10
+                                                type: border_radius
+                                                display: 'Border Radius'
+                                                hide_display: true
+                                                sve_sync_siblings: true
+                                        title:
+                                          display: Title
+                                          icon: text-formatting-layer-style
+                                          fields:
+                                            -
+                                              handle: title
+                                              field:
+                                                type: text
+                                                display: Title
+                                                default: 'Indtast din title her...'
+                                            -
+                                              handle: font_size
+                                              field: common.font_size
+                                              config:
+                                                default: text-300
+                                                sve_responsive: true
+                                                sve_sync_siblings: true
+                                        text:
+                                          display: Text
+                                          icon: fieldtype-text
+                                          fields:
+                                            -
+                                              handle: text
+                                              field:
+                                                buttons:
+                                                  - bold
+                                                  - italic
+                                                  - removeformat
+                                                  - anchor
+                                                  - color
+                                                container: assets
+                                                remove_empty_nodes: false
+                                                type: bard
+                                                display: Text
+                                                default:
+                                                  -
+                                                    type: paragraph
+                                                    content:
+                                                      - type: text
+                                                        text: 'Indtast din tekst her...'
+                              -
+                                handle: style_tab
+                                field: common.style_tab
+                                config:
+                                  display: Style
+                              -
+                                handle: flex_direction_tab
+                                field:
+                                  style: accordion
+                                  tab_icon: 'fa7-solid:arrows-up-down-left-right'
+                                  type: tab
+                                  display: 'Flex direction'
+                              -
+                                handle: flex_direction
+                                field:
+                                  options:
+                                    - id: 4gadgOp8GlejDEYDKYFI7
+                                      key: flex-row
+                                      iconify: 'fa6-solid:arrows-left-right'
+                                    - id: 3448le1o2-O2SKWk4AbP4
+                                      key: flex-col
+                                      iconify: 'boxicons:move-vertical-filled'
+                                  type: icon_button_group
+                                  display: 'Flex direction'
+                                  hide_display: true
+                                  default: flex-row
+                                  sve_responsive: true
+                                  sve_sync_siblings: true
+                              -
+                                handle: flex_wrap
+                                field:
+                                  options:
+                                    - key: wrap
+                                      label: Wrap
+                                      iconify: 'mdi:wrap'
+                                  clearable: true
+                                  type: icon_button_group
+                                  display: Wrap
+                                  sve_sync_siblings: true
+                                  if:
+                                    flex_direction: 'equals flex-row'
+                              -
+                                handle: align_items
+                                field:
+                                  options:
+                                    - key: start
+                                      value: Start
+                                    - key: center
+                                      value: Center
+                                    - key: end
+                                      value: End
+                                  default: center
+                                  type: button_group
+                                  display: 'Align items'
+                                  sve_responsive: true
+                                  sve_sync_siblings: true
+                                  if:
+                                    flex_direction: 'equals flex-row'
+                              -
+                                handle: justify_content
+                                field:
+                                  options:
+                                    - key: start
+                                      value: Start
+                                    - key: center
+                                      value: Center
+                                    - key: end
+                                      value: End
+                                  default: center
+                                  type: button_group
+                                  display: 'Justify content'
+                                  sve_responsive: true
+                                  sve_sync_siblings: true
+                                  if:
+                                    flex_direction: 'equals flex-col'
+                -
+                  handle: style_tab
+                  field: common.style_tab
+                  config:
+                    display: Style
+                -
+                  handle: colors_tab
+                  field: common.colors_tab
+                  config:
+                    display: Colors
+                -
+                  handle: bg_color
+                  field:
+                    type: theme_color_picker
+                    display: 'Bg color'
+                    width: 50
+                    default: var(--gray-400)
+                -
+                  handle: bg_opacity
+                  field: common.opacity
+                  config:
+                    display: 'Bg opacity'
+                    width: 50
+                    sve_responsive: true
+                -
+                  handle: spacing_tab
+                  field: common.spacing_tab
+                  config:
+                    display: Spacing
+                -
+                  handle: padding
+                  field:
+                    max: 10
+                    step: 2
+                    sve_responsive: true
+                    type: spacing
+                    display: Padding
+                    default:
+                      -
+                        sides:
+                          - top
+                          - bottom
+                        value: 6
+                        custom: false
+                -
+                  handle: gap
+                  field:
+                    max: 10
+                    step: 2
+                    sve_responsive: true
+                    type: gap
+                    display: Gap
+                -
+                  handle: media_tab
+                  field:
+                    style: accordion
+                    tab_icon: 'pajamas:media'
+                    type: tab
+                    display: Media
+                -
+                  handle: background_opacity
+                  field:
+                    type: grid
+                    display: 'Background opacity'
+                -
+                  handle: position
+                  field:
+                    options:
+                      - id: zPh42Z8RPc09FRyRj__JN
+                        key: v
+                        label: Vertical
+                        icon_source: iconify
+                        iconify: 'solar:flip-vertical-bold'
+                      - id: NxWfy2jB_6tHjIGhUnDs4
+                        key: h
+                        label: Horizontal
+                        icon_source: iconify
+                        iconify: 'solar:flip-horizontal-bold'
+                    type: icon_button_group
+                    display: Position
+  -
+    handle: media
+    field:
+      container: assets
+      max_files: 1
+      type: assets
+      display: Media
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  -
+    handle: colors_tab
+    field: common.colors_tab
+    config:
+      display: Colors
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Background color'
+      default: var(--gray-300)
+  -
+    handle: spacing_tab
+    field: common.spacing_tab
+    config:
+      display: Spacing
+  -
+    handle: padding
+    field: common.section_spacing
+    config:
+      display: Padding
+      default:
+        -
+          sides:
+            - top
+            - bottom
+          value: 9
+          custom: false
+      sve_responsive: true
+  -
+    handle: media_settings_tab
+    field:
+      style: accordion
+      tab_icon: 'codicon:settings'
+      type: tab
+      display: 'Media settings'
+  -
+    handle: media_width
+    field:
+      type: width
+      display: 'Media width'
+      sve_responsive: true
+  -
+    handle: position
+    field:
+      options:
+        - id: nXruYZBOryEg58AM-fnew
+          key: h
+          label: Horizontal
+          icon_source: iconify
+          iconify: 'solar:flip-horizontal-bold'
+        - id: xlYyml1xtSZfzc3xl_75x
+          key: v
+          label: Vertical
+          icon_source: iconify
+          iconify: 'solar:flip-vertical-bold'
+      type: icon_button_group
+      display: Position
+      sve_responsive: true
+  -
+    handle: background_opacity
+    field:
+      add_row: 'Add opacity'
+      max_rows: 3
+      min_rows: 1
+      type: grid
+      display: 'Background opacity'
+      sve_responsive: true
+      fields:
+        - handle: opacity
+          field: common.opacity

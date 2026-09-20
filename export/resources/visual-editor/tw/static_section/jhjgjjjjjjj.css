@@ -1,0 +1,32 @@
+/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host {
+    --color-black: #000000;
+    --color-primary-700: var(--primary-700);
+    --spacing-900: var(--size-900);
+    --font-base: var(--font-base);
+    --font-heading: var(--font-heading);
+  }
+}
+@layer utilities {
+  .flex {
+    display: flex;
+  }
+  .flex-col {
+    flex-direction: column;
+  }
+  .bg-primary-700 {
+    background-color: var(--color-primary-700);
+  }
+  .py-900 {
+    padding-block: var(--spacing-900);
+  }
+  .hover\:bg-black {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-black);
+      }
+    }
+  }
+}

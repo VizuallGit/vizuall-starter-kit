@@ -1,0 +1,8 @@
+
+
+{{ if media | ends_with('.mp4') }}
+{{ else }}
+    <figure class="[ media ] {{ aspect_ratio }}" {{ visual_edit }}>
+        {{ partial:components/image :imagePath="media" class="w-full h-full object-cover" }}
+    </figure>
+{{ endif }}

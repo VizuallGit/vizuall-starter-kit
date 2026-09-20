@@ -1,0 +1,131 @@
+enabled: true
+panel: true
+page_activity: true
+pages: true
+pages_access:
+  audience: everyone
+  users: {}
+  groups: {}
+globals: true
+globals_access:
+  audience: everyone
+  users: {}
+  groups: {}
+globals_picker:
+  - site_settings
+  - theme_settings
+sections: true
+sections_access:
+  audience: everyone
+  users: {}
+  groups: {}
+listview: true
+listview_access:
+  audience: everyone
+  users: {}
+  groups: {}
+outline: true
+outline_access:
+  audience: everyone
+  users: {}
+  groups: {}
+performance: true
+performance_access:
+  audience: everyone
+  users: {}
+  groups: {}
+psi: false
+html_tree: true
+html_tree_access:
+  audience: everyone
+  users: {}
+  groups: {}
+comments: true
+comments_access:
+  audience: everyone
+  users: {}
+  groups: {}
+inline_edit: true
+focus_panel: true
+open_first_section: false
+template_dock: true
+template_dock_access:
+  audience: super
+  users: {}
+  groups: {}
+site_css: true
+site_css_access:
+  audience: super
+  users: {}
+  groups: {}
+file_manager: true
+file_manager_access:
+  audience: super
+  users: {}
+  groups: {}
+collection_templates: true
+tailwind_dock: true
+component_props: true
+component_props_buttons:
+  - h2
+  - h3
+  - bold
+  - italic
+  - underline
+  - strikethrough
+  - unorderedlist
+  - orderedlist
+  - anchor
+  - removeformat
+ai_panel: true
+ai_panel_access:
+  audience: everyone
+  users: {}
+  groups: {}
+ai_text: true
+ai_text_access:
+  audience: everyone
+  users: {}
+  groups: {}
+ai_project_rules: true
+open_in_preview: true
+open_in_preview_collections:
+  - pages
+  - templates
+library_page: true
+library_custom: true
+previews_autowatch: false
+library_global: true
+library_templates: true
+library_in_use_only: false
+breakpoints:
+  - id: wsnbqmbf
+    handle: laptop
+    label: desktop
+    device: Desktop
+    icon: desktop
+    min: 64.0
+    unit: em
+    width: 1440
+    height: 900
+  - id: ddw7zAE7
+    handle: tablet
+    label: tablet
+    device: Tablet
+    icon: tablet
+    min: 48.0
+    unit: em
+    width: 810
+    height: 1080
+  - id: saQiGx9o
+    handle: mobile
+    label: mobile
+    device: Mobile
+    icon: mobile
+    min: 0.0
+    unit: em
+    width: 375
+    height: 812
+chrome_header: true
+chrome_footer: true
+schema: true

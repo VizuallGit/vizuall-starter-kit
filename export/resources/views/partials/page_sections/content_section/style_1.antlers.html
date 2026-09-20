@@ -1,0 +1,160 @@
+{{ cols = 6 }}
+{{ cols_mobile = 1 }}
+
+{{ colsTablet = switch(
+    (cols_tablet == true) => cols_tablet,
+    () => cols
+) }}
+
+{{ colsMobile = switch(
+    (cols_mobile == true) => cols_mobile,
+    (cols_tablet == true) => cols_tablet,
+    () => cols
+) }}
+
+<article id="id-{{ id }}" class="[ content_section-style-1 ] wrapper py-900 bg-primary-900 text-primary-50" {{ visual_edit outline_inside="true" section_orderable="true" }}>
+    <div class="[ inner-wrapper ]{{ if overlap }} is-overlapping{{ /if }}" {{ visual_edit field="blocks" insertable="true" outline="always" grid_view="true" :grid="cols" grid_min="1" grid_resize="free" grid_handles="both" grid_preview="outline" :grid_overlap="overlap" }}>
+        {{ blocks }}
+            <div id="block-{{ id }}" class="[ content ]" data-auto-contrast data-block="{{ type }}" style="--order:{{ index }};{{ if front }}--front:1;{{ /if }}{{ if offset }}--offset:{{ offset }};{{ /if }}{{ if span.laptop.span }}--span-l:{{ span.laptop.span }};{{ /if }}{{ if span.laptop.span.start }}--start-l:{{ span.laptop.span.start }};{{ /if }}{{ if span.tablet.span }}--span-t:{{ span.tablet.span }};{{ /if }}{{ if span.tablet.span.start }}--start-t:{{ span.tablet.span.start }};{{ /if }}{{ if span.mobile.span }}--span-m:{{ span.mobile.span }};{{ /if }}{{ if span.mobile.span.start }}--start-m:{{ span.mobile.span.start }};{{ /if }}" {{ visual_edit orderable="true" }}>
+                {{ if type == 'content' }}
+                    {{ content_block }}
+                        {{ partial src="blocks/{type}" headline_tag="h1" headline_size="text-800" }}
+                    {{ /content_block }}
+                {{ elseif type == 'media' }}
+                    {{ partial src="blocks/{type}" }}
+                {{ endif }}
+            </div>
+        {{ /blocks }}
+    </div>
+</article>
+
+{{ sve_tw }}
+
+{{ style_push }}
+<style>
+#id-{{ id }}{
+            --color-bg: {{ bg_color }};
+            --color-content-bg: {{ blocks | where("type", "content") | pluck("bg_color") | first }};
+
+        }
+
+        @scope(.content_section-style-1){
+            :scope {
+                background-color: var(--color-bg);
+            }
+
+            .inner-wrapper{
+                --grid-cols: {{ cols }};
+                --gap-x: var(--size-800);
+
+                display: grid;
+                grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+                gap: var(--gap-x);
+            }
+
+            .content{
+                background-color: var(--color-content-bg);
+            }
+
+            {{# Pladsen læses indefra og ud: først hvad redaktøren har sat på netop
+                denne skærmstørrelse, så arven opad, så blokkens eget standardlayout
+                — og til sidst hele rækken, så et tal der mangler aldrig kan give en
+                blok bredden nul.
+
+                Bredden og startkolonnen står som hver sin variabel, så de to media
+                queries nedenfor kun skal skrive kaskaden om ét sted hver, i stedet
+                for at gentage hele `grid-column`. #}}
+            [data-block]{
+                --span: var(--span-l, var(--span-default, var(--grid-cols)));
+                --start: var(--start-l, var(--start-fallback, auto));
+
+                --col-pitch: calc((100% + var(--gap-x)) / var(--span));
+
+                order: var(--order, 0);
+                grid-column: var(--start) / span var(--span);
+
+                {{# Indrykningen holder indholdet fri af den blok der ligger oven på
+                    denne — den flytter ikke blokken. Baggrunden bliver liggende i
+                    hele sin bredde og fortsætter ind under naboen; det er kun
+                    overskrift, tekst og knapper der trækker sig, så de ikke havner
+                    under et billede og bliver klippet.
+
+                    Målt i hele kolonner, som alt andet her: ét skridt er en kolonne
+                    plus dens mellemrum. Fortegnet siger hvilken side der er optaget
+                    — positivt er højre, negativt venstre — og `max()` sørger for at
+                    kun den ene side får noget, uden at der skal to felter til. #}}
+                padding-inline-end: calc(max(var(--offset, 0), 0) * var(--col-pitch));
+                padding-inline-start: calc(max(0 - var(--offset, 0), 0) * var(--col-pitch));
+            }
+
+            {{# Standardpladserne: den ene blok mod venstre kant, den anden mod
+                højre. Media forankres bagfra — negative gitterlinjer tælles fra
+                enden — så dens plads følger dens egen bredde. Et fast kolonnetal
+                kunne den ikke bruge: sætter man bredden op uden også at flytte
+                starten, ville blokken slutte uden for gitteret, og browseren ville
+                lave de manglende kolonner i stedet for at klippe. #}}
+            [data-block="content"]{ --span-default: 4; --start-default: 1; }
+            [data-block="media"]{ --span-default: 2; --start-default: calc(-1 - var(--span)); }
+
+            {{# Med overlap slået til ligger alle blokke i samme række, og hvem
+                der ligger øverst afgøres af tekstboksens egen kontakt — ikke af
+                rækkefølgen i listen. Rækkefølgen ville ellers bestemme det halvt:
+                den siger allerede hvad der læses først, og så ville et lag ikke
+                kunne ændres uden også at ændre det. Billedet ligger imellem, så
+                tekstboksen enten er over eller under det, og aldrig i tvivl.
+
+                Her får hver blok også en startkolonne af sig selv. En blok der
+                flyder, kan ikke finde plads i en række hvor en anden allerede ligger
+                fast — den skubbes ud i kolonner der ikke findes. Standardpladserne
+                ovenfor ligger kant i kant, så det at tænde for overlap ikke i sig
+                selv flytter noget.
+
+                Mellemrummet mellem kolonnerne bliver stående. To blokke overlapper
+                ved at dele et spor, ikke ved at mellemrummet forsvinder — og uden
+                mellemrum er der ingen søm mellem sporene, så gitterlinjerne i Live
+                Preview smelter sammen til én flade man ikke kan sigte efter. #}}
+            .is-overlapping [data-block]{
+                --start-fallback: var(--start-default, auto);
+
+                grid-row: 1;
+            }
+
+            .is-overlapping [data-block="media"]{ z-index: 1; }
+            .is-overlapping [data-block="content"]{ z-index: calc(var(--front, 0) * 2); }
+
+            {{# Gitteret selv må også skifte pr. skærmstørrelse. En bredde gemt for
+                et bredere gitter klipper browseren af sig selv ned til rækken, så en
+                blok kan ikke blive bredere end der er. #}}
+            @media (max-width: 1023.98px){
+                .inner-wrapper{ --grid-cols: {{ colsTablet }}; }
+
+                [data-block]{
+                    --span: var(--span-t, var(--span-l, var(--span-default, var(--grid-cols))));
+                    --start: var(--start-t, var(--start-l, var(--start-fallback, auto)));
+                }
+            }
+
+            {{# På mobil stables blokkene, og hverken bredde eller plads arves
+                herned. Begge dele blev sat i et gitter med seks kolonner, og båret
+                ned i ét spor beskriver de noget der ikke findes: en bredde på fire
+                får browseren til at lave de manglende kolonner i stedet for at
+                klippe, og en startkolonne ville lægge blokkene oven i hinanden i
+                stedet for under. Standard er derfor hele rækken. Sætter man
+                udtrykkeligt en bredde eller en plads på mobil, gælder den. #}}
+            @media (max-width: 767.98px){
+                .inner-wrapper{ --grid-cols: {{ colsMobile }}; }
+
+                [data-block]{
+                    --span: var(--span-m, var(--grid-cols));
+                    --start: var(--start-m, auto);
+                    --offset: 0;
+                }
+
+                .is-overlapping [data-block]{
+                    grid-row: auto;
+                    z-index: auto;
+                }
+            }
+        }
+</style>
+{{ /style_push }}

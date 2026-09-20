@@ -1,0 +1,5 @@
+<span class="icon {{ bg_color ?= 'flex items-center justify-center' }}" style="color: {{ text_color ?? icon_color }}; background-color: {{ bg_color }}; {{ partial:cms_styles/icon_size_vars }} {{ partial:cms_styles/border_radius }}" {{ visual_edit field="icon" inline_edit="true" }}>
+    {{ iconify:icon class="{{ bg_color ? 'h-[50%]' : 'h-full' }} w-auto shrink-0 text-current" }}
+</span>
+
+{{ sve_tw handle="view/partials/blocks/icon" }}

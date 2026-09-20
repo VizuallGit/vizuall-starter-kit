@@ -1,0 +1,92 @@
+footer_widgets:
+  -
+    id: RqWpTBvBwf_P2uKYRNAEt
+    type: contact_info
+    enabled: true
+    _visual_id: 7c3119c8-0771-4251-af4a-1d37e6294c36
+    title: ''
+    items:
+      -
+        id: fi1
+        type: logo
+        enabled: true
+        _visual_id: ad3a6664-361d-4258-a0de-b726a0bba458
+        height: 40
+      -
+        id: fi2
+        type: address
+        enabled: true
+        _visual_id: b7974eb2-55ba-4e43-861f-4076fa0c9458
+        show_country: true
+      -
+        id: fi3
+        type: phone
+        enabled: true
+        _visual_id: c6c19b74-58e1-4ade-87a6-851a479fe697
+        label: 'Tlf:'
+      -
+        id: fi4
+        type: email
+        enabled: true
+        _visual_id: 4370a9c9-46bc-4561-ad6a-77d7479d2041
+        label: 'Mail:'
+      -
+        id: fi5
+        type: socialmedia
+        enabled: true
+        _visual_id: 6225c886-71f2-4813-a1db-2c6b5da192c7
+  -
+    id: ISwP2r6BlJBEUwLd2wlG3
+    type: navigation
+    enabled: true
+    _visual_id: eadecb2f-8bb6-46b0-a8ec-172516f62eb5
+    title: 'Nyttige links'
+    navigation_type: custom
+    navigation_picker:
+      - footer_nav
+    max_depth: 1
+  -
+    id: oh6bc6552397d4428cbe
+    type: opening_hours
+    enabled: true
+    _visual_id: ed0dd064-5e45-49d0-a7c5-37c139f800f3
+    title: Åbningstider
+    hours:
+      - { day: Mandag, time: '8.30 - 19.00' }
+      - { day: Tirsdag, time: '8.30 - 17.30' }
+      - { day: Onsdag, time: '8.30 - 14.00' }
+      - { day: Torsdag, time: '8.30 - 13.00' }
+      - { day: Fredag, time: '8.30 - 15.30' }
+      - { day: 'Lørdag og søndag', time: Lukket }
+  -
+    id: _tPTZr49eC0kNdraXOXiv
+    type: form
+    enabled: true
+    _visual_id: 641c9ea8-a205-4ab8-b694-53dfa2963f91
+    title: 'Online bestilling'
+    intro: '<p>Har du brug for en tid, så kan du bestille en nedenunder.</p>'
+    form_picker: contact_form
+    button_text: 'Online booking'
+columns:
+  laptop:
+    columns: 4
+  tablet:
+    columns: 2
+  mobile:
+    columns: 1
+dividers: true
+bg_color: 'var(--gray-300)'
+padding:
+  -
+    sides:
+      - top
+      - bottom
+    value: 8
+    custom: false
+gap:
+  -
+    axes:
+      - 'y'
+      - x
+    value: 8
+    custom: false

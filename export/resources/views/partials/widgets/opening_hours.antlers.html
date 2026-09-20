@@ -1,0 +1,20 @@
+{{# Åbningstider står i widgetten selv — ikke i Site settings — så hvert sted
+    de vises kan have sine egne tider. #}}
+{{ if title }}
+    <h3 class="[ widget-title ]" {{ visual_edit field="title" inline_edit="true" :blueprint="_bp" }}>{{ title }}</h3>
+{{ /if }}
+
+{{ if hours }}
+    <ul class="[ widget-hours ]" {{ visual_edit field="hours" outline_inside="true" :blueprint="_bp" }}>
+        {{ hours }}
+            <li>
+                <span class="[ day ]">{{ day }}</span>
+                <span class="[ time ]">{{ time }}</span>
+            </li>
+        {{ /hours }}
+    </ul>
+{{ /if }}
+
+{{ if note }}
+    <div class="[ widget-note ]" {{ visual_edit field="note" inline_edit="true" :blueprint="_bp" }}>{{ note }}</div>
+{{ /if }}

@@ -1,0 +1,68 @@
+title: 'Opening hours widget'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: title
+    field:
+      type: text
+      display: Overskrift
+      localizable: false
+      default: Åbningstider
+  -
+    handle: hours
+    field:
+      type: grid
+      display: Åbningstider
+      mode: stacked
+      add_row: 'Tilføj dag'
+      reorderable: true
+      localizable: false
+      fields:
+        -
+          handle: day
+          field:
+            type: text
+            display: Dag
+            width: 50
+        -
+          handle: time
+          field:
+            type: text
+            display: Tid
+            width: 50
+      default:
+        -
+          day: Mandag
+          time: '8.30 - 19.00'
+        -
+          day: Tirsdag
+          time: '8.30 - 17.30'
+        -
+          day: Onsdag
+          time: '8.30 - 14.00'
+        -
+          day: Torsdag
+          time: '8.30 - 13.00'
+        -
+          day: Fredag
+          time: '8.30 - 15.30'
+        -
+          day: 'Lørdag og søndag'
+          time: Lukket
+  -
+    handle: note
+    field:
+      buttons:
+        - bold
+        - italic
+        - removeformat
+        - anchor
+      toolbar_mode: floating
+      container: assets
+      remove_empty_nodes: false
+      type: bard
+      display: Note

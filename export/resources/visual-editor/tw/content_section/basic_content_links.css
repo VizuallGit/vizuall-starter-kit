@@ -1,0 +1,20 @@
+/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host {
+    --font-base: var(--font-base);
+    --font-heading: var(--font-heading);
+  }
+}
+@layer utilities {
+  .prose-headings\:max-w-\[35ch\] {
+    & :is(:where(h1, h2, h3, h4, h5, h6, th):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
+      max-width: 35ch;
+    }
+  }
+  .prose-p\:max-w-\[85ch\] {
+    & :is(:where(p):not(:where([class~="not-prose"],[class~="not-prose"] *))) {
+      max-width: 85ch;
+    }
+  }
+}

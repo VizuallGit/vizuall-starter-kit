@@ -1,0 +1,106 @@
+title: 'Page sections'
+fields:
+  -
+    handle: page_sections
+    field:
+      type: replicator
+      display: 'Page sections'
+      collapse: accordion
+      sets:
+        hero:
+          display: Hero
+          sets:
+            hero/style_2:
+              display: 'Hero style 2'
+              icon: 'lucide:panel-top'
+              image: hero-style-2-11e32007.png
+              fields:
+                - import: hero.style_2
+        galleries:
+          display: Galleries
+          sets:
+            gallery/style_1:
+              display: 'Galleri style 1'
+              fields:
+                - import: gallery.style_1
+              image: gallery-style-1-38c6d1d9.png
+        content_sections:
+          display: 'Content sections'
+          sets:
+            content_section/basic_content_links:
+              display: 'Basic content with links'
+              icon: 'fluent:text-align-center-24-regular'
+              fields:
+                - import: content_section.basic_content_links
+              image: content-section-basic-content-links-ba8d7dde.png
+            content_section/style_1:
+              display: 'Content section style 1'
+              image: content-section-style-1-9f4acb1f.png
+              fields:
+                - import: content_section.style_1
+            media_textbox/style_1:
+              display: 'Media textbox style 1'
+              image: media-textbox-style-1-fe825e73.png
+              fields:
+                - import: media_textbox.style_1
+        featured_sections:
+          display: 'Featured sections'
+          sets:
+            featured_section/feature_list_icons:
+              display: 'Feature list with icons'
+              icon: 'lucide:list-checks'
+              fields:
+                - import: featured_section.feature_list_icons
+              image: featured-section-feature-list-icons-1f9d4136.png
+            featured_section/style_1:
+              display: 'Featured section Style 1'
+              image: featured-section-style-1-ae8aaa88.png
+              fields:
+                - import: featured_section.style_1
+            new_set:
+              display: 'New Set'
+              fields: {}
+        other_sections:
+          display: 'Other sections'
+          sets:
+            form_section/style_1:
+              display: 'Media Form Box'
+              icon: 'lucide:mail'
+              fields:
+                - import: form_section.style_1
+              image: form-section-style-1-eb533194.png
+            accordion_section/style_1:
+              display: FAQ
+              icon: 'lucide:message-circle-question'
+              fields:
+                - import: accordion_section.style_1
+              image: accordion-section-style-1-aaff8e44.png
+            global_section:
+              display: 'Global section'
+              hide: true
+              fields:
+                -
+                  handle: global_section
+                  field:
+                    collections:
+                      - saved_sections
+                    max_items: 1
+                    type: entries
+                    display: 'Global section'
+            event_list:
+              display: 'Event list'
+              image: event-list-be387251.png
+              fields:
+                - import: event_list
+            other_section/employees_list_2:
+              display: 'Employees list'
+              fields:
+                - import: other_section.employees_list_2
+              image: other-section-employees-list-2-d40f821b.png
+        static_sections:
+          display: 'Static sections'
+          sets:
+            static_section/jhjgjjjjjjj:
+              display: jhjgjjjjjjj
+              static: true
+              fields: {}

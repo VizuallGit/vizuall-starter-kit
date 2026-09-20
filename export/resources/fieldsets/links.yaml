@@ -1,31 +1,112 @@
 title: Links
 fields:
   -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
     handle: links
     field:
-      max_rows: 2
-      type: grid
+      type: replicator
       display: Links
-      add_row: 'Tilføj link'
-      fields:
-        -
-          handle: url
-          field:
-            type: link
-            display: Url
-        -
-          handle: text
-          field:
-            type: text
-            display: Text
-        -
-          handle: icon
-          field:
-            store_as: svg_data
-            type: iconify
-            display: Icon
-        -
-          handle: outline
-          field:
-            type: toggle
-            display: Outline
+      collapse: true
+      button_label: 'Tilføj link'
+      default:
+        - type: link
+      sets:
+        item:
+          display: Item
+          sets:
+            link:
+              display: Link
+              icon: add-link
+              fields:
+                -
+                  handle: content_tab
+                  field: common.content_tab
+                  config:
+                    display: Content
+                -
+                  handle: url
+                  field:
+                    type: link
+                    display: Url
+                -
+                  handle: text
+                  field:
+                    type: text
+                    display: Text
+                    default: 'Læs mere'
+                -
+                  handle: icon
+                  field:
+                    store_as: svg_data
+                    type: iconify
+                    display: Icon
+                -
+                  handle: style_tab
+                  field: common.style_tab
+                  config:
+                    display: Style
+                -
+                  handle: colors_tab
+                  field: common.colors_tab
+                  config:
+                    display: Colors
+                -
+                  handle: color
+                  field:
+                    type: theme_color_picker
+                    display: Color
+                -
+                  handle: color_hover
+                  field:
+                    type: theme_color_picker
+                    display: 'Hover color'
+                -
+                  handle: outline_tab
+                  field:
+                    style: accordion
+                    type: tab
+                    display: Outline
+                -
+                  handle: outline
+                  field:
+                    type: toggle
+                    display: Outline
+                    hide_display: true
+                -
+                  handle: icon_position_tab
+                  field:
+                    style: accordion
+                    type: tab
+                    display: 'Icon position'
+                -
+                  handle: icon_placement
+                  field:
+                    options:
+                      - key: left
+                        value: Left
+                      - key: right
+                        value: Right
+                    default: right
+                    type: button_group
+                    display: 'Icon placement'
+                    hide_display: true
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  - handle: flow_space_tab
+    field: blocks.richtext.flow_space_tab
+  -
+    handle: flow_space
+    field: common.flow_space
+    config:
+      sve_sync_siblings: false
+      hide_display: true
+      # Ingen default her: en gemt værdi ville altid vinde over sektionens
+      # blocks_cfg, og så kunne stedet aldrig bestemme sin egen afstand.
+      default: null

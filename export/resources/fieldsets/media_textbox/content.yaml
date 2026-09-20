@@ -1,0 +1,48 @@
+title: 'Media textbox content'
+fields:
+  -
+    handle: content
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: content_block
+    field: content_block.content_block
+    config:
+      display: Blocks
+      default:
+        - type: headline
+        - type: richtext
+        - type: links
+      sets:
+        items:
+          display: Items
+          sets:
+            headline:
+              display: Headline
+              icon: fieldtype-text
+              fields:
+                - import: blocks.headline
+            richtext:
+              display: Richtext
+              icon: fieldtype-textarea
+              fields:
+                - import: blocks.richtext
+            links:
+              display: Links
+              icon: add-link
+              fields:
+                - import: links
+  -
+    handle: style
+    field: common.style_tab
+    config:
+      display: Style
+  -
+    handle: span
+    field:
+      type: column_span
+      display: Bredde
+      instructions: 'Hvor mange af sektionens 6 kolonner blokken fylder. Auto = sektionens eget layout.'
+      columns: 6
+      sve_responsive: true

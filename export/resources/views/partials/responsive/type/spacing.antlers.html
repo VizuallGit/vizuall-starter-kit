@@ -1,0 +1,23 @@
+{{#
+    Alle spacing-felter. Ikke én værdi men fire sider, så det bliver til rigtige
+    deklarationer i stedet for en custom property.
+
+    Egenskaben kommer af handlet: `padding` skriver `padding-top`, `margin`
+    skriver `margin-top`. Ét felt kaldt det rigtige er nok — der skal ikke en fil
+    mere til, hver gang en sektion vil styre en anden side af kassen.
+#}}
+{{ value }}
+    {{ if custom }}
+        {{ if top    }}{{ handle }}-top:    {{ value }};{{ /if }}
+        {{ if right  }}{{ handle }}-right:  {{ value }};{{ /if }}
+        {{ if bottom }}{{ handle }}-bottom: {{ value }};{{ /if }}
+        {{ if left   }}{{ handle }}-left:   {{ value }};{{ /if }}
+    {{ elseif value }}
+        {{ if top    }}{{ handle }}-top:    var(--size-{{ value }}00);{{ /if }}
+        {{ if right  }}{{ handle }}-right:  var(--size-{{ value }}00);{{ /if }}
+        {{ if bottom }}{{ handle }}-bottom: var(--size-{{ value }}00);{{ /if }}
+        {{ if left   }}{{ handle }}-left:   var(--size-{{ value }}00);{{ /if }}
+    {{ else }}
+        padding-block: var(--size-900);
+    {{ /if }}
+{{ /value }}

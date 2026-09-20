@@ -1,0 +1,29 @@
+{{ _is_placeholder = richtext | is_default('blocks.richtext') }}
+
+{{# Start-tekst pr. sted blokken bruges: kald partialen med richtext_placeholder,
+    så står den indtil redaktøren selv skriver. Sendes den ikke, gælder teksten
+    her. Navnet bærer blokkens eget navn foran, fordi sektionen kalder alle sine
+    blokke gennem ét partial-kald. #}}
+{{ _cfg = blocks_cfg.richtext }}
+{{ _placeholder = _cfg.placeholder ?: richtext_placeholder ?: 'Indtast din tekst her...' }}
+{{# Ekstra klasser pr. sted. SKAL hentes fra _cfg — et blot `class` er
+    allerede sektionens egen klasse, som skabelon_sections sender med
+    (`:class="_class"`) og Antlers arver ned i nestede partials. #}}
+{{ _block_class = _cfg.class ?: richtext_class }}
+{{# Afstanden op til blokken foran. Samme kaskade som resten: gemt værdi,
+    så stedets, så det almindelige auto. #}}
+{{ _flow_space = flow_space ?: _cfg.flow_space ?: 'flow-space-auto' }}
+
+{{# The caller can switch moving off (locked_rows replicators); orderable otherwise. #}}
+{{ _orderable = orderable ?? 'true' }}
+<div id="fs-{{ id }}" class="flow-y {{ _block_class }} {{ if _is_placeholder }}opacity-50{{ /if }} {{ _flow_space }}" {{ visual_edit field="richtext" inline_edit="true" placeholder="{_placeholder}" orderable="{_orderable}" toolbar="true" scope="{{ id }}" }}>
+    {{ if _is_placeholder }}<p>{{ _placeholder }}</p>{{ else }}{{ richtext }}{{ /if }}
+</div>
+
+{{ sve_tw handle="view/partials/blocks/richtext" }}
+
+{{ style_push }}
+<style>
+{{ partial:responsive/font_size }}
+</style>
+{{ /style_push }}

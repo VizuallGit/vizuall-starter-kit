@@ -1,0 +1,156 @@
+title: 'Accordion style 1'
+fields:
+  -
+    handle: content
+    field:
+      type: tab
+      display: Content
+      tab_icon: text
+  -
+    handle: blocks
+    field:
+      type: replicator
+      display: Blocks
+      collapse: accordion
+      button_label: 'Add block'
+      default:
+        - type: headline
+      sets:
+        items:
+          display: Items
+          sets:
+            title:
+              display: Title
+              icon: text
+              fields:
+                -
+                  handle: title
+                  field:
+                    type: text
+                    display: Title
+                    default: Caption
+            headline:
+              display: Headline
+              icon: fieldtype-text
+              fields:
+                - import: blocks.headline
+            richtext:
+              display: Richtext
+              icon: fieldtype-bard
+              fields:
+                - handle: richtext
+                  field: blocks.richtext.richtext
+  -
+    handle: items
+    field:
+      type: replicator
+      display: Accordion
+      collapse: accordion
+      button_label: 'Add item'
+      default:
+        - type: item
+          headline: 'Who should use the app?'
+        - type: item
+          headline: 'What is included with my subscription?'
+        - type: item
+          headline: 'How do I get paid?'
+        - type: item
+          headline: 'Is my personal information safe?'
+        - type: item
+          headline: 'How can we get in touch?'
+      sets:
+        list:
+          display: List
+          sets:
+            item:
+              display: Item
+              fields:
+                -
+                  handle: headline
+                  field:
+                    type: text
+                    display: Headline
+                    default: 'Indtast dit spørgsmål'
+                -
+                  handle: text
+                  field:
+                    type: bard
+                    display: Text
+                    toolbar_mode: floating
+                    buttons:
+                      - bold
+                      - italic
+                      - unorderedlist
+                      - orderedlist
+                      - removeformat
+                      - anchor
+                    default:
+                      -
+                        type: paragraph
+                        content:
+                          - type: text
+                            text: 'Indtast din tekst'
+  -
+    handle: design
+    field:
+      type: tab
+      display: Style
+      tab_icon: 'codicon:color-mode'
+  -
+    handle: width_tab
+    field:
+      type: tab
+      display: Width
+      style: accordion
+      tab_icon: 'ant-design:column-width-outlined'
+  -
+    handle: list_width
+    field:
+      type: select
+      display: Width
+      options:
+        - key: full
+          value: 'Full width'
+        - key: narrow
+          value: Narrow
+        - key: ultra_narrow
+          value: 'Ultra narrow'
+      default: narrow
+      hide_display: true
+  -
+    handle: farver
+    field:
+      type: tab
+      display: Farver
+      style: accordion
+      tab_icon: 'material-symbols:invert-colors-outline'
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Background color'
+      default: var(--gray-200)
+  -
+    handle: accordion_color
+    field:
+      type: theme_color_picker
+      display: 'Accordion color'
+      default: var(--color-white)
+  -
+    handle: text_color
+    field:
+      type: theme_color_picker
+      display: 'Text color'
+  -
+    handle: spacing
+    field:
+      type: tab
+      display: Spacing
+      style: accordion
+      tab_icon: spacing
+  -
+    handle: padding
+    field: common.section_spacing
+    config:
+      display: Padding
+      sve_responsive: true

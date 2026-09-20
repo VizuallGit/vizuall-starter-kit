@@ -1,0 +1,3 @@
+{{# Et grid af opacity-trin bliver til gradient-stops, som én værdi der kan stå
+    i en custom property. Er gridet tomt, skrives propertyen slet ikke, og
+    skabelonens `var(--background-opacity, …)` bestemmer hvad der så sker. #}}--background-opacity: {{ value }}color-mix(in oklch, var(--color-bg), transparent {{ opacity }}){{ last ? '' : ', ' }}{{ /value }};

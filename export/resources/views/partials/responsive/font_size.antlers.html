@@ -1,0 +1,48 @@
+{{#
+    font_size → CSS. Ikke Tailwind-klasser.
+
+    1) responsive_css kalder med value
+    2) Blok med feltet (title, richtext): #fs-{id} + @media
+    3) Ét kald i sektionens style_push finder title-rækker
+
+    HTML: id="fs-{id}"
+#}}
+{{ if value }}
+font-size: var(--{{ value }});
+{{ elseif type == "title" or type == "richtext" }}
+{{ _fs = font_size.laptop.font_size or font_size }}
+{{ if !_fs and type == "title" }}
+{{ _fs = 'text-300' }}
+{{ /if }}
+{{ if _fs }}
+#fs-{{ id }} {
+    font-size: var(--{{ _fs }});
+}
+{{ if font_size.tablet.font_size }}
+@media (width < 64em) {
+    #fs-{{ id }} {
+        font-size: var(--{{ font_size.tablet.font_size }});
+    }
+}
+{{ /if }}
+{{ if font_size.mobile.font_size }}
+@media (width < 48em) {
+    #fs-{{ id }} {
+        font-size: var(--{{ font_size.mobile.font_size }});
+    }
+}
+{{ /if }}
+{{ /if }}
+{{ else }}
+{{ blocks }}
+    {{ if type == "list" }}
+        {{ list }}
+            {{ blocks }}
+                {{ if type == "title" }}
+                    {{ partial:responsive/font_size }}
+                {{ /if }}
+            {{ /blocks }}
+        {{ /list }}
+    {{ /if }}
+{{ /blocks }}
+{{ /if }}

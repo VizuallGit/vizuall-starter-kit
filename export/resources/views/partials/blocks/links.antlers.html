@@ -1,0 +1,26 @@
+{{# Ekstra klasser pr. sted. group_class er det gamle navn og virker stadig. #}}
+{{ _cfg = blocks_cfg.links }}
+{{ _block_class = _cfg.class ?: group_class }}
+{{# Afstanden op til blokken foran. Samme kaskade som resten: gemt værdi,
+    så stedets, så det almindelige auto. #}}
+{{ _flow_space = flow_space ?: _cfg.flow_space ?: 'flow-space-auto' }}
+{{ if links }}
+    {{# Samme annotering som headline- og richtext-blokken: feltet der redigeres,
+        og blokkens egen række-id som scope. Uden den peger `_visual_id` på
+        sektionen, som alle blokkene deler, og så kan blokken ikke kendes fra
+        naboerne — hverken til at flytte eller til at slette.
+
+        Lidt padding: uden den dækker knapperne hele blokken, og man kan ikke
+        klikke “Links-blokken” selv for at få dens tool-chip (flyt/slet). #}}
+    <div class="flex w-full max-w-full flex-wrap gap-100 {{ _block_class }} {{ _flow_space }}" {{ visual_edit field="links" insertable="true" scope="{{ id }}" }}>
+        {{ links }}
+            {{ _color = switch(
+                (first and ! outline) => 'bg-(--color-button-one) text-(--color-button-one-text)',
+                (first and outline) => 'text-(--color-button-one) ring-curent',
+                (last and ! outline) => 'bg-(--color-button-two) text-(--color-button-two-text)',
+                (last and outline) => 'text-(--color-button-two) ring-curent',
+            ) }}
+                {{ partial:components/btn class="{_color}" }}
+        {{ /links }}
+    </div>
+{{ endif }}

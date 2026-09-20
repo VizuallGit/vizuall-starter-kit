@@ -1,0 +1,98 @@
+<section id="id-{{ id }}" class="[ {{ _class }} ] relative"{{ unless text_color }} data-auto-contrast{{ /unless }} {{ visual_edit outline_inside="true" section_orderable="true" }}>
+    <div class="[ content ] wrapper flow-y" {{ visual_edit field="blocks" insertable="true" }}>
+        {{ blocks }}
+            {{ partial src="blocks/{type}" headline_tag="h2" headline_size="text-600" }}
+        {{ /blocks }}
+    </div>
+    {{ if media }}
+    <div class="[ media ]" {{ visual_edit field="media" inline_edit="true" }}>
+        {{ if media | ends_with('.mp4') }}
+            <video loop autoplay muted playsinline src="{{ media }}"></video>
+        {{ else }}
+            {{ partial:components/picture :imagePath="media" }}
+        {{ /if }}
+    </div>
+    {{ /if }}
+</section>
+
+{{ style_push }}
+<style>
+  #id-{{ id }}{
+    --color-bg: {{ bg_color ?? 'var(--light)' }};
+    --bg-opacity: {{ bg_opacity ?? '0%' }};
+    {{ if text_color }}
+    --color-text: {{ text_color }};
+    {{ /if }}
+
+    {{ partial:cms_styles/spacing_sides_css :padding="padding.laptop.padding" }}
+  }
+
+  @media (width < 64em) {
+    #id-{{ id }}{
+      {{ partial:cms_styles/spacing_sides_css :padding="padding.tablet.padding" }}
+    }
+  }
+
+  @media (width < 48em) {
+    #id-{{ id }}{
+      {{ partial:cms_styles/spacing_sides_css :padding="padding.mobile.padding" }}
+    }
+  }
+
+  @scope(.{{ _class }}) {
+    :scope {
+      background-color: var(--color-bg);
+      {{ if text_color }}
+      color: var(--color-text);
+      {{ /if }}
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .content > p {
+      font-size: var(--size-200);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .content :is(h1, h2, h3, h4, h5, h6) {
+      max-inline-size: 28ch;
+    }
+
+    .media {
+      position: absolute;
+      inset: 0;
+      overflow: clip;
+    }
+
+    .media :is(img, video, picture) {
+      position: absolute;
+      inset: 0;
+      inline-size: 100%;
+      block-size: 100%;
+      object-fit: cover;
+    }
+
+    .media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-color: color-mix(in oklch, var(--color-bg) var(--bg-opacity), transparent);
+    }
+  }
+</style>
+{{ /style_push }}
+
+{{ script_push }}
+<script>
+
+</script>
+{{ /script_push }}

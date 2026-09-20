@@ -1,0 +1,53 @@
+{{#sve_props
+[
+    {
+        "handle": "headline",
+        "type": "text",
+        "label": "Headline",
+        "default": "fdsfdsf fdsfsd"
+    },
+    {
+        "handle": "rich_text",
+        "type": "bard",
+        "label": "Rich text",
+        "default": ""
+    },
+    {
+        "handle": "text",
+        "type": "text",
+        "label": "Text",
+        "default": "fdsfdsf"
+    },
+    {
+        "handle": "image",
+        "type": "media",
+        "label": "Image",
+        "default": "/assets/dencker-billeder-kvadratisk-(2).webp"
+    },
+    {
+        "handle": "link",
+        "type": "link",
+        "label": "Link",
+        "default": ""
+    },
+    {
+        "handle": "teaser",
+        "type": "bard",
+        "label": "Teaser",
+        "default": "<p>fadgad dsafgdag dsafgadsg</p>"
+    }
+]
+#}}
+
+{{ sve_defaults props_headline="fdsfdsf fdsfsd" props_rich_text="" props_text="fdsfdsf" props_image="/assets/dencker-billeder-kvadratisk-(2).webp" props_link="" props_teaser="<p>fadgad dsafgdag dsafgadsg</p>" }}
+<li class="group bg-gray-700 text-gray-50 relative rounded-4xl overflow-clip">
+  
+  
+{{ partial:components/image :imagePath="props_image" props_width="500" props_height="300" }}<div class="p-500 flow-y">
+    <h3 class="text-400"><a class="group-hover:text-primary-500 transition-colors duration-300 ease-in-out link-parent" href="{{ url }}">{{ props_headline }}</a></h3>
+    <p class="text-base text-current/70">{{ props_text }}</p>
+  </div>
+</li>
+
+{{ sve_tw handle="view/partials/components/card" }}
+{{ /sve_defaults }}

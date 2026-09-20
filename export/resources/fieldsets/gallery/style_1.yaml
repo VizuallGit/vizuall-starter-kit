@@ -1,0 +1,137 @@
+title: 'Gallery style 1'
+fields:
+  -
+    handle: content_tab
+    field: common.content_tab
+    config:
+      display: Content
+  -
+    handle: blocks
+    field:
+      type: replicator
+      display: Blocks
+      collapse: accordion
+      button_label: 'Add block'
+      default:
+        - type: headline
+      sets:
+        items:
+          display: Items
+          sets:
+            headline:
+              display: Headline
+              icon: fieldtype-text
+              fields:
+                - import: blocks.headline
+            richtext:
+              display: Richtext
+              icon: fieldtype-bard
+              fields:
+                - import: blocks.richtext
+  -
+    handle: images
+    field:
+      container: assets
+      type: assets
+      display: Billeder
+      mode: grid
+  -
+    handle: style_tab
+    field: common.style_tab
+    config:
+      display: Style
+  -
+    handle: layout_tab
+    field:
+      style: accordion
+      tab_icon: 'material-symbols:stacks-outline'
+      type: tab
+      display: Layout
+  -
+    handle: gallery_mode
+    field:
+      options:
+        - key: grid
+          value: Grid
+        - key: slider
+          value: Slider
+        - key: masonry
+          value: Masonry
+      default: grid
+      type: button_group
+      display: Layout
+      hide_display: true
+  -
+    handle: columns
+    field:
+      min: 1
+      max: 6
+      default: 3
+      sve_defaults:
+        tablet: 2
+        mobile: 1
+      type: range
+      display: Kolonner
+      instructions: 'Antal billeder ved siden af hinanden. Kan sættes for sig på tablet og mobil.'
+      sve_responsive: true
+      if:
+        gallery_mode: 'not slider'
+  -
+    handle: aspect_ratio
+    field: common.aspect_ratio
+    config:
+      unless:
+        gallery_mode: 'equals masonry'
+  -
+    handle: slider_items
+    field:
+      min: 1
+      max: 5
+      default: 3
+      type: range
+      display: 'Slider items'
+      if:
+        gallery_mode: 'equals slider'
+  -
+    handle: lightbox
+    field:
+      type: toggle
+      display: Lightbox
+      instructions: 'Klik på et billede åbner det stort, med pile gennem hele galleriet.'
+  -
+    handle: colors_tab
+    field: common.colors_tab
+    config:
+      display: Colors
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: 'Background color'
+      default: 'var(--gray-200)'
+  -
+    handle: spacing_tab
+    field: common.spacing_tab
+    config:
+      display: Spacing
+  -
+    handle: padding
+    field: common.section_spacing
+    config:
+      display: Padding
+      sve_responsive: true
+  -
+    handle: gap
+    field:
+      max: 10
+      step: 2
+      sve_responsive: true
+      type: gap
+      display: Gap
+      default:
+        -
+          axes:
+            - 'y'
+            - x
+          value: 4
+          custom: false

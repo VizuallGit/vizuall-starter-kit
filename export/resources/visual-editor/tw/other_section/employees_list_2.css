@@ -1,0 +1,73 @@
+/*! tailwindcss v4.2.4 | MIT License | https://tailwindcss.com */
+@layer theme, base, components, utilities;
+@layer theme {
+  :root, :host {
+    --spacing: 0.25rem;
+    --color-primary-100: var(--primary-100);
+    --color-gray-200: var(--gray-200);
+    --text-250: calc(var(--size-200) + 1px);
+    --text-400: var(--size-400);
+    --text-750: var(--size-750);
+    --spacing-500: var(--size-500);
+    --spacing-1000: var(--size-1000);
+    --font-base: var(--font-base);
+    --font-heading: var(--font-heading);
+  }
+}
+@layer utilities {
+  .mb-1\.5 {
+    margin-bottom: calc(var(--spacing) * 1.5);
+  }
+  .mb-2 {
+    margin-bottom: calc(var(--spacing) * 2);
+  }
+  .mb-5 {
+    margin-bottom: calc(var(--spacing) * 5);
+  }
+  .mb-20 {
+    margin-bottom: calc(var(--spacing) * 20);
+  }
+  .grid {
+    display: grid;
+  }
+  .grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .gap-500 {
+    gap: var(--spacing-500);
+  }
+  .bg-gray-200 {
+    background-color: var(--color-gray-200);
+  }
+  .bg-primary-100 {
+    background-color: var(--color-primary-100);
+  }
+  .py-9 {
+    padding-block: calc(var(--spacing) * 9);
+  }
+  .py-90 {
+    padding-block: calc(var(--spacing) * 90);
+  }
+  .py-1000 {
+    padding-block: var(--spacing-1000);
+  }
+  .text-250 {
+    font-size: var(--text-250);
+  }
+  .text-400 {
+    font-size: var(--text-400);
+  }
+  .text-750 {
+    font-size: var(--text-750);
+  }
+  .max-lg\:grid-cols-3 {
+    @media (width < 64rem) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+  .max-md\:grid-cols-1 {
+    @media (width < 48rem) {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+  }
+}

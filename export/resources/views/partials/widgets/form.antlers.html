@@ -1,0 +1,22 @@
+{{ if title }}
+    <h3 class="[ widget-title ]" {{ visual_edit field="title" inline_edit="true" :blueprint="_bp" }}>{{ title }}</h3>
+{{ /if }}
+
+{{ if intro }}
+    <div class="[ widget-text ]" {{ visual_edit field="intro" inline_edit="true" :blueprint="_bp" }}>{{ intro }}</div>
+{{ /if }}
+
+{{ if form_picker }}
+    {{# Felterne kommer fra den valgte formulars blueprint — vælges en anden
+        formular, skifter felterne med. #}}
+    {{ form:create :in="form_picker" class="widget-form" }}
+        {{ fields }}
+            <div class="[ form-field ]">
+                <label for="{{ id }}">{{ display }}</label>
+                {{ field }}
+                {{ if error }}<p class="[ form-error ]">{{ error }}</p>{{ /if }}
+            </div>
+        {{ /fields }}
+        <button type="submit" class="btn">{{ button_text ?? 'Send' }}</button>
+    {{ /form:create }}
+{{ /if }}

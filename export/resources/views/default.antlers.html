@@ -1,3 +1,8 @@
 {{ page_sections }}
-    {{ partial src="partials/page_sections/{ type }" id="{{ id }}" class="{{ type | replace('/', '-') | replace('_', '-') }}" }}
+    {{ _class = type | replace('/', '-') | replace('_', '-') }}
+    {{ partial src="partials/page_sections/{ type }" id="{{ id }}" :class="_class" :_class="_class" }}
 {{ /page_sections }}
+
+{{ sve_tw handle="view/default" }}
+
+{{ partial src="partials/static/ttttt" }}

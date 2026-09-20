@@ -1,0 +1,32 @@
+title: 'Block text settings'
+# Delt mellem settings (desktop), settings_t (tablet) og settings_m (mobil)
+# i blocks/text.yaml — nye felter her dukker automatisk op på alle tre
+# breakpoints. CSS-output til nye felter tilføjes ét sted:
+# partials/blocks/text_settings_css.antlers.html
+fields:
+  -
+    handle: main
+    field:
+      type: tab
+      display: Main
+      localizable: false
+  -
+    handle: text_alignment
+    field:
+      options:
+        - key: left
+          value: Left
+        - key: center
+          value: Center
+        - key: right
+          value: Right
+      type: button_group
+      display: 'Text alignment'
+      localizable: false
+  -
+    handle: padding
+    field:
+      max: 12
+      type: spacing
+      display: Padding
+      localizable: false

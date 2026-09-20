@@ -1,0 +1,13 @@
+{{ img_setting = switch(
+    (image_settings == 'float-left') => "@lg:float-right @lg:ml-600 @lg:!w-[calc(50%+var(--size-600)/2)] my-1.5!",
+    (image_settings == 'float-right') => "@lg:float-left @lg:mr-600 @lg:!w-[calc(50%+var(--size-600)/2)] my-1.5!",
+    () => "my-700!"
+)}}
+<figure class="lqip image-overlay {{ img_setting }}" style="background-image: url('{{ glide:image quality="10" fit="crop_focal" format="webp" width="50" height="50" }}'); background-size: cover; background-position: center;">
+    {{ glide :src="image" width="{{ image_settings == 'float-left' ? '350' : '700' }}" }}
+        {{ partial:components/image :imagePath="image" :props_width="width" :props_height="height" class="w-full"  }}
+    {{ /glide }}
+    {{ if caption }}
+        <figcaption class="dark:bg-gray-800 light:bg-gray-200 px-400 py-200 text-xxs text-current/80">{{ caption }}</figcaption>
+    {{ endif }}
+</figure>

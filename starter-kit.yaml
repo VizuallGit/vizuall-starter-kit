@@ -1,66 +1,124 @@
 updatable: false
 export_paths:
-  - app/Http/Middleware/InjectStyles.php
-  - app/Http/Controllers/CP/ComponentExporterController.php
+  - app/Dashboard
+  - app/Http/Controllers/CP/DashboardWidgetsController.php
+  - app/Http/Middleware/RecordPageViews.php
   - app/Providers/AppServiceProvider.php
-  - app/Modifiers
-  - app/Support
   - app/Tags
-  - app/Fieldtypes/ButtonPreview.php
-  - app/Fieldtypes/FluidFontPreview.php
-  - app/Fieldtypes/FluidFontSize.php
-  - app/Fieldtypes/FluidSize.php
-  - app/Fieldtypes/FontFamilySelector.php
-  - app/Fieldtypes/FontUploader.php
-  - app/Fieldtypes/ThemeColorPicker.php
+  - app/Widgets
   - bootstrap/app.php
   - resources/css
   - resources/js
-  - resources/views/utilities/component-exporter.blade.php
+  - resources/svg
   - public/fonts
-  - resources/users/roles.yaml
-  - resources/fieldsets/common.yaml
-  - resources/fieldsets/code_block.yaml
-  - resources/fieldsets/links.yaml
-  - resources/fieldsets/meta.yaml
-  - resources/fieldsets/socialmedia_links.yaml
-  - resources/fieldsets/widgets.yaml
-  - resources/fieldsets/sidebar_widgets.yaml
-  - resources/fieldsets/footer_widgets.yaml
-  - resources/views/default.antlers.html
-  - resources/views/layout.antlers.html
-  - resources/views/partials/components
-  - resources/views/partials/color_scheme_style.antlers.html
-  - resources/views/partials/layout_style_push.antlers.html
-  - resources/views/partials/meta_info.antlers.html
-  - resources/views/partials/spacing_props.antlers.html
-  - resources/views/partials/spacing_sides_css.antlers.html
-  - resources/views/partials/mobil_menu.antlers.html
-  - resources/views/partials/site_foot.antlers.html
-  - resources/views/partials/site_head.antlers.html
-  - resources/blueprints/collections/pages
-  - resources/blueprints/globals/site_settings.yaml
-  - resources/blueprints/globals/theme_settings.yaml
-  - content/globals/site_settings.yaml
-  - content/globals/theme_settings.yaml
-  - content/assets
   - package.json
   - vite.config.js
   - vite-cp.config.js
+  - resources/users/roles.yaml
+  - resources/users/groups.yaml
+  - resources/blueprints/user.yaml
+  - resources/fieldsets/common.yaml
+  - resources/fieldsets/meta.yaml
+  - resources/fieldsets/links.yaml
+  - resources/fieldsets/content_block.yaml
+  - resources/fieldsets/basic_blocks.yaml
+  - resources/fieldsets/blocks
+  - resources/fieldsets/accordion.yaml
+  - resources/fieldsets/logo.yaml
+  - resources/fieldsets/search.yaml
+  - resources/fieldsets/socialmedia_links.yaml
+  - resources/fieldsets/widgets.yaml
+  - resources/fieldsets/widgets
+  - resources/fieldsets/footer_widgets.yaml
+  - resources/views/layout.antlers.html
+  - resources/views/default.antlers.html
+  - resources/views/errors
+  - resources/views/partials/meta_info.antlers.html
+  - resources/views/partials/mobil_menu.antlers.html
+  - resources/views/partials/site_head.antlers.html
+  - resources/views/partials/site_foot.antlers.html
+  - resources/views/partials/site_topbar.antlers.html
+  - resources/views/partials/header
+  - resources/views/partials/footer
+  - resources/views/partials/widgets
+  - resources/views/partials/blocks
+  - resources/views/partials/components
+  - resources/views/partials/cms_styles
+  - resources/views/partials/responsive
+  - resources/views/partials/sets
+  - resources/views/partials/page_sections/global_section.antlers.html
+  - resources/views/partials/page_sections/main_content.antlers.html
+  - resources/blueprints/default.yaml
+  - resources/blueprints/assets
+  - resources/blueprints/forms
+  - resources/blueprints/collections/pages
+  - resources/blueprints/collections/saved_sections
+  - resources/blueprints/collections/saved_compositions
+  - resources/blueprints/collections/templates
+  - resources/blueprints/globals
+  - content/collections/pages.yaml
+  - content/collections/saved_sections.yaml
+  - content/collections/saved_compositions.yaml
+  - content/collections/templates.yaml
+  - content/globals/site_foot.yaml
+  - content/globals/site_head.yaml
+  - content/globals/site_settings.yaml
+  - content/globals/theme_settings.yaml
+  - content/globals/default/site_foot.yaml
+  - content/globals/default/site_head.yaml
+  - content/globals/default/theme_settings.yaml
+  - content/navigation/footer_nav.yaml
+  - content/trees/navigation/footer_nav.yaml
+  - content/assets
+  - resources/forms
+  - config/statamic-visual-editor.php
   - config/statamic/editions.php
   - config/statamic/live_preview.php
+  - resources/addons/visual-editor.yaml
+  - resources/visual-editor/ai-rules.md
+  - resources/visual-editor/collection-presets
+  - resources/visual-editor/tw/view
 dependencies:
   eminos/statamic-iconify: ^2.1
+  mitydigital/iconamic: ^3.0
   statamic-addon/bard-style: ^1.0
   statamic-addon/border-radius: ^1.0
   statamic-addon/code-editor: ^1.0
   statamic-addon/color-scheme: ^1.0
   statamic-addon/column-builder: ^1.0
+  statamic-addon/component-exporter: ^1.0
   statamic-addon/fluid-size: ^1.0
   statamic-addon/modifiers: ^1.0
   statamic-addon/popup: ^1.0
   statamic-addon/popup-group: ^1.0
   statamic-addon/sections: ^1.0
   statamic-addon/spacing: ^1.0
+  statamic-addon/style-push: ^1.0
   statamic-addon/tabs: ^1.0
-  statamic-addon/visual-editor: ^1.0
+  statamic-addon/visual-editor: ^1.1
+modules:
+  sections:
+    prompt: 'Installér Vizualls sektionsbibliotek (hero, indhold, galleri … med previews og gemte sektioner)?'
+    default: true
+    export_paths:
+      - resources/fieldsets/page_sections.yaml
+      - resources/fieldsets/accordion_section
+      - resources/fieldsets/content_section
+      - resources/fieldsets/featured_section
+      - resources/fieldsets/form_section
+      - resources/fieldsets/gallery
+      - resources/fieldsets/hero
+      - resources/fieldsets/media_textbox
+      - resources/fieldsets/other_section
+      - resources/fieldsets/event_list.yaml
+      - resources/views/partials/page_sections
+      - resources/visual-editor/tw/accordion_section
+      - resources/visual-editor/tw/content_section
+      - resources/visual-editor/tw/featured_section
+      - resources/visual-editor/tw/gallery
+      - resources/visual-editor/tw/hero
+      - resources/visual-editor/tw/other_section
+      - resources/visual-editor/tw/static_section
+      - public/assets/set-previews
+      - content/collections/saved_sections
+      - public/assets/saved-sections

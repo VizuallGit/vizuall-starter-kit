@@ -1,0 +1,93 @@
+{{#
+    Flex på list-item. Ét kald: partial:responsive/flex_direction
+    HTML: id="fd-{id}" på li
+
+    flex-row  → align-items (lodret) + valgfri flex-wrap
+    flex-col  → align-items + text-align (vandret), ingen wrap
+
+    Wrap on: tekst får flex-basis 20rem, så den hopper under ikonet
+    når der ikke er plads ved siden af (naturlig flex-wrap + container).
+#}}
+{{ if value }}
+flex-direction: {{ value == 'flex-col' ? 'column' : 'row' }};
+{{ elseif type == "item" }}
+{{ _dir_l = flex_direction.laptop.flex_direction ?? 'flex-row' }}
+{{ _dir_t = flex_direction.tablet.flex_direction ?? _dir_l }}
+{{ _dir_m = flex_direction.mobile.flex_direction ?? _dir_t }}
+{{ if _dir_l == 'flex-col' }}
+{{ _align_l = justify_content.laptop.justify_content ?? 'start' }}
+{{ else }}
+{{ _align_l = align_items.laptop.align_items ?? 'center' }}
+{{ /if }}
+{{ if _dir_t == 'flex-col' }}
+{{ _align_t = justify_content.tablet.justify_content ?? justify_content.laptop.justify_content ?? 'start' }}
+{{ else }}
+{{ _align_t = align_items.tablet.align_items ?? align_items.laptop.align_items ?? 'center' }}
+{{ /if }}
+{{ if _dir_m == 'flex-col' }}
+{{ _align_m = justify_content.mobile.justify_content ?? justify_content.tablet.justify_content ?? justify_content.laptop.justify_content ?? 'start' }}
+{{ else }}
+{{ _align_m = align_items.mobile.align_items ?? align_items.tablet.align_items ?? align_items.laptop.align_items ?? 'center' }}
+{{ /if }}
+{{ _wrap = flex_wrap ?? null }}
+#fd-{{ id }} {
+    flex-direction: {{ _dir_l == 'flex-col' ? 'column' : 'row' }};
+    align-items: {{ _align_l }};
+    justify-content: start;
+    align-content: start;
+    text-align: {{ _dir_l == 'flex-col' ? _align_l : 'start' }};
+    flex-wrap: {{ (_dir_l == 'flex-row' and _wrap == 'wrap') ? 'wrap' : 'nowrap' }};
+{{ if _dir_l == 'flex-row' and _wrap == 'wrap' }}
+    container-type: inline-size;
+    container-name: item-wrap;
+{{ /if }}
+}
+{{ if _dir_l == 'flex-row' and _wrap == 'wrap' }}
+#fd-{{ id }} > .icon {
+    flex: 0 0 auto;
+}
+#fd-{{ id }} > div {
+    flex: 1 1 20rem;
+    min-inline-size: min(100%, 20rem);
+}
+{{ /if }}
+{{ if flex_direction.tablet.flex_direction or align_items.tablet.align_items or justify_content.tablet.justify_content }}
+@media (width < 64em) {
+    #fd-{{ id }} {
+        flex-direction: {{ _dir_t == 'flex-col' ? 'column' : 'row' }};
+        align-items: {{ _align_t }};
+        justify-content: start;
+        align-content: start;
+        text-align: {{ _dir_t == 'flex-col' ? _align_t : 'start' }};
+        flex-wrap: {{ (_dir_t == 'flex-row' and _wrap == 'wrap') ? 'wrap' : 'nowrap' }};
+    }
+}
+{{ /if }}
+{{ if flex_direction.mobile.flex_direction or align_items.mobile.align_items or justify_content.mobile.justify_content }}
+@media (width < 48em) {
+    #fd-{{ id }} {
+        flex-direction: {{ _dir_m == 'flex-col' ? 'column' : 'row' }};
+        align-items: {{ _align_m }};
+        justify-content: start;
+        align-content: start;
+        text-align: {{ _dir_m == 'flex-col' ? _align_m : 'start' }};
+        flex-wrap: {{ (_dir_m == 'flex-row' and _wrap == 'wrap') ? 'wrap' : 'nowrap' }};
+    }
+}
+{{ /if }}
+{{ if _wrap == 'wrap' }}
+@container item-wrap (width < 20rem) {
+    #fd-{{ id }} > div {
+        flex-basis: 100%;
+    }
+}
+{{ /if }}
+{{ else }}
+{{ blocks }}
+    {{ if type == "list" }}
+        {{ list }}
+            {{ partial:responsive/flex_direction }}
+        {{ /list }}
+    {{ /if }}
+{{ /blocks }}
+{{ /if }}

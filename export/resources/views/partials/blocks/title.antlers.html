@@ -1,0 +1,3 @@
+{{ _is_placeholder = title | is_default('blocks.title') }}
+
+<p class="{{ if _is_placeholder }}opacity-50{{ /if }} {{ flow_space }}" {{ visual_edit field="title" inline_edit="true" orderable="true" toolbar="true" scope="{{ id }}" }}>{{ title }}</p>

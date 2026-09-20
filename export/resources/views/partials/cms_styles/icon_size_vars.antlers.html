@@ -1,0 +1,4 @@
+{{# Feltet gemmer sm/md/lg. Oversættelsen til --size-600/700/800 ligger på .icon som --icon-sm/md/lg. Tom tablet/mobil arver opad. #}}
+--icon-size-l: var(--icon-{{ size.laptop.size or 'md' }});
+--icon-size-t: var(--icon-{{ size.tablet.size or size.laptop.size or 'md' }});
+--icon-size-m: var(--icon-{{ size.mobile.size or size.tablet.size or size.laptop.size or 'md' }});

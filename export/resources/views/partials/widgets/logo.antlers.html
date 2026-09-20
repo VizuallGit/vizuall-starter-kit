@@ -1,0 +1,17 @@
+<a class="site-logo" href="/" aria-label="Gå til {{ site_settings.site_name }} forside" {{ visual_edit }}>
+    {{ if (logo | ends_with('.svg')) }}
+        {{ svg :src="logo" class="w-auto h-full" }}
+    {{ else }}
+        {{ glide :src="logo" height="{{ height }}" }}
+            <img src="{{ url }}" width="{{ width }}" height="{{ height }}">
+        {{ /glide }}
+    {{ endif }}
+</a>
+
+{{ style_push }}
+    <style>
+        .site-logo{
+            height: {{ height }}px;
+        }
+    </style>
+{{ /style_push }}

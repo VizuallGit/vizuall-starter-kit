@@ -1,0 +1,15 @@
+{{ _p = padding ?? settings.padding }}
+
+{{ _p }}
+    {{ if custom }}
+        {{ if top or (sides | contains('top')) }}padding-top:    {{ value }};{{ /if }}
+        {{ if right or (sides | contains('right')) }}padding-right:  {{ value }};{{ /if }}
+        {{ if bottom or (sides | contains('bottom')) }}padding-bottom: {{ value }};{{ /if }}
+        {{ if left or (sides | contains('left')) }}padding-left:   {{ value }};{{ /if }}
+    {{ elseif value }}
+        {{ if top or (sides | contains('top')) }}padding-top:    var(--size-{{ value }}00);{{ /if }}
+        {{ if right or (sides | contains('right')) }}padding-right:  var(--size-{{ value }}00);{{ /if }}
+        {{ if bottom or (sides | contains('bottom')) }}padding-bottom: var(--size-{{ value }}00);{{ /if }}
+        {{ if left or (sides | contains('left')) }}padding-left:   var(--size-{{ value }}00);{{ /if }}
+    {{ /if }}
+{{ /_p }}

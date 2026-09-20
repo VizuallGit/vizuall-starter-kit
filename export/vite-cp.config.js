@@ -12,6 +12,9 @@ logger.warn = (msg, options) => {
 
 export default defineConfig({
     customLogger: logger,
+    build: {
+        emptyOutDir: false,
+    },
     plugins: [
         tailwindcss(),
         statamic(),
