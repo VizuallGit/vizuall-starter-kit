@@ -52,7 +52,7 @@ YAML,
             <<<'MD'
 ---
 id: home
-blueprint: pages
+blueprint: home
 title: Home
 page_sections: []
 ---
