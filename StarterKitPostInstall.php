@@ -70,6 +70,46 @@ MD,
         );
 
         $console->info('Visual Editor stores (Global sections + Compositions) are included from the starter kit.');
+
+        $this->requireStaticPublish($console);
+    }
+
+    /**
+     * Static Publish (statamic-addon/static-publish) is part of every site, but
+     * it is not on Packagist, so it cannot sit in the kit's `dependencies`
+     * (the installer resolves those with plain `composer require`). Instead the
+     * hook registers the GitHub repository on the site and requires it from
+     * there. Runs after the modules, so a failure here never costs the site its
+     * files; it prints the manual command and moves on.
+     */
+    protected function requireStaticPublish($console): void
+    {
+        $package = 'statamic-addon/static-publish';
+        $repository = 'https://github.com/VizuallGit/statamic-addon-static-publish.git';
+
+        if (\Facades\Statamic\Console\Processes\Composer::isInstalled($package)) {
+            $console->line('Static Publish is already installed.');
+
+            return;
+        }
+
+        try {
+            \Facades\Statamic\Console\Processes\Composer::withoutQueue()->throwOnFailure()
+                ->runComposerCommand('config', 'repositories.static-publish', 'vcs', $repository);
+
+            $console->info('Installing Static Publish from GitHub (not on Packagist yet)…');
+
+            // --no-audit: an advisory on an unrelated package must not stop an
+            // unattended install; the site's own audit still runs on deploy.
+            \Facades\Statamic\Console\Processes\Composer::withoutQueue()->throwOnFailure()
+                ->require($package, '^1.0', '--no-audit', '--no-interaction');
+
+            $console->info('Static Publish installed.');
+        } catch (\Throwable $e) {
+            $console->error('Static Publish could not be installed: '.$e->getMessage());
+            $console->error('Run by hand in the site: composer config repositories.static-publish vcs '.$repository
+                .' && composer require '.$package.':^1.0 --no-audit');
+        }
     }
 
     protected function writeIfMissing(string $path, string $contents, $console, string $message): void
