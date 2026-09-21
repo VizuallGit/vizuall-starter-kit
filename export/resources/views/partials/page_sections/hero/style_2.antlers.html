@@ -1,3 +1,4 @@
+{{# sve-unlocked #}}
 <section id="id-{{ id }}" class="[ {{ _class }} ] relative" data-auto-contrast {{ visual_edit outline_inside="true" section_orderable="true" }} aria-label="fdsdsad">
     {{ blocks }}
         {{ if type == 'content' }}
@@ -7,7 +8,7 @@
                     {{ partial src="blocks/{type}" :blocks_cfg='[
                         "headline" => ["tag" => "h1", "size" => "text-800", "placeholder" => "Trine Rosendal din psykolog & hypnotisør"],
                         "richtext" => ["placeholder" => "Jeg har gennem de sidste 15 år arbejdet og studeret følelser og tanker. I den proces har jeg lært, på egen krop, hvad det vil sige at give slip. Den bgdfg evne kan jeg lære dig."],
-                    ]' }}
+                        ]' }}
                 {{ /content_block }}
             </div>
         {{ elseif type == 'list' }}
@@ -31,7 +32,7 @@
                     </li>
                 {{ /list }}
             </ul>
-        {{ endif }}
+            {{ endif }}
     {{ /blocks }}
     <div class="[ media ]" {{ visual_edit field="media" outline_inside="true" inline_edit="true" }}>
         {{ if media }}

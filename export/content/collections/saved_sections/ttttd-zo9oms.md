@@ -410,7 +410,7 @@ page_sections:
     enabled: true
     type: hero/style_2
     _visual_id: fea2ae8b-d7ba-4a88-962c-967698b6d6ba
-preview_image: saved-sections/c25cb758-ef52-4f6e-8f96-d211327cee0e-6405d529.png
+preview_image: saved-sections/c25cb758-ef52-4f6e-8f96-d211327cee0e-36cc1557.png
 updated_by: ea17491f-7b87-45b2-9df4-a12ccaeef7f4
 updated_at: 1788950848
 ---

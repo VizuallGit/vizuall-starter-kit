@@ -1,0 +1,7 @@
+title: 'Hero style 1'
+fields:
+  -
+    handle: text_field
+    field:
+      type: text
+      display: 'Text Field'

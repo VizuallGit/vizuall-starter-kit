@@ -316,5 +316,5 @@ page_sections:
     position:
       laptop:
         position: h
-preview_image: saved-sections/c6fe155d-3cc3-473a-b382-f0b57c6b6bba-b443a140.png
+preview_image: saved-sections/c6fe155d-3cc3-473a-b382-f0b57c6b6bba-d3bb56d5.png
 ---

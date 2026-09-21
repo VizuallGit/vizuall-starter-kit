@@ -24,7 +24,7 @@
 {{ sve_defaults props_headline="Headline" props_text="Position" props_image="/assets/image-4-(9).jpg" }}
 <li class="group">
   <div class="mb-200 rounded-md overflow-clip ">
-    {{ partial:components/image :imagePath="props_image" props_width="300" props_height="200" class="w-full group-hover:scale-110 transition-transform duration-800 ease-in-out" }}
+    {{ partial:components/image :imagePath="props_image" props_width="300" props_height="200" class="w-full group-hover:scale-110 transition-transform duration-800 ease-in-out" props_quality="70" }}
   </div>
   <div class="space-y-100">
     <h3 {{ visual_edit inline_edit="true" field="props_headline" }} class="text-300" >{{ props_headline }}</h3>

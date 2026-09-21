@@ -105,5 +105,5 @@ page_sections:
     block_order_mobile:
       - mtamgagow3ko
       - mtamgagolb0y
-preview_image: saved-sections/91f32ad9-d3a6-4f49-9326-aca99e10a3ca-7142158a.png
+preview_image: saved-sections/91f32ad9-d3a6-4f49-9326-aca99e10a3ca-696e58c7.png
 ---
