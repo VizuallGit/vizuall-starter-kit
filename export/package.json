@@ -8,7 +8,8 @@
         "dev:previews": "concurrently -k -n vite,previews -c cyan,magenta \"vite\" \"php artisan sve:previews --watch\"",
         "watch": "vite",
         "cp:dev": "vite --config vite-cp.config.js",
-        "cp:build": "vite build --config vite-cp.config.js"
+        "cp:build": "vite build --config vite-cp.config.js",
+        "browser": "puppeteer browsers install chrome-headless-shell"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.11",
