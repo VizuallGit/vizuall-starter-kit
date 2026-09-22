@@ -1,3 +1,21 @@
-{{# Footerens markup bor i partials/footer/, så template-docken kan adressere den —
-    addonet leder efter chrome-skabeloner netop dér. #}}
-{{ partial:footer/widgets }}
+{{# Footeren. site_foot som scope: uden det arver hvert visual_edit sidens `id`,
+    og klikket bliver tilskrevet entryen i stedet for footerens eget globale sæt. #}}
+{{ site_foot }}
+<footer class="[ site-foot ] wrapper" id="id-site-foot" data-sve-chrome="footer" data-sve-chrome-label="Footer" data-auto-contrast>
+    <p>Copyright &copy; {{ now format="Y" }}{{ if site_settings:site_name }} {{ site_settings:site_name }}{{ /if }}. All rights reserved.</p>
+</footer>
+{{ /site_foot }}
+
+{{ style_push }}
+<style>
+#id-site-foot {
+    --color-bg: {{ site_foot.bg_color }};
+    {{ partial:cms_styles/spacing_sides_css :padding="site_foot.padding" }}
+}
+@scope(.site-foot) {
+    :scope {
+        background: var(--color-bg);
+    }
+}
+</style>
+{{ /style_push }}

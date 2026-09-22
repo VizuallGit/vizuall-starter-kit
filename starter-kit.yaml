@@ -29,7 +29,6 @@ export_paths:
   - resources/fieldsets/socialmedia_links.yaml
   - resources/fieldsets/widgets.yaml
   - resources/fieldsets/widgets
-  - resources/fieldsets/footer_widgets.yaml
   - resources/views/layout.antlers.html
   - resources/views/default.antlers.html
   - resources/views/errors
@@ -38,8 +37,6 @@ export_paths:
   - resources/views/partials/site_head.antlers.html
   - resources/views/partials/site_foot.antlers.html
   - resources/views/partials/site_topbar.antlers.html
-  - resources/views/partials/header
-  - resources/views/partials/footer
   - resources/views/partials/widgets
   - resources/views/partials/blocks
   - resources/views/partials/components

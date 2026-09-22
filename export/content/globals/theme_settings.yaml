@@ -71,25 +71,6 @@ header:
     font: '--font-heading'
     font_size: '--size-200'
 footer:
-  footer_widgets:
-    -
-      id: RqWpTBvBwf_P2uKYRNAEt
-      title: 'Kontakt os'
-      type: contact_info
-      enabled: true
-    -
-      id: ISwP2r6BlJBEUwLd2wlG3
-      title: 'Nyttige links'
-      navigation_picker:
-        - footer_nav
-      type: navigation
-      enabled: true
-    -
-      id: _tPTZr49eC0kNdraXOXiv
-      title: 'Bliv kontaktet'
-      type: form
-      enabled: true
-      form_picker: contact_form
   settings:
     pt:
       -

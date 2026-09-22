@@ -6,42 +6,10 @@ tabs:
       -
         fields:
           -
-            handle: content_tab
-            field: common.content_tab
-            config:
-              display: Content
-          - import: footer_widgets
-          -
             handle: style_tab
             field: common.style_tab
             config:
               display: Style
-          -
-            handle: columns_tab
-            field:
-              style: accordion
-              tab_icon: 'material-symbols:stacks-outline'
-              type: tab
-              display: Kolonner
-          -
-            handle: columns
-            field:
-              min: 1
-              max: 4
-              default: 4
-              sve_defaults:
-                tablet: 2
-                mobile: 1
-              type: range
-              display: Kolonner
-              instructions: 'Antal widgets ved siden af hinanden. Kan sættes for sig på tablet og mobil.'
-              sve_responsive: true
-          -
-            handle: dividers
-            field:
-              type: toggle
-              display: 'Streger mellem kolonner'
-              default: true
           -
             handle: colors_tab
             field: common.colors_tab
@@ -70,19 +38,5 @@ tabs:
                   sides:
                     - top
                     - bottom
-                  value: 8
-                  custom: false
-          -
-            handle: gap
-            field:
-              max: 12
-              step: 2
-              type: gap
-              display: Gap
-              default:
-                -
-                  axes:
-                    - 'y'
-                    - x
                   value: 8
                   custom: false
