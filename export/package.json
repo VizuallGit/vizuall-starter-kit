@@ -9,7 +9,7 @@
         "watch": "vite",
         "cp:dev": "vite --config vite-cp.config.js",
         "cp:build": "vite build --config vite-cp.config.js",
-        "browser": "puppeteer browsers install chrome-headless-shell"
+        "browser": "PUPPETEER_CACHE_DIR=storage/app/sve-browser/puppeteer puppeteer browsers install chrome-headless-shell"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.11",
