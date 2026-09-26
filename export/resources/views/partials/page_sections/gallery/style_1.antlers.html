@@ -3,13 +3,14 @@
     ikke længere inde i et settings-objekt bag en revealer — så de hedder
     gallery_mode, image_size osv. i stedet for settings.gallery_mode. #}}
 
-{{# Glide-bredden pr. billede: containerbredden delt ud på antallet i sliderens
-    synsfelt. Højden følger det valgte format, så udsnittet bliver beskåret
-    ét sted i stedet for at browseren skalerer et for stort billede. #}}
+{{# Glide-bredden pr. billede: --container-width i var.css delt ud på antallet
+    i sliderens synsfelt. Højden følger det valgte format, så udsnittet bliver
+    beskåret ét sted i stedet for at browseren skalerer et for stort billede. #}}
 {{ _slider_items = slider_items ?? 3 }}
 {{ _columns = columns.laptop.columns ?? 3 }}
 {{ _per_row = gallery_mode == 'slider' ? _slider_items : _columns }}
-{{ _slider_image_width = theme_settings.container_width | remove_right('em') | multiply(16) | divide(_per_row) }}
+{{ _container_px = {css_var name="container-width" px="true"} }}
+{{ _slider_image_width = _container_px | divide(_per_row) }}
 
 {{ _slider_image_height = switch(
     (aspect_ratio == 'aspect-4/3') => (_slider_image_width | multiply(3) | divide(4) | ceil),

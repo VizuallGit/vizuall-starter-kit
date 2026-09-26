@@ -384,5 +384,5 @@ page_sections:
           - opacity: 100%
     enabled: true
     type: hero/style_2
-preview_image: saved-sections/39505339-9d23-478f-b913-485e05b7de5a-999b6efb.png
+preview_image: saved-sections/39505339-9d23-478f-b913-485e05b7de5a-4745f4c5.png
 ---

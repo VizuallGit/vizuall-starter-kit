@@ -13,13 +13,14 @@ fields:
             hero/style_2:
               display: 'Hero style 2'
               icon: 'lucide:panel-top'
-              image: hero-style-2-3dac130f.png
+              image: hero-style-2-2a5425e5.png
               fields:
                 - import: hero.style_2
             hero/hero_style_1:
               display: 'Hero style 1'
               fields:
                 - import: hero.hero_style_1
+              image: hero-hero-style-1-456af758.png
         galleries:
           display: Galleries
           sets:
@@ -27,7 +28,7 @@ fields:
               display: 'Galleri style 1'
               fields:
                 - import: gallery.style_1
-              image: gallery-style-1-4eb904a1.png
+              image: gallery-style-1-68c16a87.png
         content_sections:
           display: 'Content sections'
           sets:
@@ -36,15 +37,15 @@ fields:
               icon: 'fluent:text-align-center-24-regular'
               fields:
                 - import: content_section.basic_content_links
-              image: content-section-basic-content-links-07c334e5.png
+              image: content-section-basic-content-links-03072515.png
             content_section/style_1:
               display: 'Content section style 1'
-              image: content-section-style-1-2fe06710.png
+              image: content-section-style-1-5d7d30ae.png
               fields:
                 - import: content_section.style_1
             media_textbox/style_1:
               display: 'Media textbox style 1'
-              image: media-textbox-style-1-2f00fd67.png
+              image: media-textbox-style-1-a358069c.png
               fields:
                 - import: media_textbox.style_1
         featured_sections:
@@ -55,10 +56,10 @@ fields:
               icon: 'lucide:list-checks'
               fields:
                 - import: featured_section.feature_list_icons
-              image: featured-section-feature-list-icons-225015ad.png
+              image: featured-section-feature-list-icons-b3f95bdd.png
             featured_section/style_1:
               display: 'Featured section Style 1'
-              image: featured-section-style-1-e1edc07a.png
+              image: featured-section-style-1-7de2f3cb.png
               fields:
                 - import: featured_section.style_1
             new_set:
@@ -72,13 +73,13 @@ fields:
               icon: 'lucide:mail'
               fields:
                 - import: form_section.style_1
-              image: form-section-style-1-6d183bc7.png
+              image: form-section-style-1-a29c913f.png
             accordion_section/style_1:
               display: FAQ
               icon: 'lucide:message-circle-question'
               fields:
                 - import: accordion_section.style_1
-              image: accordion-section-style-1-5560631d.png
+              image: accordion-section-style-1-6d33144d.png
             global_section:
               display: 'Global section'
               hide: true
@@ -100,7 +101,7 @@ fields:
               display: 'Employees list'
               fields:
                 - import: other_section.employees_list_2
-              image: other-section-employees-list-2-d7b7d699.png
+              image: other-section-employees-list-2-d8671e46.png
             other_section/team:
               display: Team
               fields:
@@ -112,7 +113,61 @@ fields:
               display: jhjgjjjjjjj
               static: true
               fields: {}
+              image: static-section-jhjgjjjjjjj-521589da.png
             static_section/testt:
               display: testt
+              static: true
+              fields: {}
+              image: static-section-testt-6fdcda50.png
+            static_section/tew:
+              display: tew
+              static: true
+              fields: {}
+            static_section/sfgdgsfdg:
+              display: sfgdgsfdg
+              static: true
+              fields: {}
+            static_section/jjjjjjj:
+              display: jjjjjjj
+              static: true
+              fields: {}
+            static_section/kkkkkkkk:
+              display: kkkkkkkk
+              static: true
+              fields: {}
+            static_section/hdhgdfghgfdhgfh:
+              display: hdhgdfghgfdhgfh
+              static: true
+              fields: {}
+            static_section/ghghghghghjjjjjjj:
+              display: ghghghghghjjjjjjj
+              static: true
+              fields: {}
+            static_section/uuuuuu:
+              display: uuuuuu
+              static: true
+              fields: {}
+            static_section/iuytre:
+              display: iuytre
+              static: true
+              fields: {}
+            static_section/tterewrewr:
+              display: tterewrewr
+              static: true
+              fields: {}
+            static_section/lkjhgfdsfghg:
+              display: lkjhgfdsfghg
+              static: true
+              fields: {}
+            static_section/tteeeeee:
+              display: tteeeeee
+              static: true
+              fields: {}
+            static_section/gfdghdhsf:
+              display: gfdghdhsf
+              static: true
+              fields: {}
+            static_section/hsfgh:
+              display: hsfgh
               static: true
               fields: {}

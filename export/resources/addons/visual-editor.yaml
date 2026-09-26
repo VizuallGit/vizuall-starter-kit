@@ -40,6 +40,11 @@ html_tree_access:
   audience: everyone
   users: {}
   groups: {}
+schema: true
+schema_access:
+  audience: super
+  users: {}
+  groups: {}
 comments: true
 comments_access:
   audience: everyone
@@ -88,10 +93,7 @@ ai_text_access:
   users: {}
   groups: {}
 ai_project_rules: true
-open_in_preview: true
-open_in_preview_collections:
-  - pages
-  - templates
+open_in_preview: false
 library_page: true
 library_custom: true
 previews_autowatch: false
@@ -128,4 +130,3 @@ breakpoints:
     height: 812
 chrome_header: true
 chrome_footer: true
-schema: true

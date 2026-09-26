@@ -1,3 +1,4 @@
+{{# sve-unlocked #}}
 {{ cols = 6 }}
 {{ cols_mobile = 2 }}
 
@@ -28,11 +29,11 @@
     </div>
 </section>
 
-
+{{ sve_tw }}
 
 {{ style_push }}
-    <style>
-        {{ responsive_css }}
+<style>
+{{ responsive_css }}
 
         #id-{{ id }}{
             background-color: {{ bg_color }};
@@ -120,5 +121,16 @@
                 {{ block_order_mobile }}#block-{{ value }}{ order: {{ index }}; }{{ /block_order_mobile }}
             }
         {{ /if }}
-    </style>
+.media-textbox-style-1 {
+    .blocks {
+        ;
+
+        display: grid;
+        grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
+        gap: var(--size-1000);
+        --grid-cols: {{ cols }}
+    }
+}
+
+</style>
 {{ /style_push }}

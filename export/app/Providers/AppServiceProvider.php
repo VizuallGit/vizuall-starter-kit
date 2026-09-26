@@ -6,6 +6,7 @@ use App\Dashboard\WidgetCatalog;
 use App\Http\Controllers\CP\DashboardWidgetsController;
 use App\Tags\FileCode;
 use App\Tags\SectionYaml;
+use App\Tags\ThemeTokens;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Statamic\Facades\Icon;
@@ -75,10 +76,11 @@ class AppServiceProvider extends ServiceProvider
         // contrast_color, highlight_color, to_int, with_type_index,
         // render_antlers, scope_css, style_push,
         // script_push, yield_minified, yield_scripts og button_preview
-        // registreres nu af hvert sit addon. Kun de to der er bundet til
+        // registreres nu af hvert sit addon. Kun dem der er bundet til
         // dette projekts egne stier bliver her.
         FileCode::register();
         SectionYaml::register();
+        ThemeTokens::register();
 
         Statamic::pushCpRoutes(function () {
             Route::get('dashboard-widgets', [DashboardWidgetsController::class, 'show'])->name('dashboard-widgets.show');

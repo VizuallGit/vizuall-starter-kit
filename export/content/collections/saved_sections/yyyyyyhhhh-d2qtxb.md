@@ -397,5 +397,5 @@ page_sections:
             opacity: 100%
     enabled: true
     type: hero/style_2
-preview_image: saved-sections/777cf3c5-5e10-4e66-b0b9-9a85ff983fa0-2a15b577.png
+preview_image: saved-sections/777cf3c5-5e10-4e66-b0b9-9a85ff983fa0-682f868d.png
 ---

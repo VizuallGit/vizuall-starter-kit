@@ -2,7 +2,7 @@
 
 :root {
   --gutter: var(--size-700);
-  /* --container-width: 85.375rem; */
+  --container-width: 85.375rem;
   --container-width-narrow: 45rem;
   --container-padding: calc(((100vw - var(--container-width)) / 2) - var(--gutter));
 }

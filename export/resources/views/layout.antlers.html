@@ -9,17 +9,8 @@
         {{ /if }}
         {{ partial:meta_info }}
         {{ vite src="resources/css/site.css" }}
-        {{ if theme_settings.adobe_kits }}
-            {{ theme_settings.adobe_kits }}
-                {{ if url }}<link rel="stylesheet" href="{{ url }}">{{ /if }}
-            {{ /theme_settings.adobe_kits }}
-        {{ /if }}
+        {{ theme_tokens }}
         {{ yield_minified }}
-        {{ if theme_settings.custom_css }}
-            <style>
-                {{ theme_settings.custom_css }}
-            </style>
-        {{ endif }}
         <script type="speculationrules">
             {
                 "prerender": [{
@@ -45,5 +36,3 @@
 
     </body>
 </html>
-
-{{ sve_cache src="cms_styles/layout_style_push" globals="theme_settings" }}

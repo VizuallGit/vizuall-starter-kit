@@ -12,6 +12,7 @@ body {
   text-shadow: rgba(0, 0, 0, 0.01) 0 0 1px;
   font-size: 1rem;
   font-family: var(--font-base);
+  font-weight: var(--body-weight, 400);
   line-height: var(--line-height);
 }
 

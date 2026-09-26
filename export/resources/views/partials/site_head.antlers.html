@@ -3,7 +3,7 @@
         {{ site_head.blocks }}
             {{ if type == 'topbar' }}
                 <div class="[ topbar ] bg-tertiary h-400" {{ visual_edit outline_inside="true" }}>
-
+                    <h2>dsfdsf</h2>
                 </div>
                 {{ elseif type == 'main_header' }}
                 {{ if live_preview }} <div {{ visual_edit outline_inside="true" }}>{{ /if }}
@@ -21,9 +21,11 @@
     </div>
 </header>
 
+{{ sve_tw handle="view/partials/site_head" }}
+
 {{ style_push }}
-    <style>
-        @scope(.site-head){
+<style>
+@scope(.site-head){
             :scope{
                 
             }
@@ -34,5 +36,5 @@
 
 
         }
-    </style>
+</style>
 {{ /style_push }}

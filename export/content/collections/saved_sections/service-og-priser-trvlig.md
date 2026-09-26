@@ -487,5 +487,5 @@ page_sections:
     enabled: true
     type: featured_section/style_1
     bg_color: var(--tertiary-100)
-preview_image: saved-sections/25ce583a-f23e-4c86-8bd1-e74bc9c24af2-2e2a4eb9.png
+preview_image: saved-sections/25ce583a-f23e-4c86-8bd1-e74bc9c24af2-b3431b8f.png
 ---

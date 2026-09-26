@@ -1,7 +1,0 @@
-.flow-y > * + * {
-  margin-top: var(--flow-space, 1em);
-}
-
-.flow-x > * + * {
-  margin-left: var(--flow-space, 1em);
-}

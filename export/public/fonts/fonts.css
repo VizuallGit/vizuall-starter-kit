@@ -1,0 +1,113 @@
+/*
+ * The site's fonts. Written by the Fonts tab in Live Preview's Theme panel
+ * (Visual Editor); `{{ theme_tokens }}` links this file on every page, so a
+ * font added on the server works without a build.
+ *
+ * One @font-face per file; a family's faces stand together. Editing by hand
+ * is fine: the panel reads the rules back and only ever adds to the file.
+ * Paths are relative to this file. Iconfont is declared in resources/css/type.css.
+ */
+
+/* BarlowCondensed */
+@font-face {
+  font-family: "BarlowCondensed";
+  src: url("BarlowCondensed-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "BarlowCondensed";
+  src: url("BarlowCondensed-Medium-1.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "BarlowCondensed";
+  src: url("BarlowCondensed-Bold-3.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Bitter */
+@font-face {
+  font-family: "Bitter";
+  src: url("Bitter.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Cairo */
+@font-face {
+  font-family: "Cairo";
+  src: url("Cairo.woff2") format("woff2");
+  font-weight: 200 1000;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Exo2 */
+@font-face {
+  font-family: "Exo2";
+  src: url("Exo2.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Inter */
+@font-face {
+  font-family: "Inter";
+  src: url("Inter.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Merriweather */
+@font-face {
+  font-family: "Merriweather";
+  src: url("Merriweather.woff2") format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Montserrat */
+@font-face {
+  font-family: "Montserrat";
+  src: url("Montserrat.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Oswald */
+@font-face {
+  font-family: "Oswald";
+  src: url("Oswald.woff2") format("woff2");
+  font-weight: 200 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Roboto */
+@font-face {
+  font-family: "Roboto";
+  src: url("Roboto.woff2") format("woff2");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* SourceSerif4 */
+@font-face {
+  font-family: "SourceSerif4";
+  src: url("SourceSerif4.woff2") format("woff2");
+  font-weight: 200 900;
+  font-style: normal;
+  font-display: swap;
+}

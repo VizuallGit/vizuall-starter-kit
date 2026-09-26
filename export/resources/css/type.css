@@ -7,39 +7,58 @@
 
 h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
   text-wrap: balance;
-  line-height: var(--leading-flat);
+  line-height: var(--heading-line-height, var(--leading-flat));
+  font-weight: var(--heading-weight, 700);
   font-family: var(--font-heading);
   text-transform: var(--heading-text-transform);
+}
+
+.font-heading,
+.title {
+  line-height: var(--heading-line-height, var(--leading-flat));
+  font-weight: var(--heading-weight, 700);
 }
 
 h1,
 .h1 {
   font-size: var(--font-size-h1);
+  line-height: var(--h1-line-height, var(--heading-line-height, var(--leading-flat)));
+  font-weight: var(--h1-weight, var(--heading-weight, 700));
 }
 
 h2,
 .h2 {
   font-size: var(--font-size-h2);
+  line-height: var(--h2-line-height, var(--heading-line-height, var(--leading-flat)));
+  font-weight: var(--h2-weight, var(--heading-weight, 700));
 }
 
 h3,
 .h3 {
   font-size: var(--font-size-h3);
+  line-height: var(--h3-line-height, var(--heading-line-height, var(--leading-flat)));
+  font-weight: var(--h3-weight, var(--heading-weight, 700));
 }
 
 h4,
 .h4 {
   font-size: var(--font-size-h4);
+  line-height: var(--h4-line-height, var(--heading-line-height, var(--leading-flat)));
+  font-weight: var(--h4-weight, var(--heading-weight, 700));
 }
 
 h5,
 .h5 {
   font-size: var(--font-size-h5);
+  line-height: var(--h5-line-height, var(--heading-line-height, var(--leading-flat)));
+  font-weight: var(--h5-weight, var(--heading-weight, 700));
 }
 
 h6,
 .h6 {
   font-size: var(--font-size-h6);
+  line-height: var(--h6-line-height, var(--heading-line-height, var(--leading-flat)));
+  font-weight: var(--h6-weight, var(--heading-weight, 700));
 }
 
 p{

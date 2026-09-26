@@ -117,7 +117,7 @@ page_sections:
     enabled: true
     type: featured_section/style_1
     _visual_id: ef8df54a-8089-437a-a370-3b3e9aefd1c9
-preview_image: saved-sections/1f676f72-975f-46d2-99f8-cc457f456514-7af919b1.png
+preview_image: saved-sections/1f676f72-975f-46d2-99f8-cc457f456514-02e15fde.png
 updated_by: ea17491f-7b87-45b2-9df4-a12ccaeef7f4
 updated_at: 1786393294
 ---
