@@ -19,6 +19,10 @@ tabs:
               type: select
               display: Type
               options:
+                - key: layout
+                  value: Layout
+                - key: page
+                  value: Side
                 - key: index
                   value: Index
                 - key: show
@@ -32,8 +36,9 @@ tabs:
               type: collections
               display: Collection
               max_items: 1
-              validate:
-                - required
+              instructions: 'Kun for Index og Show. Layout og Side hører til sitet, ikke til en collection.'
+              if:
+                kind: 'contains_any index, show'
               width: 50
           -
             handle: view

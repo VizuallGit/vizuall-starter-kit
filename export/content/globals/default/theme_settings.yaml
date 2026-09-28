@@ -1,15 +1,7 @@
 primary_color: '#11122C'
-primary_tones_bias: 0
-primary_saturation: 0
 secondary_color: '#254446'
-secondary_tones_bias: 0
-secondary_saturation: 0
 tertiary_color: '#D6A485'
-tertiary_tones_bias: 0
-tertiary_saturation: 0
 quaternary_color: '#DE4F3F'
-quaternary_tones_bias: 0
-quaternary_saturation: 0
 container_width: 80em
 fluid_sizes:
   max_viewport: 1280
