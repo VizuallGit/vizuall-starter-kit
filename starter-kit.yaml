@@ -60,10 +60,8 @@ export_paths:
   - content/globals/site_foot.yaml
   - content/globals/site_head.yaml
   - content/globals/site_settings.yaml
-  - content/globals/theme_settings.yaml
   - content/globals/default/site_foot.yaml
   - content/globals/default/site_head.yaml
-  - content/globals/default/theme_settings.yaml
   - content/navigation/footer_nav.yaml
   - content/trees/navigation/footer_nav.yaml
   - content/assets
@@ -74,6 +72,7 @@ export_paths:
   - resources/addons/visual-editor.yaml
   - resources/visual-editor/ai-rules.md
   - resources/visual-editor/collection-presets
+  - resources/visual-editor/template-presets
   - resources/visual-editor/tw/view
 dependencies:
   eminos/statamic-iconify: ^2.1
@@ -114,6 +113,7 @@ modules:
       - resources/visual-editor/tw/featured_section
       - resources/visual-editor/tw/gallery
       - resources/visual-editor/tw/hero
+      - resources/visual-editor/tw/media_textbox
       - resources/visual-editor/tw/other_section
       - resources/visual-editor/tw/static_section
       - public/assets/set-previews

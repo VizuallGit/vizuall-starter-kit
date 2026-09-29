@@ -1,0 +1,26 @@
+{{#
+    Søgeresultater. Ret denne fil — den er skabelonen for det, "Opret" skriver.
+    Hvilke felter der søges i, bestemmes af indekset i config/statamic/search.php.
+#}}
+<section class="[ wrapper ] py-900">
+    <h1>{{ title }}</h1>
+
+    <form action="{{ current_uri }}" method="GET" role="search">
+        <label for="q">Søg</label>
+        <input id="q" type="search" name="q" value="{{ get:q }}" autocomplete="off">
+        <button type="submit">Søg</button>
+    </form>
+
+    {{ if get:q }}
+        {{ search:results query="q" }}
+            {{ if no_results }}
+                <p>Ingen resultater for "{{ get:q }}".</p>
+            {{ /if }}
+
+            <article>
+                <h2><a href="{{ url }}">{{ title }}</a></h2>
+                {{ if content }}<p>{{ content | strip_tags | truncate:160 }}</p>{{ /if }}
+            </article>
+        {{ /search:results }}
+    {{ /if }}
+</section>

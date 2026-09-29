@@ -13,7 +13,6 @@ globals_access:
   groups: {}
 globals_picker:
   - site_settings
-  - theme_settings
 sections: true
 sections_access:
   audience: everyone
