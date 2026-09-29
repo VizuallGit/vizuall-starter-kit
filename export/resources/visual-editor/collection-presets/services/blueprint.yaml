@@ -50,6 +50,8 @@ tabs:
               type: slug
               localizable: true
               validate: 'max:200'
+  seo:
+    display: SEO
     sections:
       -
         fields:
