@@ -107,10 +107,12 @@ return [
         'hidden_tabs' => [],
         'header' => [
             'global' => 'site_head',
-            'styles' => [
-                ['handle' => 'style_1', 'label' => 'Classic — logo · nav · CTA'],
-                ['handle' => 'style_2', 'label' => 'Centered — logo over nav'],
-            ],
+            // Tom med vilje. Layout-kortene skrev `header_style`, og ingen
+            // skabelon på sitet læser det felt — headeren bygges af blocks i
+            // `site_head`. Med tom liste dropper Live Preview også
+            // Design | Edit content-skifteren, så sidebaren går direkte til
+            // felterne. Læg kort tilbage her, og skifteren kommer igen.
+            'styles' => [],
         ],
         'footer' => [
             'global' => 'site_foot',

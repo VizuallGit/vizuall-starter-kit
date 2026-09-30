@@ -89,6 +89,7 @@ dependencies:
   statamic-addon/popup-group: ^1.0
   statamic-addon/sections: ^1.0
   statamic-addon/spacing: ^1.0
+  statamic-addon/static-publish: ^1.0
   statamic-addon/style-push: ^1.0
   statamic-addon/tabs: ^1.0
   statamic-addon/visual-editor: ^1.1
