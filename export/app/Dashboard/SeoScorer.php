@@ -201,21 +201,7 @@ class SeoScorer
 
     protected function findAsset(string $path): mixed
     {
-        $path = ltrim($path, '/');
-
-        foreach ([$path, 'assets::'.$path] as $id) {
-            try {
-                $asset = \Statamic\Facades\Asset::find($id);
-
-                if ($asset) {
-                    return $asset;
-                }
-            } catch (\Throwable) {
-                //
-            }
-        }
-
-        return null;
+        return AssetLookup::find($path);
     }
 
     protected function titleCheck(string $title): array

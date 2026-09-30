@@ -16,6 +16,7 @@ class VisualEditorComments extends Widget
     public function component()
     {
         return VueComponent::render('VisualEditorComments', [
+            'handle' => static::handle(),
             'pages' => $this->pages(),
             'csrf' => csrf_token(),
         ]);

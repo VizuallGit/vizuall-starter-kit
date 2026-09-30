@@ -45,6 +45,7 @@ class SeoScore extends Widget
         ];
 
         return VueComponent::render('SeoScore', [
+            'handle' => static::handle(),
             'pages' => $pages,
             'counts' => $counts,
         ]);

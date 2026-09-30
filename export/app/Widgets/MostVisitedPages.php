@@ -13,6 +13,7 @@ class MostVisitedPages extends Widget
         $limit = (int) $this->config('limit', 8);
 
         return VueComponent::render('MostVisitedPages', [
+            'handle' => static::handle(),
             'pages' => app(PageViewStore::class)->top(max(1, $limit)),
         ]);
     }

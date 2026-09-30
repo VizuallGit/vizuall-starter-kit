@@ -2,8 +2,12 @@
 @layer theme, base, components, utilities;
 @layer theme {
   :root, :host {
-    --font-base: var(--font-base);
-    --font-heading: var(--font-heading);
+    --spacing-800: var(--size-800);
+    --size-800: clamp(3rem, 2.5417rem + 2.2917vw, 4.375rem);
   }
 }
-@layer utilities;
+@layer utilities {
+  .py-800 {
+    padding-block: var(--spacing-800);
+  }
+}

@@ -10,16 +10,48 @@ use Statamic\Statamic;
 class WidgetCatalog
 {
     protected array $labels = [
+        'performance_scores' => 'Ydelse',
+        'accessibility_scores' => 'Tilgængelighed',
+        'recently_edited' => 'Senest redigeret',
+        'needs_attention' => 'Kræver opmærksomhed',
         'visual_editor_comments' => 'Kommentarer',
         'most_visited_pages' => 'Mest besøgte sider',
         'seo_score' => 'SEO-status',
     ];
 
     protected array $descriptions = [
+        'performance_scores' => 'Googles PageSpeed-score pr. side og for sitet, med en knap til at måle igen.',
+        'accessibility_scores' => 'Overskrifter, alt-tekster og links tjekket på hver udgiven side.',
+        'recently_edited' => 'Hvor du slap, på tværs af sider, sektioner og skabeloner.',
+        'needs_attention' => 'Kladder, manglende meta-tekst, billeder uden alt-tekst og åbne kommentarer ét sted.',
         'visual_editor_comments' => 'Åbne tråde fra Visual Editor, gruppet per side.',
         'most_visited_pages' => 'De sider der bliver besøgt mest på det offentlige site.',
         'seo_score' => 'Tjekliste for overskrifter, meta og indhold på udgivne sider.',
     ];
+
+    /**
+     * Dashboardets standardopsætning.
+     *
+     * Den står her og ikke i `config/statamic/cp.php`, fordi config-filen ikke
+     * følger med starter kittet: et nyt site fik Statamics tomme liste og
+     * dermed et dashboard uden widgets, selv om widget-koden var installeret.
+     * `AppServiceProvider` lægger listen ind under boot, når ingen har sat en
+     * anden — så er der ét sted at rette den, og nye sites får den gratis.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public static function defaults(): array
+    {
+        return [
+            ['type' => 'performance_scores', 'width' => 50, 'per_page' => 5],
+            ['type' => 'accessibility_scores', 'width' => 50, 'per_page' => 5],
+            ['type' => 'recently_edited', 'width' => 50, 'limit' => 6],
+            ['type' => 'needs_attention', 'width' => 50],
+            ['type' => 'most_visited_pages', 'width' => 50, 'limit' => 8],
+            ['type' => 'visual_editor_comments', 'width' => 50],
+            ['type' => 'seo_score', 'width' => 100],
+        ];
+    }
 
     public function payload(): array
     {

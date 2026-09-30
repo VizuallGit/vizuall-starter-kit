@@ -5,8 +5,13 @@ import { createApp } from 'vue';
 import MostVisitedPages from './components/widgets/MostVisitedPages.vue';
 import VisualEditorComments from './components/widgets/VisualEditorComments.vue';
 import SeoScore from './components/widgets/SeoScore.vue';
+import RecentlyEdited from './components/widgets/RecentlyEdited.vue';
+import NeedsAttention from './components/widgets/NeedsAttention.vue';
+import PerformanceScores from './components/widgets/PerformanceScores.vue';
+import AccessibilityScores from './components/widgets/AccessibilityScores.vue';
 import DashboardWidgetsPicker from './components/widgets/DashboardWidgetsPicker.vue';
 import './fieldsets-folder-filter.js';
+import './dashboard-drag.js';
 
 (function () {
     'use strict';
@@ -19,6 +24,10 @@ import './fieldsets-folder-filter.js';
         Statamic.$components.register('MostVisitedPages', MostVisitedPages);
         Statamic.$components.register('VisualEditorComments', VisualEditorComments);
         Statamic.$components.register('SeoScore', SeoScore);
+        Statamic.$components.register('RecentlyEdited', RecentlyEdited);
+        Statamic.$components.register('NeedsAttention', NeedsAttention);
+        Statamic.$components.register('PerformanceScores', PerformanceScores);
+        Statamic.$components.register('AccessibilityScores', AccessibilityScores);
 
         mountDashboardWidgetsPicker();
         Statamic.booted(() => {

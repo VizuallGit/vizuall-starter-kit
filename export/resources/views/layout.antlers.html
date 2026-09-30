@@ -26,13 +26,14 @@
         </script>
     </head>
     <body class="">
-        {{ partial:site_head }}
-        <main class="">
-            {{ template_content }}
-        </main>
-        {{ partial:site_foot }}
-        {{ vite src="resources/js/site.js" }}
-        {{ yield_scripts }}
-
-    </body>
+    {{ partial:site_head }}
+    <main class="">
+        {{ template_content }}
+    </main>
+    {{ partial:site_foot }}
+    {{ vite src="resources/js/site.js" }}
+    {{ yield_scripts }}
+</body>
 </html>
+
+{{ sve_tw handle="view/layout" }}

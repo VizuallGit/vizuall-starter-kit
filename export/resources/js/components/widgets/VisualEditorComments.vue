@@ -1,8 +1,9 @@
 <script setup>
 import { computed, nextTick, ref, watch } from 'vue';
-import { Widget } from '@statamic/cms/ui';
+import Card from './lib/Card.vue';
 
 const props = defineProps({
+    handle: { type: String, default: '' },
     pages: { type: Array, default: () => [] },
     csrf: { type: String, default: '' },
 });
@@ -263,22 +264,23 @@ async function deleteThread() {
     }
 }
 </script>
-
 <template>
-    <Widget title="Kommentarer">
-        <div v-if="thread" class="ve-thread">
-            <header>
-                <div>
-                    <strong>Kommentar</strong>
-                    <span>{{ thread.page.title }}</span>
-                </div>
-                <button type="button" aria-label="Luk" @click="closeThread">×</button>
-            </header>
+    <Card :handle="handle" :title="thread ? thread.page.title : 'Kommentarer'">
+        <template #tools>
+            <button v-if="thread" type="button" class="dash-head-btn" @click="closeThread">Tilbage</button>
+            <span v-else class="ve-tabs">
+                <button type="button" :class="{ 'is-active': filter === 'open' }" @click="filter = 'open'">
+                    Åbne ({{ openCount }})
+                </button>
+                <button type="button" :class="{ 'is-active': filter === 'all' }" @click="filter = 'all'">
+                    Alle ({{ allCount }})
+                </button>
+            </span>
+        </template>
 
-            <div class="ve-thread__section">
-                <label>Sektion</label>
-                <div>{{ thread.comment.section }}</div>
-            </div>
+        <!-- Én tråd ad gangen: listen viser hvem der har skrevet, tråden viser hvad. -->
+        <div v-if="thread" class="ve-thread">
+            <p class="ve-thread__where">{{ thread.comment.section }}</p>
 
             <div class="ve-thread__messages">
                 <div v-for="message in thread.comment.messages" :key="message.id || message.created_at">
@@ -309,248 +311,163 @@ async function deleteThread() {
             </form>
         </div>
 
-        <div v-else class="ve-comments">
-            <div class="ve-comments__tabs">
-                <button type="button" :class="{ 'is-active': filter === 'open' }" @click="filter = 'open'">
-                    Åbne ({{ openCount }})
-                </button>
-                <button type="button" :class="{ 'is-active': filter === 'all' }" @click="filter = 'all'">
-                    Alle ({{ allCount }})
-                </button>
-            </div>
-
-            <div v-if="!visiblePages.length" class="ve-comments__empty">
+        <template v-else>
+            <p v-if="!visiblePages.length" class="dash-empty">
                 {{ filter === 'open' ? 'Ingen åbne kommentarer.' : 'Ingen kommentarer endnu.' }}
-            </div>
+            </p>
 
-            <section v-for="page in visiblePages" :key="page.id" class="ve-comments__page">
-                <h3>{{ page.title }}</h3>
+            <template v-for="page in visiblePages" :key="page.id">
                 <button
                     v-for="comment in page.comments"
                     :key="comment.id"
                     type="button"
-                    class="ve-comments__row"
+                    class="dash-row-item"
                     :class="{ 'is-resolved': comment.resolved }"
                     @click="openThread(page, comment)"
                 >
-                    <div class="ve-comments__meta">
-                        <span>{{ comment.author }}</span>
-                        <span>{{ timeAgo(comment.created_at) }}</span>
-                    </div>
-                    <div class="ve-comments__where">{{ comment.section }}</div>
-                    <div class="ve-comments__body">{{ comment.body }}</div>
+                    <span class="dash-dot" :class="comment.resolved ? 'dash-dot--good' : 'dash-dot--ok'" />
+                    <span class="dash-row-item__body">
+                        <span class="dash-row-item__title">{{ comment.body }}</span>
+                        <span class="dash-row-item__sub">
+                            {{ page.title }} · {{ comment.section }} · {{ comment.author }}
+                        </span>
+                    </span>
+                    <span class="dash-row-item__aside">{{ timeAgo(comment.created_at) }}</span>
                 </button>
-            </section>
-        </div>
-    </Widget>
+            </template>
+        </template>
+    </Card>
 </template>
 
 <style scoped>
-.ve-comments,
-.ve-thread {
-    padding: 8px 12px 12px;
-    color: inherit;
-}
-.ve-comments__tabs {
+.ve-tabs {
     display: flex;
-    gap: 4px;
-    margin-bottom: 12px;
+    gap: 0.25rem;
 }
-.ve-comments__tabs button {
-    all: unset;
-    cursor: pointer;
-    padding: 4px 10px;
+
+.ve-tabs button {
+    margin: 0;
+    padding: 0.1875rem 0.625rem;
+    border: 0;
     border-radius: 999px;
-    font-size: 11px;
+    background: var(--dash-field);
+    color: var(--dash-muted);
+    font: inherit;
+    font-size: 0.6875rem;
     font-weight: 500;
-    background: color-mix(in oklab, currentColor 14%, transparent);
+    cursor: pointer;
 }
-.ve-comments__tabs button.is-active {
-    font-weight: 600;
+
+.ve-tabs button.is-active {
     background: var(--theme-color-primary, #4530d8);
     color: #fff;
 }
-.ve-comments__empty {
-    padding: 20px 8px;
-    text-align: center;
-    opacity: 0.55;
-    font-size: 12px;
-    line-height: 1.45;
+
+.dash-row-item.is-resolved {
+    opacity: 0.6;
 }
-.ve-comments__page + .ve-comments__page {
-    margin-top: 16px;
+
+.ve-thread {
+    padding: 0.75rem 1.125rem 1.125rem;
+    border-top: 1px solid var(--dash-line);
 }
-.ve-comments__page h3 {
-    margin: 0 0 8px;
-    font-size: 13px;
-    font-weight: 650;
+
+.ve-thread__where {
+    margin: 0 0 0.625rem;
+    font-size: 0.75rem;
+    color: var(--dash-sub);
 }
-.ve-comments__row {
-    all: unset;
-    box-sizing: border-box;
-    display: block;
-    width: 100%;
-    cursor: pointer;
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid color-mix(in oklab, currentColor 16%, transparent);
-    background: color-mix(in oklab, currentColor 7%, transparent);
-    color: inherit;
-    text-align: left;
-}
-.ve-comments__row + .ve-comments__row {
-    margin-top: 8px;
-}
-.ve-comments__row.is-resolved {
-    opacity: 0.62;
-}
-.ve-comments__meta {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 4px;
-}
-.ve-comments__meta span:first-child {
-    font-size: 11px;
-    font-weight: 650;
-}
-.ve-comments__meta span:last-child {
-    font-size: 10px;
-    opacity: 0.55;
-}
-.ve-comments__where {
-    font-size: 10px;
-    opacity: 0.55;
-    margin-bottom: 4px;
-}
-.ve-comments__body {
-    font-size: 13px;
-    line-height: 1.4;
-    white-space: pre-wrap;
-    word-break: break-word;
-}
-.ve-thread header {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 8px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid color-mix(in oklab, currentColor 14%, transparent);
-}
-.ve-thread header strong {
-    display: block;
-    font-size: 13px;
-}
-.ve-thread header span {
-    display: block;
-    margin-top: 2px;
-    font-size: 11px;
-    opacity: 0.55;
-}
-.ve-thread header button {
-    all: unset;
-    cursor: pointer;
-    opacity: 0.55;
-    font-size: 16px;
-    padding: 0 4px;
-    line-height: 1;
-}
-.ve-thread__section {
-    padding: 10px 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    border-bottom: 1px solid color-mix(in oklab, currentColor 14%, transparent);
-}
-.ve-thread__section label {
-    font-size: 10px;
-    font-weight: 650;
-    opacity: 0.55;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-}
-.ve-thread__section div {
-    font-size: 12px;
-}
+
 .ve-thread__messages {
-    padding: 10px 0;
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    max-height: 240px;
+    gap: 0.625rem;
+    max-height: 15rem;
     overflow: auto;
 }
+
 .ve-thread__who {
     display: flex;
     align-items: baseline;
+    gap: 0.375rem;
 }
+
 .ve-thread__who span:first-child {
-    font-size: 11px;
-    font-weight: 650;
+    font-size: 0.75rem;
+    font-weight: 600;
 }
+
 .ve-thread__who span:last-child {
-    font-size: 10px;
-    opacity: 0.55;
-    margin-left: 6px;
+    font-size: 0.6875rem;
+    color: var(--dash-sub);
 }
+
 .ve-thread__messages p {
-    margin: 3px 0 0;
-    font-size: 13px;
+    margin: 0.1875rem 0 0;
+    font-size: 0.8125rem;
     line-height: 1.4;
     white-space: pre-wrap;
     word-break: break-word;
 }
+
 .ve-thread__form {
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding-top: 10px;
-    border-top: 1px solid color-mix(in oklab, currentColor 14%, transparent);
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--dash-line);
 }
+
 .ve-thread__form textarea {
     width: 100%;
-    min-height: 64px;
+    min-height: 4rem;
+    padding: 0.5rem;
     resize: vertical;
-    border: 1px solid color-mix(in oklab, currentColor 22%, transparent);
-    border-radius: 8px;
-    padding: 8px;
+    border: 1px solid var(--dash-ring);
+    border-radius: 0.5rem;
     font: inherit;
-    font-size: 13px;
-    box-sizing: border-box;
+    font-size: 0.8125rem;
     color: inherit;
-    background: color-mix(in oklab, currentColor 6%, transparent);
+    background: var(--dash-field);
 }
+
 .ve-thread__form textarea:focus {
     outline: none;
     border-color: var(--theme-color-primary, #4530d8);
 }
+
 .ve-thread__error {
     margin: 0;
-    font-size: 12px;
-    color: #e5484d;
+    font-size: 0.75rem;
+    color: var(--dash-bad);
 }
+
 .ve-thread__actions {
     display: flex;
-    gap: 6px;
+    gap: 0.375rem;
     flex-wrap: wrap;
     justify-content: flex-end;
 }
+
 .ve-thread__form button {
-    cursor: pointer;
-    font: inherit;
-    font-size: 12px;
-    font-weight: 650;
-    padding: 6px 10px;
+    margin: 0;
+    padding: 0.375rem 0.75rem;
     border: 0;
-    border-radius: 8px;
+    border-radius: 0.5rem;
+    background: var(--dash-field);
     color: inherit;
-    background: color-mix(in oklab, currentColor 12%, transparent);
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
 }
+
 .ve-thread__form button:disabled {
     opacity: 0.45;
     cursor: default;
 }
+
 .ve-thread__form button.is-primary {
     background: var(--theme-color-primary, #4530d8);
     color: #fff;

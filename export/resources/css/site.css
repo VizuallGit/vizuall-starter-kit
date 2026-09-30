@@ -38,18 +38,16 @@
     --color-primary-900: #11121b;
     --color-primary-950: #05060a;
 
-    --color-secondary: #254446;
-    --color-secondary-50: #f3f5f6;
-    --color-secondary-100: #e8ecec;
-    --color-secondary-200: #cfd7d8;
-    --color-secondary-300: #aebcbd;
-    --color-secondary-400: #889d9e;
-    --color-secondary-500: #627e7f;
-    --color-secondary-600: #425e60;
-    --color-secondary-700: #2f4547;
-    --color-secondary-800: #1b2a2b;
-    --color-secondary-900: #0b1415;
-    --color-secondary-950: #030707;
+    --color-secondary: #061b6f;
+    --color-secondary-200: #bfd4ff;
+    --color-secondary-300: #93aee6;
+    --color-secondary-400: #6c89c8;
+    --color-secondary-450: #4765aa;
+    --color-secondary-500: #24418d;
+    --color-secondary-700: #031160;
+    --color-secondary-750: #010751;
+    --color-secondary-800: #010042;
+    --color-secondary-900: #01002e;
 
     --color-tertiary: #D6A485;
     --color-tertiary-50: #f8f4f2;
@@ -88,6 +86,8 @@
     --color-gray-800: #262626;
     --color-gray-900: #171717;
     --color-gray-950: #0a0a0a;
+
+    --color-yyy: #fbff00;
 
 
     --text-*: initial;
@@ -160,7 +160,7 @@
 
     /* Temaet: redigeres i Live Preview (Tema-panelet) og lægges på :root af
        theme_tokens-tagget ved hver visning, så en ændring ses uden build. */
-    --container-width: 80rem;
+    --container-width: 85.375rem;
 
     --size-xxs: .8125rem;
     --size-xs: .875rem;
@@ -217,6 +217,24 @@
     & > * + *{
         margin-block-start: var(--flow-space, 1em);
     }
+}
+
+@utility btn {
+    padding-block: .9em;
+    padding-inline: 1.8em;
+    display: inline flex;
+    align-items: center;
+    border-radius: var(--button-radius);
+    gap: .5em;
+    font-size: var(--button-size);
+    font-weight: var(--button-weight);
+    justify-content: center;
+    min-width: fit-content;
+    line-height: var(--leading-flat);
+    font-family: var(--button-font);
+    text-transform: var(--button-transform);
+    transition: 200ms all ease;
+    text-decoration: none;
 }
 
 @utility flow-x {

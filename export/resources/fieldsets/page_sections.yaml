@@ -20,7 +20,7 @@ fields:
               display: 'Hero style 1'
               fields:
                 - import: hero.hero_style_1
-              image: hero-hero-style-1-456af758.png
+              image: hero-hero-style-1-719b5a3b.png
         galleries:
           display: Galleries
           sets:
@@ -28,7 +28,7 @@ fields:
               display: 'Galleri style 1'
               fields:
                 - import: gallery.style_1
-              image: gallery-style-1-68c16a87.png
+              image: gallery-style-1-cdf8332f.png
         content_sections:
           display: 'Content sections'
           sets:
@@ -37,15 +37,15 @@ fields:
               icon: 'fluent:text-align-center-24-regular'
               fields:
                 - import: content_section.basic_content_links
-              image: content-section-basic-content-links-03072515.png
+              image: content-section-basic-content-links-b70a80af.png
             content_section/style_1:
               display: 'Content section style 1'
-              image: content-section-style-1-5d7d30ae.png
+              image: content-section-style-1-97cca857.png
               fields:
                 - import: content_section.style_1
             media_textbox/style_1:
               display: 'Media textbox style 1'
-              image: media-textbox-style-1-a358069c.png
+              image: media-textbox-style-1-57e215e2.png
               fields:
                 - import: media_textbox.style_1
         featured_sections:
@@ -56,10 +56,10 @@ fields:
               icon: 'lucide:list-checks'
               fields:
                 - import: featured_section.feature_list_icons
-              image: featured-section-feature-list-icons-b3f95bdd.png
+              image: featured-section-feature-list-icons-084104c6.png
             featured_section/style_1:
               display: 'Featured section Style 1'
-              image: featured-section-style-1-7de2f3cb.png
+              image: featured-section-style-1-c356dde9.png
               fields:
                 - import: featured_section.style_1
             new_set:
@@ -73,13 +73,13 @@ fields:
               icon: 'lucide:mail'
               fields:
                 - import: form_section.style_1
-              image: form-section-style-1-a29c913f.png
+              image: form-section-style-1-ad105c13.png
             accordion_section/style_1:
               display: FAQ
               icon: 'lucide:message-circle-question'
               fields:
                 - import: accordion_section.style_1
-              image: accordion-section-style-1-6d33144d.png
+              image: accordion-section-style-1-403a8c05.png
             global_section:
               display: 'Global section'
               hide: true
@@ -101,7 +101,7 @@ fields:
               display: 'Employees list'
               fields:
                 - import: other_section.employees_list_2
-              image: other-section-employees-list-2-d8671e46.png
+              image: other-section-employees-list-2-98cb33e9.png
             other_section/team:
               display: Team
               fields:
@@ -113,12 +113,12 @@ fields:
               display: jhjgjjjjjjj
               static: true
               fields: {}
-              image: static-section-jhjgjjjjjjj-521589da.png
+              image: static-section-jhjgjjjjjjj-b9c5d41b.png
             static_section/testt:
               display: testt
               static: true
               fields: {}
-              image: static-section-testt-6fdcda50.png
+              image: static-section-testt-b64546cd.png
             static_section/tew:
               display: tew
               static: true
@@ -139,6 +139,7 @@ fields:
               display: hdhgdfghgfdhgfh
               static: true
               fields: {}
+              image: static-section-hdhgdfghgfdhgfh-bc72ae0f.png
             static_section/ghghghghghjjjjjjj:
               display: ghghghghghjjjjjjj
               static: true
@@ -147,6 +148,7 @@ fields:
               display: uuuuuu
               static: true
               fields: {}
+              image: static-section-uuuuuu-beb9cb67.png
             static_section/iuytre:
               display: iuytre
               static: true

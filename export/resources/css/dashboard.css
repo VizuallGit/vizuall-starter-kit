@@ -1,0 +1,441 @@
+/* ═══════════════════════════════════════════════════════
+   Dashboard — fælles lag
+
+   Målene er taget fra Kjelde bolig-dashboardet, som ejeren pegede på: kort på
+   0.875rem radius i en flade der er lysere end siden, og lister hvor
+   overskriften og rækkerne deler samme kort.
+
+   Forskellen fra Kjelde: accentfarven er kontrolpanelets egen
+   (`--theme-color-primary`), ikke en indbygget grøn, og enhederne er rem —
+   px kun til rammer. Fladerne er vores egne tokens og ikke
+   `--theme-color-content-bg`, fordi den i mørke temaer ligger så tæt på
+   sidens baggrund at kortene forsvinder.
+   ═══════════════════════════════════════════════════════ */
+
+:root {
+    --dash-gap: 0.75rem;
+    --dash-radius: 0.875rem;
+    --dash-card: #fff;
+    --dash-ring: #eceae4;
+    --dash-text: #1a1a1a;
+    --dash-muted: #6b7280;
+    --dash-sub: #9ca3af;
+    --dash-hover: #f7f7f5;
+    --dash-line: #f0eee8;
+    --dash-field: #f1f0ec;
+    --dash-icon-bg: color-mix(in srgb, var(--theme-color-primary, #4530d8) 12%, #fff);
+    --dash-icon-fg: color-mix(in srgb, var(--theme-color-primary, #4530d8) 90%, #000);
+    --dash-chevron: #c0c4c8;
+    --dash-good: #0f6e56;
+    --dash-ok: #b45309;
+    --dash-bad: #b91c1c;
+}
+
+html.dark {
+    --dash-card: #27272a;
+    --dash-ring: rgb(255 255 255 / 0.08);
+    --dash-text: #f4f4f0;
+    --dash-muted: #a1a1aa;
+    --dash-sub: #8b8b93;
+    --dash-hover: #2f2f33;
+    --dash-line: rgb(255 255 255 / 0.07);
+    --dash-field: #3f3f46;
+    --dash-icon-bg: color-mix(in srgb, var(--theme-color-primary, #4530d8) 30%, #18181b);
+    --dash-icon-fg: color-mix(in srgb, var(--theme-color-primary, #4530d8) 45%, #fff);
+    --dash-chevron: #71717a;
+    --dash-good: #6ee7b7;
+    --dash-ok: #fbbf24;
+    --dash-bad: #fca5a5;
+}
+
+/* Hver widget er sit eget rod i kontrolpanelets gitter; her sættes dens
+   skriftstørrelse og container, så de indre gitre kan bryde selv. */
+.dash-scope {
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    color: var(--dash-text);
+    font-size: 0.85rem;
+    line-height: 1.4;
+    container-type: inline-size;
+    container-name: dash;
+}
+
+.dash-scope *,
+.dash-scope *::before,
+.dash-scope *::after {
+    box-sizing: border-box;
+}
+
+.dash-scope a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.dash-card {
+    background: var(--dash-card);
+    border: 1px solid var(--dash-ring);
+    border-radius: var(--dash-radius);
+    min-width: 0;
+}
+
+/* ── Lister ──────────────────────────────────────────── */
+
+.dash-list {
+    overflow: hidden;
+    height: 100%;
+}
+
+.dash-list__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 1rem 1.125rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+}
+
+/* Titlen og grebet hører sammen i venstre side; værktøjerne skubbes til højre. */
+.dash-list__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+}
+
+/*
+ * Grebet står i venstremargenen og fylder ikke noget, før man er i nærheden af
+ * kortet. Et håndtag der altid er synligt, gør hvert kort til en kontrolflade;
+ * et der aldrig er det, findes ikke.
+ */
+.dash-grip {
+    display: flex;
+    align-items: center;
+    margin-left: -0.375rem;
+    padding: 0.125rem;
+    color: var(--dash-sub);
+    opacity: 0;
+    cursor: grab;
+    touch-action: none;
+    transition: opacity 0.12s;
+}
+
+.dash-grip svg {
+    width: 0.625rem;
+    height: 1rem;
+}
+
+.dash-card:hover .dash-grip,
+.dash-grip:focus-visible {
+    opacity: 0.75;
+}
+
+.dash-grip:active {
+    cursor: grabbing;
+}
+
+/* Mens der trækkes: kassen der flytter sig, og et gitter der ikke svarer på klik. */
+.dash-cell-dragging {
+    opacity: 0.55;
+}
+
+.dash-cell-dragging .dash-grip {
+    opacity: 0.75;
+}
+
+.dash-cell-dragging .dash-card {
+    border-color: color-mix(in srgb, var(--theme-color-primary, #4530d8) 70%, var(--dash-ring));
+}
+
+.widgets.is-dragging {
+    cursor: grabbing;
+    user-select: none;
+}
+
+.widgets.is-dragging .dash-row-item,
+.widgets.is-dragging .dash-head-btn,
+.widgets.is-dragging .dash-more {
+    pointer-events: none;
+}
+
+.dash-list__legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--dash-sub);
+}
+
+.dash-list__legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+}
+
+.dash-row-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 0.75rem 1.125rem;
+    border-top: 1px solid var(--dash-line);
+    text-align: left;
+    transition: background 0.1s;
+}
+
+button.dash-row-item {
+    margin: 0;
+    background: none;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    font: inherit;
+    color: inherit;
+    cursor: pointer;
+}
+
+.dash-row-item:hover {
+    background: var(--dash-hover);
+}
+
+.dash-row-item__body {
+    flex: 1;
+    min-width: 0;
+}
+
+.dash-row-item__title {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dash-row-item__sub {
+    display: block;
+    margin-top: 0.125rem;
+    font-size: 0.75rem;
+    color: var(--dash-sub);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.dash-row-item__aside {
+    flex: none;
+    font-size: 0.75rem;
+    color: var(--dash-sub);
+    font-variant-numeric: tabular-nums;
+}
+
+.dash-rank {
+    flex: none;
+    width: 0.875rem;
+    font-size: 0.75rem;
+    color: var(--dash-sub);
+    font-variant-numeric: tabular-nums;
+}
+
+.dash-badge {
+    flex: none;
+    padding: 0.1875rem 0.625rem;
+    border-radius: 999px;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    background: var(--dash-field);
+    color: var(--dash-muted);
+}
+
+.dash-chevron {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+    color: var(--dash-chevron);
+}
+
+.dash-dot {
+    flex: none;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--dash-sub);
+}
+
+.dash-dot--good { background: var(--dash-good); }
+.dash-dot--ok { background: var(--dash-ok); }
+.dash-dot--bad { background: var(--dash-bad); }
+
+.dash-icon {
+    flex: none;
+    width: 1.125rem;
+    height: 1.125rem;
+}
+
+.dash-icon--good { color: var(--dash-good); }
+.dash-icon--ok { color: var(--dash-ok); }
+.dash-icon--bad { color: var(--dash-bad); }
+
+.dash-bar {
+    display: block;
+    margin-top: 0.375rem;
+    height: 0.25rem;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--dash-text) 10%, transparent);
+    overflow: hidden;
+}
+
+.dash-bar__fill {
+    display: block;
+    height: 100%;
+    border-radius: inherit;
+    background: var(--theme-color-primary, #4530d8);
+}
+
+.dash-empty {
+    margin: 0;
+    padding: 0.75rem 1.125rem 1.125rem;
+    border-top: 1px solid var(--dash-line);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--dash-sub);
+}
+
+.dash-more {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0.75rem 1.125rem;
+    border: 0;
+    border-top: 1px solid var(--dash-line);
+    background: none;
+    font: inherit;
+    font-size: 0.75rem;
+    color: var(--dash-sub);
+    text-align: center;
+    cursor: pointer;
+}
+
+.dash-more:hover {
+    background: var(--dash-hover);
+}
+
+/* ── Smalt ───────────────────────────────────────────── */
+
+@container dash (max-width: 30rem) {
+    .dash-list__head {
+        flex-wrap: wrap;
+    }
+
+    .dash-row-item__aside {
+        display: none;
+    }
+}
+
+/* ── Score, hoved-knapper og sidevisning ─────────────── */
+
+.dash-score {
+    flex: none;
+    min-width: 2.5rem;
+    padding: 0.1875rem 0.5rem;
+    border-radius: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+}
+
+.dash-score--good {
+    background: color-mix(in srgb, var(--dash-good) 18%, transparent);
+    color: var(--dash-good);
+}
+
+.dash-score--ok {
+    background: color-mix(in srgb, var(--dash-ok) 18%, transparent);
+    color: var(--dash-ok);
+}
+
+.dash-score--bad {
+    background: color-mix(in srgb, var(--dash-bad) 18%, transparent);
+    color: var(--dash-bad);
+}
+
+.dash-score--none {
+    background: var(--dash-field);
+    color: var(--dash-sub);
+}
+
+.dash-head-tools {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 400;
+}
+
+.dash-head-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3125rem;
+    margin: 0;
+    padding: 0.25rem 0.625rem;
+    border: 1px solid var(--dash-ring);
+    border-radius: 0.375rem;
+    background: none;
+    color: var(--dash-muted);
+    font: inherit;
+    font-size: 0.75rem;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.dash-head-btn:hover:not(:disabled) {
+    background: var(--dash-hover);
+    color: var(--dash-text);
+}
+
+.dash-head-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+.dash-head-btn svg {
+    width: 0.875rem;
+    height: 0.875rem;
+}
+
+.dash-head-total {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.375rem;
+    font-size: 0.75rem;
+    color: var(--dash-sub);
+}
+
+.dash-pager {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.625rem 1.125rem;
+    border-top: 1px solid var(--dash-line);
+    font-size: 0.75rem;
+    color: var(--dash-sub);
+}
+
+.dash-pager__buttons {
+    display: flex;
+    gap: 0.375rem;
+}
+
+.dash-note {
+    margin: 0;
+    padding: 0.625rem 1.125rem;
+    border-top: 1px solid var(--dash-line);
+    font-size: 0.75rem;
+    line-height: 1.45;
+    color: var(--dash-sub);
+}

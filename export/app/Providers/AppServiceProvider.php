@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Dashboard\ResilientWidgetLoader;
 use App\Dashboard\WidgetCatalog;
+use App\Http\Controllers\CP\DashboardPageSpeedController;
 use App\Http\Controllers\CP\DashboardWidgetsController;
 use App\Tags\FileCode;
 use App\Tags\SectionYaml;
@@ -17,6 +19,10 @@ class AppServiceProvider extends ServiceProvider
 {
     public function register(): void
     {
+        // En widget der er fjernet, må ikke kunne vælte hele dashboardet for de
+        // brugere der havde den i deres gemte liste. Se ResilientWidgetLoader.
+        $this->app->bind(\Statamic\Widgets\Loader::class, ResilientWidgetLoader::class);
+
         // Responsive felter på globale sæt pakkes ind af addonet selv siden
         // visual-editor v1.1.180 (`WrapResponsiveGlobalFields` bor dér, ved
         // siden af `ResponsiveFields`). Intet at gøre her.
@@ -82,11 +88,21 @@ class AppServiceProvider extends ServiceProvider
         SectionYaml::register();
         ThemeTokens::register();
 
+        // Dashboardets standardwidgets. `config/statamic/cp.php` følger ikke med
+        // starter kittet, så et nyt site startede med Statamics tomme liste og
+        // dermed et dashboard uden et eneste kort — selv om widget-koden var
+        // installeret. En tom liste er ikke et valg nogen har truffet, så her
+        // lægges vores egen ind. Har nogen sat noget, står det urørt.
+        if (empty(config('statamic.cp.widgets'))) {
+            config(['statamic.cp.widgets' => WidgetCatalog::defaults()]);
+        }
+
         Statamic::pushCpRoutes(function () {
             Route::get('dashboard-widgets', [DashboardWidgetsController::class, 'show'])->name('dashboard-widgets.show');
             Route::put('dashboard-widgets', [DashboardWidgetsController::class, 'update'])->name('dashboard-widgets.update');
             Route::put('dashboard-widgets/default', [DashboardWidgetsController::class, 'updateDefault'])->name('dashboard-widgets.default');
             Route::delete('dashboard-widgets', [DashboardWidgetsController::class, 'destroy'])->name('dashboard-widgets.destroy');
+            Route::post('dashboard-pagespeed', [DashboardPageSpeedController::class, 'store'])->name('dashboard-pagespeed.store');
         });
 
         Statamic::provideToScript([
