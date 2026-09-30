@@ -253,3 +253,27 @@ body.dark .fs-folder-filter__list {
 
 /* Låste rækker og foldede blueprint-sektioner er flyttet til
    visual editor-addonets resources/css/addon.css. */
+
+/* ═══════════════════════════════════════════════════════
+   Hjørner: 4px overalt
+
+   Statamics knapper og felter kommer med `rounded-lg` (0.5rem) fra Tailwind.
+   Vores egne flader — plusset i HTML-træet, søgefeltet, dockens knapper —
+   har 4px, og to forskellige hjørner side om side ser ud som en fejl.
+
+   Reglen står uden for `@layer` med vilje: en utility i et cascade-lag taber
+   til en almindelig regel her, uanset specificity. Runde ting (avatarer,
+   piller, kontakter) er former og ikke hjørner — de rammes ikke.
+   ═══════════════════════════════════════════════════════ */
+
+button.rounded-lg,
+button.rounded-md,
+a.rounded-lg[role="button"],
+input.rounded-lg,
+input.rounded-md,
+select.rounded-lg,
+select.rounded-md,
+textarea.rounded-lg,
+textarea.rounded-md {
+    border-radius: 0.25rem;
+}
