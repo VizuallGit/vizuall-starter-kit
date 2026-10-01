@@ -17,6 +17,12 @@ return Application::configure(basePath: dirname(__DIR__))
         // `<!-- __YIELD_STYLES__ -->`, og det er addonets middleware der fylder
         // den ud. To middlewares om samme opgave er én for meget.
 
+        // Redirects slår til før Statamic slår adressen op, og før den
+        // statiske cache svarer fra disk — derfor prepend og ikke append.
+        $middleware->web(prepend: [
+            \App\Http\Middleware\HandleRedirects::class,
+        ]);
+
         $middleware->web(append: [
             \App\Http\Middleware\RecordPageViews::class,
         ]);

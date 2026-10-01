@@ -26,3 +26,17 @@ fields:
       max_files: 1
       display: Image
       type: assets
+  -
+    handle: canonical
+    field:
+      type: text
+      display: 'Canonical-adresse'
+      instructions: 'Lad stå tom, så bruges sidens egen adresse. Udfyld den kun hvis det samme indhold har en officiel adresse et andet sted.'
+      placeholder: 'https://…'
+  -
+    handle: noindex
+    field:
+      type: toggle
+      display: 'Skjul for søgemaskiner'
+      instructions: 'Siden holdes ude af sitemappen og får noindex. Brug den til tak-sider og sider der ikke skal findes i Google.'
+      default: false
