@@ -71,7 +71,40 @@ MD,
 
         $console->info('Visual Editor stores (Global sections + Compositions) are included from the starter kit.');
 
+        $this->removeLaravelRobots($console);
         $this->requireStaticPublish($console);
+    }
+
+    /**
+     * Laravel ships a two-line public/robots.txt. This site answers /robots.txt
+     * with a route instead, so the Sitemap line carries whatever domain the
+     * request came in on — right on the live site, the staging copy and
+     * locally, with nothing to keep in step.
+     *
+     * The web server hands out a real file in public/ long before PHP sees the
+     * request, so Laravel's copy would silently win and the site would never
+     * tell a crawler where its sitemap is. A file anybody has edited is left
+     * alone: then somebody meant it.
+     */
+    protected function removeLaravelRobots($console): void
+    {
+        $path = public_path('robots.txt');
+
+        if (! file_exists($path)) {
+            return;
+        }
+
+        $contents = trim((string) file_get_contents($path));
+
+        if ($contents !== "User-agent: *\nDisallow:" && $contents !== "User-agent: *\r\nDisallow:") {
+            $console->line('Kept public/robots.txt — it has been edited, so /robots.txt stays a file.');
+
+            return;
+        }
+
+        @unlink($path);
+
+        $console->info('Removed Laravel\'s public/robots.txt so the site answers /robots.txt itself.');
     }
 
     /**

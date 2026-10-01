@@ -7,6 +7,15 @@ export_paths:
   - app/Tags
   - app/Widgets
   - bootstrap/app.php
+  - app/Redirects
+  - app/Routes
+  - app/Seo
+  - app/Env
+  - app/Http/Middleware/HandleRedirects.php
+  - app/Http/Controllers/SitemapController.php
+  - app/Http/Controllers/CP/RedirectsController.php
+  - app/Http/Controllers/CP/RoutesController.php
+  - app/Http/Controllers/CP/EnvKeysController.php
   - resources/css
   - resources/js
   - resources/svg
@@ -32,6 +41,7 @@ export_paths:
   - resources/views/layout.antlers.html
   - resources/views/default.antlers.html
   - resources/views/errors
+  - resources/views/utilities
   - resources/views/partials/meta_info.antlers.html
   - resources/views/partials/mobil_menu.antlers.html
   - resources/views/partials/site_head.antlers.html
