@@ -102,6 +102,7 @@ dependencies:
   statamic-addon/static-publish: ^1.0
   statamic-addon/style-push: ^1.0
   statamic-addon/tabs: ^1.0
+  statamic-addon/upload-video: ^1.0
   statamic-addon/visual-editor: ^1.1
 modules:
   sections:
