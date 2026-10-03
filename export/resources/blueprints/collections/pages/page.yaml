@@ -6,6 +6,20 @@ tabs:
       -
         fields:
           - import: page_sections
+          -
+            handle: upload_video_field
+            field:
+              container: assets
+              max_files: 1
+              type: assets
+              display: 'Upload video Field'
+          -
+            handle: assets_field
+            field:
+              container: assets
+              max_files: 10
+              type: assets
+              display: 'Assets Field'
   sidebar:
     display: 'Page Settings'
     sections:
