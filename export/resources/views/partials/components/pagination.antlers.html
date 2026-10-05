@@ -1,0 +1,37 @@
+{{#sve_props
+[
+    {
+        "handle": "prev",
+        "type": "text",
+        "label": "Forrige",
+        "default": "Forrige"
+    },
+    {
+        "handle": "next",
+        "type": "text",
+        "label": "Næste",
+        "default": "Næste"
+    }
+]
+#}}
+
+{{ sve_defaults props_prev="Forrige" props_next="Næste" }}
+{{#
+    Sideinddeling. Skal kaldes inde i paginate-parret i en collection-løkke med
+    paginate="true" og as="entries" (limit = antal pr. side) - ellers findes
+    prev_page, links og current_page ikke. Én side i alt giver intet output.
+#}}
+{{ if total_pages > 1 }}
+<nav aria-label="Sideinddeling" class="flex flex-wrap items-center justify-center gap-2 text-sm">
+    {{ if prev_page }}
+        <a href="{{ prev_page }}" rel="prev" class="px-3 py-2 rounded border border-current/20">{{ props_prev }}</a>
+    {{ /if }}
+    {{ links:all }}
+        <a href="{{ url }}" class="px-3 py-2 rounded border {{ page == current_page ? 'border-current font-semibold' : 'border-current/20' }}"{{ if page == current_page }} aria-current="page"{{ /if }}>{{ page }}</a>
+    {{ /links:all }}
+    {{ if next_page }}
+        <a href="{{ next_page }}" rel="next" class="px-3 py-2 rounded border border-current/20">{{ props_next }}</a>
+    {{ /if }}
+</nav>
+{{ /if }}
+{{ /sve_defaults }}
