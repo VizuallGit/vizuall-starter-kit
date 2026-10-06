@@ -56,8 +56,14 @@
     ligger i <div class="blurred-img"> med en 20 px bred udgave som baggrund
     og toner frem når det er hentet. Kun med blur_load="true"; uden er
     billedet et almindeligt billede.
+    Med blur_load="true" (og ikke loading="eager") hentes det fulde billede
+    først når det er 100 px fra skærmen: src er en gennemsigtig SVG med
+    billedets mål (så pladsen er den samme), og det fulde billede står i
+    data-src/data-srcset, som blurred-img.js flytter over.
 #}}
 {{ _blur = _src && (blur_load === 'true' || blur_load === true) }}
+{{ _wait = _blur && loading !== 'eager' }}
+{{ _pre = _wait ? 'data-' : '' }}
 {{ if _blur }}<div class="blurred-img" style="background-image: url({{ glide :src="_src" width="20" }})">{{ /if }}
 <img
     {{ if _id }}
@@ -70,8 +76,11 @@
     loading="{{ loading ? loading : 'lazy'  }}"
     width="{{ _w }}"
     height="{{ _h }}"
-    srcset="{{ glide :src="_src" width="{{ _w }}" height="{{ _h }}" quality="{{ props_quality }}" fit="crop_focal" format="{{ format or 'webp' }}" }} 1x, {{ glide :src="_src" width="{{ _w }}" height="{{ _h }}" quality="{{ props_quality }}" fit="crop_focal" format="{{ format or 'webp' }}" dpr="2" }} 2x"
-    src="{{ glide :src="_src" width="{{ _w }}" height="{{ _h }}" quality="{{ props_quality }}" fit="crop_focal" format="{{ format or 'webp' }}" }}"
+    {{ if _wait }}
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 {{ _w }} {{ _h }}'%3E%3C/svg%3E"
+    {{ /if }}
+    {{ _pre }}srcset="{{ glide :src="_src" width="{{ _w }}" height="{{ _h }}" quality="{{ props_quality }}" fit="crop_focal" format="{{ format or 'webp' }}" }} 1x, {{ glide :src="_src" width="{{ _w }}" height="{{ _h }}" quality="{{ props_quality }}" fit="crop_focal" format="{{ format or 'webp' }}" dpr="2" }} 2x"
+    {{ _pre }}src="{{ glide :src="_src" width="{{ _w }}" height="{{ _h }}" quality="{{ props_quality }}" fit="crop_focal" format="{{ format or 'webp' }}" }}"
     alt="{{ if imagePath }}{{ imagePath:alt }}{{ elseif props_image }}{{ asset :url="props_image" }}{{ alt }}{{ /asset }}{{ /if }}"
 >
 {{ if _blur }}</div>{{ /if }}

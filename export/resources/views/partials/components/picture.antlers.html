@@ -4,6 +4,10 @@
     ligger i <div class="blurred-img"> med en 20 px bred udgave som baggrund
     og toner frem når det er hentet. Kun med blur_load="true"; uden er
     billedet et almindeligt billede.
+    Med blur_load="true" (og ikke loading="eager") hentes det fulde billede
+    først når det er 100 px fra skærmen: src er en gennemsigtig SVG med
+    billedets mål (så pladsen er den samme), og det fulde billede står i
+    data-src/data-srcset, som blurred-img.js flytter over.
 
     ratio er højden i sekstendedele af bredden (9 = 16:9, 12 = 4:3, 16 = 1:1).
     smRatio … xxlRatio gælder fra og med den størrelse og opefter; den
@@ -24,6 +28,8 @@
 ] }}
 
 {{ _blur = blur_load === 'true' || blur_load === true }}
+{{ _wait = _blur && loading !== 'eager' }}
+{{ _pre = _wait ? 'data-' : '' }}
 
 {{ if _blur }}<div class="blurred-img" style="background-image: url({{ glide :src="imagePath" width="20" }})">{{ /if }}
 <picture class="{{ class }}">
@@ -32,7 +38,7 @@
         <source
             media="(min-width: {{ w }}px)"
             width="{{ w }}" height="{{ _h }}"
-            srcset="{{ glide :src="imagePath" :width="w" :height="_h" quality="70" fit="crop_focal" format="webp" }} 1x, {{ glide :src="imagePath" :width="w" :height="_h" dpr="2" quality="50" fit="crop_focal" format="webp" }} 2x"
+            {{ _pre }}srcset="{{ glide :src="imagePath" :width="w" :height="_h" quality="70" fit="crop_focal" format="webp" }} 1x, {{ glide :src="imagePath" :width="w" :height="_h" dpr="2" quality="50" fit="crop_focal" format="webp" }} 2x"
         >
     {{ /_sources }}
 
@@ -41,8 +47,11 @@
         class="w-full h-full object-cover {{ flip_image ?= 'scale-x-[-1]' }}"
         width="480" height="{{ _h }}"
         loading="{{ loading or 'lazy' }}"
-        src="{{ glide :src="imagePath" width="480" :height="_h" quality="70" fit="crop_focal" format="webp" }}"
-        srcset="{{ glide :src="imagePath" width="480" :height="_h" quality="70" fit="crop_focal" format="webp" }} 1x, {{ glide :src="imagePath" width="480" :height="_h" dpr="2" quality="50" fit="crop_focal" format="webp" }} 2x"
+        {{ if _wait }}
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 {{ _h }}'%3E%3C/svg%3E"
+        {{ /if }}
+        {{ _pre }}src="{{ glide :src="imagePath" width="480" :height="_h" quality="70" fit="crop_focal" format="webp" }}"
+        {{ _pre }}srcset="{{ glide :src="imagePath" width="480" :height="_h" quality="70" fit="crop_focal" format="webp" }} 1x, {{ glide :src="imagePath" width="480" :height="_h" dpr="2" quality="50" fit="crop_focal" format="webp" }} 2x"
         alt="{{ imagePath:alt }}"
     >
 </picture>
