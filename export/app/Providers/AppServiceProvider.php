@@ -50,16 +50,16 @@ class AppServiceProvider extends ServiceProvider
                 ->pushMiddlewareToGroup('statamic.web', \App\Http\Middleware\LoadUsedFrontendScripts::class);
         });
 
-        // Den statiske udgivelse (Static Publish → statamic/ssg) kalder
-        // toResponse() direkte, så ingen middleware kører. Samme arbejde på
-        // Statamics ResponseCreated, kun i konsollen hvor udgivelsen kører —
-        // ellers kom auto-kontrast og Alpine ikke med i den udgivne kopi.
-        if ($this->app->runningInConsole()) {
-            \Illuminate\Support\Facades\Event::listen(\Statamic\Events\ResponseCreated::class, function ($event) {
-                $this->app->make(\App\Http\Middleware\LoadUsedFrontendScripts::class)
-                    ->handle(request(), fn () => $event->response);
-            });
-        }
+        // Den statiske udgivelse (Static Publish → statamic/ssg) og Visual
+        // Editors preview-billeder (/!/sve/…-preview, uden for statamic.web)
+        // kalder toResponse() uden middlewaren. Samme arbejde på Statamics
+        // ResponseCreated — ellers mangler auto-kontrast og Alpine i den
+        // udgivne kopi og i Patterns-billederne. På statamic.web-sider er
+        // tagget allerede der, når middlewaren kommer, og den springer over.
+        \Illuminate\Support\Facades\Event::listen(\Statamic\Events\ResponseCreated::class, function ($event) {
+            $this->app->make(\App\Http\Middleware\LoadUsedFrontendScripts::class)
+                ->handle(request(), fn () => $event->response);
+        });
 
         // Custom SVGs for Replicator/Bard set icons (Edit Set → Custom icon field,
         // or filename in YAML). Does not replace Statamic's default picker list —
