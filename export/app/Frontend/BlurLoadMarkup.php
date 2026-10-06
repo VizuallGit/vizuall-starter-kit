@@ -5,8 +5,8 @@ namespace App\Frontend;
 /**
  * Om den færdige HTML har billeder med sløret forhåndsbillede.
  *
- * components/picture sætter data-blur-load, medmindre kaldet siger
- * blur_load="false". Uden attributten hentes scriptet ikke.
+ * components/picture og components/image sætter data-blur-load, medmindre
+ * kaldet siger blur_load="false". Uden attributten hentes scriptet ikke.
  */
 class BlurLoadMarkup
 {

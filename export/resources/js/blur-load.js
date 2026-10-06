@@ -1,15 +1,15 @@
-// Blur-load: components/picture lægger et sløret forhåndsbillede bag
-// billedet (data-blur-load). Billeder der ikke er hentet endnu skjules og
-// toner frem når de er. Kun scriptet sætter is-loading, så et billede aldrig
-// står skjult uden det.
-for (const picture of document.querySelectorAll('[data-blur-load]')) {
-    const img = picture.querySelector(':scope > img')
+// Blur-load: components/picture og components/image viser et sløret
+// forhåndsbillede (data-blur-load) mens billedet hentes. På <picture> sidder
+// attributten på indpakningen, på image-komponenten på selve <img>. Kun
+// scriptet sætter is-loading/is-loaded, så et billede aldrig står skjult
+// uden det.
+for (const el of document.querySelectorAll('[data-blur-load]')) {
+    const img = el instanceof HTMLImageElement ? el : el.querySelector(':scope > img')
 
     if (!img || img.complete) continue
 
-    picture.classList.add('is-loading')
+    el.classList.add('is-loading')
 
-    const done = () => picture.classList.remove('is-loading')
-    img.addEventListener('load', done, { once: true })
-    img.addEventListener('error', done, { once: true })
+    img.addEventListener('load', () => el.classList.replace('is-loading', 'is-loaded'), { once: true })
+    img.addEventListener('error', () => el.classList.remove('is-loading'), { once: true })
 }

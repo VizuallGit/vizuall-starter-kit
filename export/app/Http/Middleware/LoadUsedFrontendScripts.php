@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * Alpine og auto-kontrast sættes ind på den offentlige side kun når HTML'en
  * bruger dem. Live Preview får begge, så editoren kan tilføje dem undervejs.
- * Blur-load (sløret forhåndsbillede i components/picture) følger kun HTML'en:
+ * Blur-load (sløret forhåndsbillede i components/picture og image) følger HTML'en:
  * det virker alligevel kun på billeder der er der ved indlæsning.
  *
  * Skal ligge efter Statamics static-cache-middleware i statamic.web, så den

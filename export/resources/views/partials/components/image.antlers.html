@@ -50,12 +50,23 @@
         () => _h
     ) }}
 {{ /if }}
+{{#
+    Sløret forhåndsbillede (blur-load): Glide gør et 48 px sløret billede, der
+    ligger som billedets egen baggrund, til billedet er hentet. Ingen
+    indpakning, så layoutet er det samme. blur_load="false" slår det fra, fx
+    på billeder med gennemsigtighed, hvor baggrunden ville skinne igennem.
+#}}
+{{ _blur = _src && _w && blur_load !== 'false' && blur_load !== false }}
 <img
     {{ if _id }}
         id="{{ _id }}"
     {{ endif }}
     class="max-w-full {{ class }}"
-    {{ if style }}
+    {{ if _blur }}
+        {{ _ph_h = (48 * _h / _w) | round }}
+        data-blur-load
+        style="--blur-load: url('{{ glide:data_url :src="_src" width="48" :height="_ph_h" fit="crop_focal" quality="40" format="webp" blur="8" }}');{{ style }}"
+    {{ elseif style }}
         style="{{ style }}"
     {{ endif }}
     loading="{{ loading ? loading : 'lazy'  }}"
