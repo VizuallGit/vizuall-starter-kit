@@ -2,6 +2,7 @@ updatable: false
 export_paths:
   - app/Dashboard
   - app/Http/Controllers/CP/DashboardWidgetsController.php
+  - app/Http/Controllers/CP/DashboardPageSpeedController.php
   - app/Http/Middleware/RecordPageViews.php
   - app/Providers/AppServiceProvider.php
   - app/Tags

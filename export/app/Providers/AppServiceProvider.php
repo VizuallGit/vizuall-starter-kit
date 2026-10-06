@@ -50,6 +50,17 @@ class AppServiceProvider extends ServiceProvider
                 ->pushMiddlewareToGroup('statamic.web', \App\Http\Middleware\LoadUsedFrontendScripts::class);
         });
 
+        // Den statiske udgivelse (Static Publish → statamic/ssg) kalder
+        // toResponse() direkte, så ingen middleware kører. Samme arbejde på
+        // Statamics ResponseCreated, kun i konsollen hvor udgivelsen kører —
+        // ellers kom auto-kontrast og Alpine ikke med i den udgivne kopi.
+        if ($this->app->runningInConsole()) {
+            \Illuminate\Support\Facades\Event::listen(\Statamic\Events\ResponseCreated::class, function ($event) {
+                $this->app->make(\App\Http\Middleware\LoadUsedFrontendScripts::class)
+                    ->handle(request(), fn () => $event->response);
+            });
+        }
+
         // Custom SVGs for Replicator/Bard set icons (Edit Set → Custom icon field,
         // or filename in YAML). Does not replace Statamic's default picker list —
         // call Sets::useIcons('vizuall', …) if you want these in the picker too.
