@@ -1,0 +1,55 @@
+/* Lazy loading med sløret pladsholder, som i
+   https://blog.webdevsimplified.com/2023-05/lazy-load-images/
+   Bruges af components/picture og components/image. */
+
+.blurred-img {
+  /* Artiklens ::before er position: absolute; inset: 0 og skal ligge over
+     billedet, ikke over sektionen. height: 100% lader h-full på billedet
+     fylde forælderen som før indpakningen. */
+  position: relative;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* Et billede med absolute inset-0 (fx event_card) fylder sin forælder; så
+   skal indpakningen gøre det, ellers flytter billedet sig. */
+.blurred-img:has(> img.absolute) {
+  position: absolute;
+  inset: 0;
+}
+
+.blurred-img::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: pulse 2.5s infinite;
+  background-color: white;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.blurred-img.loaded::before {
+  animation: none;
+  content: none;
+}
+
+.blurred-img img {
+  opacity: 0;
+  transition: opacity 250ms ease-in-out;
+}
+
+.blurred-img.loaded img {
+  opacity: 1;
+}

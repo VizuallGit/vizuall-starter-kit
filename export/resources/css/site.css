@@ -13,7 +13,7 @@
 @import "./type" layer(base);
 @import "./custom-classes" layer(base);
 @import "./page-content" layer(base);
-@import "./blur-load" layer(components);
+@import "./blurred-img" layer(components);
 
 
 @theme {

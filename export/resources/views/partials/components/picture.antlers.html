@@ -1,7 +1,9 @@
 {{#
-    Billede med et sløret forhåndsbillede (blur-load): et 16 px bredt billede
-    ligger inline som data-URL bag det rigtige, der toner frem når det er
-    hentet. blur_load="false" slår det fra, fx på små ikoner og logoer.
+    Lazy loading med sløret pladsholder som i
+    https://blog.webdevsimplified.com/2023-05/lazy-load-images/ — billedet
+    ligger i <div class="blurred-img"> med en 20 px bred udgave som baggrund
+    og toner frem når det er hentet. Kun med blur_load="true"; uden er
+    billedet et almindeligt billede.
 
     ratio er højden i sekstendedele af bredden (9 = 16:9, 12 = 4:3, 16 = 1:1).
     smRatio … xxlRatio gælder fra og med den størrelse og opefter; den
@@ -21,7 +23,10 @@
     ['w' => 640, 'r' => _sm],
 ] }}
 
-<picture class="{{ class }}"{{ unless blur_load === 'false' || blur_load === false }} data-blur-load style="--blur-load: url('{{ glide:data_url :src="imagePath" width="16" :height="_r" fit="crop_focal" quality="40" format="webp" }}')"{{ /unless }}>
+{{ _blur = blur_load === 'true' || blur_load === true }}
+
+{{ if _blur }}<div class="blurred-img" style="background-image: url({{ glide :src="imagePath" width="20" }})">{{ /if }}
+<picture class="{{ class }}">
     {{ _sources }}
         {{ _h = w * r / 16 }}
         <source
@@ -41,3 +46,4 @@
         alt="{{ imagePath:alt }}"
     >
 </picture>
+{{ if _blur }}</div>{{ /if }}

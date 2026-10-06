@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Frontend\AlpineMarkup;
-use App\Frontend\BlurLoadMarkup;
+use App\Frontend\BlurredImgMarkup;
 use App\Frontend\ContrastMarkup;
 use Closure;
 use Illuminate\Foundation\Vite as LaravelVite;
@@ -11,10 +11,9 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Alpine og auto-kontrast sættes ind på den offentlige side kun når HTML'en
- * bruger dem. Live Preview får begge, så editoren kan tilføje dem undervejs.
- * Blur-load (sløret forhåndsbillede i components/picture og image) følger HTML'en:
- * det virker alligevel kun på billeder der er der ved indlæsning.
+ * Alpine, auto-kontrast og blurred-img (sløret pladsholder i components/picture
+ * og image) sættes ind på den offentlige side kun når HTML'en bruger dem. Live
+ * Preview får dem alle, så editoren kan tilføje dem undervejs.
  *
  * Skal ligge efter Statamics static-cache-middleware i statamic.web, så den
  * HTML cachen gemmer, allerede indeholder de script-tags siden skal have.
@@ -25,7 +24,7 @@ class LoadUsedFrontendScripts
     private const SCRIPTS = [
         'contrast' => 'resources/js/contrast.js',
         'alpine' => 'resources/js/alpine.js',
-        'blur-load' => 'resources/js/blur-load.js',
+        'blurred-img' => 'resources/js/blurred-img.js',
     ];
 
     public function handle(Request $request, Closure $next): Response
@@ -70,7 +69,7 @@ class LoadUsedFrontendScripts
         $needed = [
             'contrast' => $preview || ContrastMarkup::usesContrast($html),
             'alpine' => $preview || AlpineMarkup::usesAlpine($html),
-            'blur-load' => BlurLoadMarkup::usesBlurLoad($html),
+            'blurred-img' => $preview || BlurredImgMarkup::usesBlurredImg($html),
         ];
 
         $clientPresent = str_contains($html, '@vite/client');

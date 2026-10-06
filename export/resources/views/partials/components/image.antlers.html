@@ -51,22 +51,20 @@
     ) }}
 {{ /if }}
 {{#
-    Sløret forhåndsbillede (blur-load): Glide gør et 48 px sløret billede, der
-    ligger som billedets egen baggrund, til billedet er hentet. Ingen
-    indpakning, så layoutet er det samme. blur_load="false" slår det fra, fx
-    på billeder med gennemsigtighed, hvor baggrunden ville skinne igennem.
+    Lazy loading med sløret pladsholder som i
+    https://blog.webdevsimplified.com/2023-05/lazy-load-images/ — billedet
+    ligger i <div class="blurred-img"> med en 20 px bred udgave som baggrund
+    og toner frem når det er hentet. Kun med blur_load="true"; uden er
+    billedet et almindeligt billede.
 #}}
-{{ _blur = _src && _w && blur_load !== 'false' && blur_load !== false }}
+{{ _blur = _src && (blur_load === 'true' || blur_load === true) }}
+{{ if _blur }}<div class="blurred-img" style="background-image: url({{ glide :src="_src" width="20" }})">{{ /if }}
 <img
     {{ if _id }}
         id="{{ _id }}"
     {{ endif }}
     class="max-w-full {{ class }}"
-    {{ if _blur }}
-        {{ _ph_h = (48 * _h / _w) | round }}
-        data-blur-load
-        style="--blur-load: url('{{ glide:data_url :src="_src" width="48" :height="_ph_h" fit="crop_focal" quality="40" format="webp" blur="8" }}');{{ style }}"
-    {{ elseif style }}
+    {{ if style }}
         style="{{ style }}"
     {{ endif }}
     loading="{{ loading ? loading : 'lazy'  }}"
@@ -76,6 +74,7 @@
     src="{{ glide :src="_src" width="{{ _w }}" height="{{ _h }}" quality="{{ props_quality }}" fit="crop_focal" format="{{ format or 'webp' }}" }}"
     alt="{{ if imagePath }}{{ imagePath:alt }}{{ elseif props_image }}{{ asset :url="props_image" }}{{ alt }}{{ /asset }}{{ /if }}"
 >
+{{ if _blur }}</div>{{ /if }}
 
 {{ sve_tw handle="view/partials/components/image" }}
 {{ /sve_defaults }}
