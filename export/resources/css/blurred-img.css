@@ -8,8 +8,24 @@
      fylde forælderen som før indpakningen. */
   position: relative;
   height: 100%;
+  isolation: isolate;
   background-repeat: no-repeat;
   background-size: cover;
+}
+
+/* Artiklens filter: blur — lagt på en kopi af baggrunden i stedet for på
+   indpakningen, så det hentede billede ikke også bliver sløret. clip-path
+   holder sløret inden for billedet. */
+.blurred-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: inherit;
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: blur(1rem);
+  clip-path: inset(0);
 }
 
 /* Et billede med absolute inset-0 (fx event_card) fylder sin forælder; så
