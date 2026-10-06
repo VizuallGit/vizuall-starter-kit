@@ -3,9 +3,9 @@
     https://blog.webdevsimplified.com/2023-05/lazy-load-images/ — billedet
     ligger i <div class="blurred-img"> med en lille udgave som baggrund (40 px
     bred; blur_width="60" ændrer det)
-    og toner frem når det er hentet. Kun med blur_load="true"; uden er
-    billedet et almindeligt billede.
-    Med blur_load="true" (og ikke loading="eager") hentes det fulde billede
+    og toner frem når det er hentet. Slået til som standard; blur_load="false"
+    giver et almindeligt billede.
+    Uden loading="eager" hentes det fulde billede
     først når det er 100 px fra skærmen: src er en gennemsigtig SVG med
     billedets mål (så pladsen er den samme), og det fulde billede står i
     data-src/data-srcset, som blurred-img.js flytter over.
@@ -28,7 +28,7 @@
     ['w' => 640, 'r' => _sm],
 ] }}
 
-{{ _blur = blur_load === 'true' || blur_load === true }}
+{{ _blur = blur_load !== 'false' && blur_load !== false }}
 {{ _wait = _blur && loading !== 'eager' }}
 {{ _pre = _wait ? 'data-' : '' }}
 

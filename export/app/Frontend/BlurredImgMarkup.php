@@ -6,8 +6,8 @@ namespace App\Frontend;
  * Om den færdige HTML har billeder med sløret pladsholder (.blurred-img).
  *
  * components/picture og components/image lægger billedet i en
- * <div class="blurred-img">, når kaldet siger blur_load="true". Uden klassen
- * hentes scriptet ikke.
+ * <div class="blurred-img">, medmindre kaldet siger blur_load="false". Uden
+ * klassen hentes scriptet ikke.
  */
 class BlurredImgMarkup
 {
