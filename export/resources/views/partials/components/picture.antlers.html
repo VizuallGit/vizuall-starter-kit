@@ -1,7 +1,8 @@
 {{#
     Lazy loading med sløret pladsholder som i
     https://blog.webdevsimplified.com/2023-05/lazy-load-images/ — billedet
-    ligger i <div class="blurred-img"> med en 20 px bred udgave som baggrund
+    ligger i <div class="blurred-img"> med en lille udgave som baggrund (40 px
+    bred; blur_width="60" ændrer det)
     og toner frem når det er hentet. Kun med blur_load="true"; uden er
     billedet et almindeligt billede.
     Med blur_load="true" (og ikke loading="eager") hentes det fulde billede
@@ -31,7 +32,8 @@
 {{ _wait = _blur && loading !== 'eager' }}
 {{ _pre = _wait ? 'data-' : '' }}
 
-{{ if _blur }}<div class="blurred-img" style="background-image: url({{ glide :src="imagePath" width="20" }})">{{ /if }}
+{{ _blur_w = blur_width or 40 }}
+{{ if _blur }}<div class="blurred-img" style="background-image: url({{ glide :src="imagePath" :width="_blur_w" }})">{{ /if }}
 <picture class="{{ class }}">
     {{ _sources }}
         {{ _h = w * r / 16 }}

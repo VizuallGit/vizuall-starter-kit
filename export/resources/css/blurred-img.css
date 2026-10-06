@@ -35,21 +35,24 @@
   inset: 0;
 }
 
+/* Pulsen mens billedet hentes. Artiklens færdige kode bruger tekstfarven
+   (var(--text-color)) — hvid kunne ikke ses på lyse billeder. Lidt kortere og
+   tydeligere end artiklen, så den ses, også når billedet kommer hurtigt. */
 .blurred-img::before {
   content: "";
   position: absolute;
   inset: 0;
   opacity: 0;
-  animation: pulse 2.5s infinite;
-  background-color: white;
+  animation: blurred-img-pulse 1.5s infinite;
+  background-color: currentColor;
 }
 
-@keyframes pulse {
+@keyframes blurred-img-pulse {
   0% {
     opacity: 0;
   }
   50% {
-    opacity: 0.1;
+    opacity: 0.15;
   }
   100% {
     opacity: 0;
@@ -63,9 +66,19 @@
 
 .blurred-img img {
   opacity: 0;
-  transition: opacity 250ms ease-in-out;
 }
 
+/* Artiklens tone-ind (transition: opacity 250ms) som animation: billedets
+   egne transition-klasser (fx transition-transform duration-700 til
+   hover-zoom på casene) overskriver ellers transition, og så sprang billedet
+   bare frem. */
 .blurred-img.loaded img {
   opacity: 1;
+  animation: blurred-img-fade 250ms ease-in-out;
+}
+
+@keyframes blurred-img-fade {
+  from {
+    opacity: 0;
+  }
 }
