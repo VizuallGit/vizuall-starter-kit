@@ -1,7 +1,6 @@
 title: 'Block text settings'
-# Delt mellem settings (desktop), settings_t (tablet) og settings_m (mobil)
-# i blocks/text.yaml — nye felter her dukker automatisk op på alle tre
-# breakpoints. CSS-output til nye felter tilføjes ét sted:
+# Importeres af settings-fanen i blocks/text.yaml.
+# CSS-output til nye felter tilføjes ét sted:
 # partials/blocks/text_settings_css.antlers.html
 fields:
   -

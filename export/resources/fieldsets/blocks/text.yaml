@@ -40,15 +40,6 @@ fields:
       display: 'Show settings'
       localizable: false
   -
-    handle: _cb_bp
-    field:
-      type: column_breakpoint
-      display: 'Breakpoint (auto)'
-      default: desktop
-      visibility: hidden
-      listable: false
-      localizable: false
-  -
     handle: settings
     field:
       type: tabby
@@ -59,30 +50,3 @@ fields:
         - import: blocks.text_settings
       if:
         show_settings: 'equals true'
-        _cb_bp: 'custom cbBpDesktop'
-  -
-    handle: settings_t
-    field:
-      type: tabby
-      display: 'Settings — Tablet'
-      instructions: 'Tomme felter arver fra desktop.'
-      localizable: false
-      always_save: true
-      fields:
-        - import: blocks.text_settings
-      if:
-        show_settings: 'equals true'
-        _cb_bp: 'equals tablet'
-  -
-    handle: settings_m
-    field:
-      type: tabby
-      display: 'Settings — Mobil'
-      instructions: 'Tomme felter arver fra tablet/desktop.'
-      localizable: false
-      always_save: true
-      fields:
-        - import: blocks.text_settings
-      if:
-        show_settings: 'equals true'
-        _cb_bp: 'equals mobile'

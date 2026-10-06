@@ -1,7 +1,6 @@
 title: 'Block media settings'
-# Delt mellem settings (desktop), settings_t (tablet) og settings_m (mobil)
-# i blocks/media.yaml — nye felter her dukker automatisk op på alle tre
-# breakpoints. CSS-output til nye felter tilføjes ét sted:
+# Importeres af settings-fanen i blocks/media.yaml.
+# CSS-output til nye felter tilføjes ét sted:
 # partials/blocks/media_settings_css.antlers.html
 fields:
   -
