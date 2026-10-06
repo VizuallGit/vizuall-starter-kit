@@ -1,72 +1,43 @@
-{{ xxlAspectRatio = switch(
-    (xxlRatio == true) => xxlRatio,
-    (xlRatio == true) => xlRatio,
-    (lgRatio == true) => lgRatio,
-    (mdRatio == true) => mdRatio,
-    (smRatio == true) => smRatio,
-    () => ratio
-) }}
+{{#
+    Billede med et sløret forhåndsbillede (blur-load): et 16 px bredt billede
+    ligger inline som data-URL bag det rigtige, der toner frem når det er
+    hentet. blur_load="false" slår det fra, fx på små ikoner og logoer.
 
-{{ xlAspectRatio = switch(
-    (xlRatio == true) => xlRatio,
-    (lgRatio == true) => lgRatio,
-    (mdRatio == true) => mdRatio,
-    (smRatio == true) => smRatio,
-    () => ratio
-) }}
+    ratio er højden i sekstendedele af bredden (9 = 16:9, 12 = 4:3, 16 = 1:1).
+    smRatio … xxlRatio gælder fra og med den størrelse og opefter; den
+    mindste der er sat, arver til de større.
+#}}
+{{ _r = ratio or 9 }}
+{{ _sm = smRatio or _r }}
+{{ _md = mdRatio or _sm }}
+{{ _lg = lgRatio or _md }}
+{{ _xl = xlRatio or _lg }}
+{{ _xxl = xxlRatio or _xl }}
+{{ _sources = [
+    ['w' => 1536, 'r' => _xxl],
+    ['w' => 1280, 'r' => _xl],
+    ['w' => 1024, 'r' => _lg],
+    ['w' => 768, 'r' => _md],
+    ['w' => 640, 'r' => _sm],
+] }}
 
-{{ lgAspectRatio = switch(
-    (lgRatio == true) => lgRatio,
-    (mdRatio == true) => mdRatio,
-    (smRatio == true) => smRatio,
-    () => ratio
-) }}
+<picture class="{{ class }}"{{ unless blur_load === 'false' || blur_load === false }} data-blur-load style="--blur-load: url('{{ glide:data_url :src="imagePath" width="16" :height="_r" fit="crop_focal" quality="40" format="webp" }}')"{{ /unless }}>
+    {{ _sources }}
+        {{ _h = w * r / 16 }}
+        <source
+            media="(min-width: {{ w }}px)"
+            width="{{ w }}" height="{{ _h }}"
+            srcset="{{ glide :src="imagePath" :width="w" :height="_h" quality="70" fit="crop_focal" format="webp" }} 1x, {{ glide :src="imagePath" :width="w" :height="_h" dpr="2" quality="50" fit="crop_focal" format="webp" }} 2x"
+        >
+    {{ /_sources }}
 
-{{ mdAspectRatio = switch(
-    (mdRatio == true) => mdRatio,
-    (smRatio == true) => smRatio,
-    () => ratio
-) }}
-
-{{ smAspectRatio = switch(
-    (smRatio == true) => smRatio,
-    () => ratio
-) }}
-
-
-<picture class="{{ class }}">
-
-    <source 
-    width="1536" 
-    height="{{ '1536' | divide:16 | multiply:{{ xxlAspectRatio or '9'}} }}" 
-    srcset="{{ glide:imagePath quality="70" fit="crop_focal" format="webp" width="1536" height="{{ '1536' | divide:16 | multiply:{{ xxlAspectRatio or '9'}} }}" }} 1x, {{ glide:imagePath quality="50" fit="crop_focal" format="webp" dpr="2" width="1536" height="{{ '1536' | divide:16 | multiply:{{ xxlAspectRatio or '9'}} }}" }} 2x" media="(min-width: 1536px)">
-    
-    <source 
-    width="1280" 
-    height="{{ '1280' | divide:16 | multiply:{{ xlAspectRatio or '9'}} }}" 
-    srcset="{{ glide:imagePath quality="70" fit="crop_focal" format="webp" width="1280" height="{{ '1280' | divide:16 | multiply:{{ xlAspectRatio or '9'}} }}" }} 1x, {{ glide:imagePath quality="50" fit="crop_focal" format="webp" dpr="2" width="1280" height="{{ '1280' | divide:16 | multiply:{{ xlAspectRatio or '9'}} }}" }} 2x" media="(min-width: 1280px)">
-
-    <source 
-    width="1024" height="{{ '1024' | divide:16 | multiply:{{ lgAspectRatio or '9'}} }}" 
-    srcset="{{ glide:imagePath quality="70" fit="crop_focal" format="webp" width="1024" height="{{ '1024' | divide:16 | multiply:{{ lgAspectRatio or '9'}} }}" }} 1x, {{ glide:imagePath quality="50" fit="crop_focal" format="webp" dpr="2" width="1024" height="{{ '1024' | divide:16 | multiply:{{ lgAspectRatio or '9'}} }}" }} 2x" media="(min-width: 1024px)">
-
-    <source 
-    width="768" height="{{ '768' | divide:16 | multiply:{{ mdAspectRatio or '9'}} }}" 
-    srcset="{{ glide:imagePath quality="70" fit="crop_focal" format="webp" width="768" height="{{ '768' | divide:16 | multiply:{{ mdAspectRatio or '9'}} }}" }} 1x, {{ glide:imagePath quality="50" fit="crop_focal" format="webp" dpr="2" width="768" height="{{ '768' | divide:16 | multiply:{{ mdAspectRatio or '9'}} }}" }} 2x" media="(min-width: 768px)">
-
-    <source 
-    width="640" height="{{ '640' | divide:16 | multiply:{{ smAspectRatio ? smAspectRatio : ratio or '9'}} }}" 
-    srcset="{{ glide:imagePath quality="70" fit="crop_focal" format="webp" width="640" height="{{ '640' | divide:16 | multiply:{{ smAspectRatio ? smAspectRatio : ratio or '9'}} }}" }} 1x, {{ glide:imagePath quality="50" fit="crop_focal" format="webp" dpr="2" width="640" height="{{ '640' | divide:16 | multiply:{{ smAspectRatio ? smAspectRatio : ratio or '9'}} }}" }} 2x" media="(min-width: 640px)">
-
-    <source 
-    width="480" height="{{ '480' | divide:16 | multiply:{{ ratio or '9'}} }}" 
-    srcset="{{ glide:imagePath quality="70" fit="crop_focal" format="webp" width="480" height="{{ '480' | divide:16 | multiply:{{ ratio or '9'}} }}" }} 1x, {{ glide:imagePath quality="50" fit="crop_focal" format="webp" dpr="2" width="480" height="{{ '480' | divide:16 | multiply:{{ ratio or '9'}} }}" }} 2x">
-
-    <img 
+    {{ _h = 480 * _r / 16 }}
+    <img
         class="w-full h-full object-cover {{ flip_image ?= 'scale-x-[-1]' }}"
-        width="480" height="{{ '480' | divide:16 | multiply:{{ ratio or '9'}} }}"
+        width="480" height="{{ _h }}"
         loading="{{ loading or 'lazy' }}"
-        src="{{ glide:imagePath quality="70" fit="crop_focal" format="webp" width="480" height="{{ '480' | divide:16 | multiply:{{ ratio or '9'}} }}" }}"
+        src="{{ glide :src="imagePath" width="480" :height="_h" quality="70" fit="crop_focal" format="webp" }}"
+        srcset="{{ glide :src="imagePath" width="480" :height="_h" quality="70" fit="crop_focal" format="webp" }} 1x, {{ glide :src="imagePath" width="480" :height="_h" dpr="2" quality="50" fit="crop_focal" format="webp" }} 2x"
         alt="{{ imagePath:alt }}"
     >
 </picture>

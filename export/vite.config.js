@@ -8,7 +8,7 @@ export default defineConfig({
     },
     plugins: [
         laravel({
-            input: ['resources/css/site.css', 'resources/js/contrast.js', 'resources/js/alpine.js'],
+            input: ['resources/css/site.css', 'resources/js/contrast.js', 'resources/js/alpine.js', 'resources/js/blur-load.js'],
             refresh: true,
         }),
         tailwindcss(),

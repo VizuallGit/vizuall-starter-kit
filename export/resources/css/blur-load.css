@@ -1,0 +1,53 @@
+/* Blur-load (components/picture): et lille sløret billede ligger bag det
+   rigtige, mens det hentes. blur-load.js sætter is-loading på de billeder der
+   ikke er færdige endnu og fjerner den igen ved load. Klassen kommer kun fra
+   scriptet, så uden det — eller når Live Preview har morphet HTML'en — står
+   billedet bare fremme. */
+
+[data-blur-load] {
+    position: relative;
+    display: block;
+    height: 100%;
+    overflow: hidden;
+    isolation: isolate;
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        background: var(--blur-load) center / cover no-repeat;
+        filter: blur(1rem);
+        transform: scale(1.1);
+    }
+
+    & > img {
+        display: block;
+        transition: opacity 0.25s ease-in-out;
+    }
+}
+
+[data-blur-load].is-loading {
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: var(--color-white);
+        opacity: 0;
+        animation: blur-load-pulse 2.5s infinite;
+    }
+
+    & > img {
+        opacity: 0;
+    }
+}
+
+@keyframes blur-load-pulse {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    [data-blur-load] > img { transition: none; }
+    [data-blur-load].is-loading::after { animation: none; }
+}
