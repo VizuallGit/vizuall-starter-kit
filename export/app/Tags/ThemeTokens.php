@@ -2,6 +2,7 @@
 
 namespace App\Tags;
 
+use App\Frontend\FontPreload;
 use Statamic\Tags\Tags;
 
 /**
@@ -23,6 +24,9 @@ use Statamic\Tags\Tags;
  * The fonts come along: public/fonts/fonts.css (the Theme panel's Fonts tab
  * writes it) is linked with its modification time in the URL, so a font
  * added on the server reaches visitors without a build or a stale cache.
+ * The body and heading font files are preloaded (FontPreload), read from
+ * the same two files, so a font changed in the Theme panel is the one
+ * preloaded on the next request.
  */
 class ThemeTokens extends Tags
 {
@@ -42,8 +46,9 @@ class ThemeTokens extends Tags
     public function index(): string
     {
         $lines = [];
+        $tokens = static::tokens();
 
-        foreach (static::tokens() as $name => $value) {
+        foreach ($tokens as $name => $value) {
             $lines[] = "--{$name}: {$value};";
 
             if (str_starts_with($name, 'color-')) {
@@ -51,7 +56,7 @@ class ThemeTokens extends Tags
             }
         }
 
-        return static::fontsLink().($lines ? '<style>:root{'.implode('', $lines).'}</style>' : '');
+        return static::fontPreloads($tokens).static::fontsLink().($lines ? '<style>:root{'.implode('', $lines).'}</style>' : '');
     }
 
     /** `<link>` to public/fonts/fonts.css, or nothing while there is no such file. */
@@ -64,6 +69,14 @@ class ThemeTokens extends Tags
         }
 
         return '<link rel="stylesheet" href="/fonts/fonts.css?v='.filemtime($file).'">';
+    }
+
+    /** `<link rel="preload">` for the font files fonts.css gives the body and headings. */
+    public static function fontPreloads(array $tokens): string
+    {
+        $file = public_path('fonts/fonts.css');
+
+        return is_file($file) ? FontPreload::links((string) file_get_contents($file), $tokens) : '';
     }
 
     /**

@@ -61,6 +61,11 @@ class AppServiceProvider extends ServiceProvider
                 ->handle(request(), fn () => $event->response);
         });
 
+        // Sidens CSS renses i den udgivne kopi også (se CleanPageCss). Efter
+        // scripts-lytteren, så de scripts siden henter er med, når den ser
+        // hvilke klasser der bruges.
+        \Illuminate\Support\Facades\Event::listen(\Statamic\Events\ResponseCreated::class, [\App\Frontend\CleanPageCss::class, 'created']);
+
         // Custom SVGs for Replicator/Bard set icons (Edit Set → Custom icon field,
         // or filename in YAML). Does not replace Statamic's default picker list —
         // call Sets::useIcons('vizuall', …) if you want these in the picker too.
