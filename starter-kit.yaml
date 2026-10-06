@@ -16,6 +16,8 @@ export_paths:
   - app/Http/Controllers/CP/RedirectsController.php
   - app/Http/Controllers/CP/RoutesController.php
   - app/Http/Controllers/CP/EnvKeysController.php
+  - app/Frontend
+  - app/Http/Middleware/LoadUsedFrontendScripts.php
   - resources/css
   - resources/js
   - resources/svg

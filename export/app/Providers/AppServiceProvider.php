@@ -42,6 +42,14 @@ class AppServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
+        // Alpine og auto-kontrast skal med i den HTML den statiske cache gemmer.
+        // Statamic lægger sin Cache-middleware på statamic.web i en booted-callback,
+        // og den her provider booter bagefter, så push lander indenfor cachen.
+        $this->app->booted(function () {
+            $this->app->make(\Illuminate\Routing\Router::class)
+                ->pushMiddlewareToGroup('statamic.web', \App\Http\Middleware\LoadUsedFrontendScripts::class);
+        });
+
         // Custom SVGs for Replicator/Bard set icons (Edit Set → Custom icon field,
         // or filename in YAML). Does not replace Statamic's default picker list —
         // call Sets::useIcons('vizuall', …) if you want these in the picker too.

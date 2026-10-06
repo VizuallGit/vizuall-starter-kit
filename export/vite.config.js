@@ -8,7 +8,7 @@ export default defineConfig({
     },
     plugins: [
         laravel({
-            input: ['resources/css/site.css', 'resources/js/site.js'],
+            input: ['resources/css/site.css', 'resources/js/contrast.js', 'resources/js/alpine.js'],
             refresh: true,
         }),
         tailwindcss(),
