@@ -16,9 +16,9 @@ namespace App\Frontend;
  * fjernes fra den side der sendes.
  *
  *  - Et billede får fetchpriority="high", loading="eager" og det rigtige
- *    billede i src/srcset med det samme — som komponentens loading="eager" —
- *    og et `<link rel="preload">` i `<head>` med samme srcset, så browseren
- *    henter den samme fil. I en `<picture>` med `<source media="(min-width:
+ *    billede i src/srcset med det samme, uden blur — som komponenten med
+ *    blur_load="false" — og et `<link rel="preload">` i `<head>` med samme
+ *    srcset, så browseren henter den samme fil. I en `<picture>` med `<source media="(min-width:
  *    …)">` får hver kilde sit link med en media der kun passer, når
  *    `<picture>` selv ville vælge den, så der stadig kun hentes én fil. Kan
  *    kilderne ikke regnes ud (type, anden media), preloades de ikke;
@@ -65,6 +65,7 @@ final class PriorityMedia
 
             $tag = self::prioritise($tag);
             $edits[] = [$offset, strlen($match[0][0]), $tag];
+            array_push($edits, ...self::withoutBlur($live, $offset, strlen($match[0][0])));
             $sources = [];
 
             foreach (self::pictureSources($live, $offset) as [$at, $length]) {
@@ -125,6 +126,51 @@ final class PriorityMedia
         }
 
         return preg_replace('/(\s)data-'.$name.'(?=\s*=)/i', '$1'.$name, $tag, 1);
+    }
+
+    /**
+     * Udklip der fjerner den `<div class="blurred-img">` komponenterne lægger
+     * om billedet (eller om dets `<picture>`), så det står som med
+     * blur_load="false". Med blur er billedet usynligt, indtil blurred-img.js
+     * har kørt — på det billede der skal frem først, er det kun ventetid. Kun
+     * når indpakningen rummer billedet og intet andet; ellers bliver den.
+     *
+     * @return list<array{int, int, string}>
+     */
+    private static function withoutBlur(string $live, int $img, int $length): array
+    {
+        [$start, $end] = [$img, $img + $length];
+        $before = substr($live, 0, $img);
+        $picture = strripos($before, '<picture');
+
+        if ($picture !== false && stripos($before, '</picture', $picture) === false) {
+            $close = stripos($live, '</picture', $end);
+            $closeEnd = $close === false ? false : strpos($live, '>', $close);
+
+            if ($closeEnd === false) {
+                return [];
+            }
+
+            [$start, $end] = [$picture, $closeEnd + 1];
+        }
+
+        if (! preg_match('#<div\b[^>]*>\s*$#i', substr($live, 0, $start), $open, PREG_OFFSET_CAPTURE)
+            || ! preg_match('#^\s*</div\s*>#i', substr($live, $end, 64), $close)) {
+            return [];
+        }
+
+        $classes = preg_split('/\s+/', Html::decode(Html::attributes($open[0][0])['class'] ?? ''));
+
+        if (! in_array('blurred-img', $classes, true)) {
+            return [];
+        }
+
+        $closeTag = ltrim($close[0]);
+
+        return [
+            [$open[0][1], strpos($open[0][0], '>') + 1, ''],
+            [$end + strlen($close[0]) - strlen($closeTag), strlen($closeTag), ''],
+        ];
     }
 
     /**

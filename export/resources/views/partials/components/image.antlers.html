@@ -62,7 +62,8 @@
     billedets mål (så pladsen er den samme), og det fulde billede står i
     data-src/data-srcset, som blurred-img.js flytter over.
     priority="true" (eller "high") henter billedet først på den offentlige
-    side: fetchpriority="high", preload i <head> og ingen ventetid på blur.
+    side: fetchpriority="high", preload i <head> og uden blur (som
+    blur_load="false"; blur er kun ventetid på det billede der skal først frem).
     Fra som standard — kun til det ene billede øverst, der skal frem først.
     Live Preview er uændret (App\Frontend\PriorityMedia).
 #}}
