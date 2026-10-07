@@ -83,6 +83,7 @@ export_paths:
   - config/statamic/editions.php
   - config/statamic/live_preview.php
   - resources/addons/visual-editor.yaml
+  - resources/addons/bard-style.yaml
   - resources/visual-editor/ai-rules.md
   - resources/visual-editor/collection-presets
   - resources/visual-editor/template-presets
