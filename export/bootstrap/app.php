@@ -19,12 +19,12 @@ return Application::configure(basePath: dirname(__DIR__))
 
         // Redirects slår til før Statamic slår adressen op, og før den
         // statiske cache svarer fra disk — derfor prepend og ikke append.
-        // CleanPageCss renser den offentlige sides CSS. Forrest, så den ser
-        // siden efter Style Push' InjectAssets (også i web) har sat
-        // sektionernes CSS ind.
+        // CleanPublicPage gør den offentlige side hurtig (CSS inline, billedet
+        // øverst først). Forrest, så den ser siden efter Style Push'
+        // InjectAssets (også i web) har sat sektionernes CSS ind.
         $middleware->web(prepend: [
             \App\Http\Middleware\HandleRedirects::class,
-            \App\Frontend\CleanPageCss::class,
+            \App\Frontend\CleanPublicPage::class,
         ]);
 
         $middleware->web(append: [

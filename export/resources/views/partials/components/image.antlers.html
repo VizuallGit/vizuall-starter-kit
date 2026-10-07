@@ -61,6 +61,10 @@
     først når det er 100 px fra skærmen: src er en gennemsigtig SVG med
     billedets mål (så pladsen er den samme), og det fulde billede står i
     data-src/data-srcset, som blurred-img.js flytter over.
+    priority="true" (eller "high") henter billedet først på den offentlige
+    side: fetchpriority="high", preload i <head> og ingen ventetid på blur.
+    Fra som standard — kun til det ene billede øverst, der skal frem først.
+    Live Preview er uændret (App\Frontend\PriorityMedia).
 #}}
 {{ _blur = _src && blur_load !== 'false' && blur_load !== false }}
 {{ _wait = _blur && loading !== 'eager' }}
@@ -76,6 +80,9 @@
         style="{{ style }}"
     {{ endif }}
     loading="{{ loading ? loading : 'lazy'  }}"
+    {{ if priority == 'true' || priority == 'high' || priority === true }}
+        priority="true"
+    {{ /if }}
     width="{{ _w }}"
     height="{{ _h }}"
     {{ if _wait }}

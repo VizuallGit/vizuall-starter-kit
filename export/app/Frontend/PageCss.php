@@ -77,7 +77,7 @@ final class PageCss
             return $html;
         }
 
-        $live = self::live(substr($html, 0, $head));
+        $live = Html::live(substr($html, 0, $head));
         $links = self::links($live);
         $site = array_values(array_filter($links, fn ($l) => $l['kind'] === 'site'));
 
@@ -396,12 +396,7 @@ final class PageCss
         $links = [];
 
         foreach ($tags[0] as [$tag, $offset]) {
-            preg_match_all('/([\w:-]+)\s*=\s*("[^"]*"|\'[^\']*\'|[^\s>]+)/', $tag, $pairs, PREG_SET_ORDER);
-            $attrs = [];
-
-            foreach ($pairs as [, $name, $value]) {
-                $attrs[strtolower($name)] = html_entity_decode(trim($value, '"\''), ENT_QUOTES | ENT_HTML5);
-            }
+            $attrs = array_map(Html::decode(...), Html::attributes($tag));
 
             $rel = preg_split('/\s+/', strtolower($attrs['rel'] ?? ''));
             $path = self::path($attrs['href'] ?? '');
@@ -423,21 +418,6 @@ final class PageCss
         }
 
         return $links;
-    }
-
-    /**
-     * `<head>` med det browseren ikke bruger som CSS blanket ud: kommentarer,
-     * `<noscript>`, `<template>` og scripts. Et udkommenteret `<style>` må
-     * hverken være "den sidste kopi" eller blive til et rigtigt stylesheet.
-     * Samme længde, så positionerne passer på den rigtige HTML.
-     */
-    private static function live(string $head): string
-    {
-        return preg_replace_callback(
-            '#<!--(?:.*?-->|.*$)|<noscript\b.*?</noscript\s*>|<template\b.*?</template\s*>|<script\b.*?</script\s*>#is',
-            fn ($m) => str_repeat(' ', strlen($m[0])),
-            $head,
-        ) ?? $head;
     }
 
     /** Stien i en URL fra siden, eller null hvis det ikke er en sti. */

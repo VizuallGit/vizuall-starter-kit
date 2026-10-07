@@ -11,7 +11,9 @@ use Vizuall\StylePush\Http\Middleware\InjectAssets;
 use Vizuall\StylePush\Tags\YieldStyles;
 
 /**
- * PageCss på den offentlige side — aldrig i Live Preview eller editoren.
+ * Den offentlige side gjort hurtig, før den sendes eller udgives — aldrig i
+ * Live Preview eller editoren: PageCss (CSS'en inline, kun det brugte, hver
+ * regel én gang) og PriorityMedia (billedet/videoen øverst hentes først).
  *
  * To indgange, samme arbejde (som LoadUsedFrontendScripts):
  *
@@ -23,10 +25,10 @@ use Vizuall\StylePush\Tags\YieldStyles;
  *    sætter vi den ind selv, med samme InjectAssets, før vi renser; Static
  *    Publish finder så ingen pladsholder og tømmer bare stakken.
  *
- * Renset én gang er der intet sitets stylesheet tilbage at rense, så den
- * anden indgang ser en færdig side og gør intet.
+ * Renset én gang er der intet sitets stylesheet tilbage at rense, og
+ * prioriteten står allerede på billedet, så den anden indgang ændrer intet.
  */
-final class CleanPageCss
+final class CleanPublicPage
 {
     public function handle(Request $request, Closure $next): Response
     {
@@ -78,7 +80,7 @@ final class CleanPageCss
     private function clean(Response $response): void
     {
         $html = $response->getContent();
-        $clean = PageCss::clean($html, fn (string $path) => $this->read($path));
+        $clean = PriorityMedia::apply(PageCss::clean($html, fn (string $path) => $this->read($path)));
 
         if ($clean !== $html) {
             $response->setContent($clean);

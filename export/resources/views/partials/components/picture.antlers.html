@@ -9,6 +9,10 @@
     først når det er 100 px fra skærmen: src er en gennemsigtig SVG med
     billedets mål (så pladsen er den samme), og det fulde billede står i
     data-src/data-srcset, som blurred-img.js flytter over.
+    priority="true" (eller "high") henter billedet først på den offentlige
+    side: fetchpriority="high", preload i <head> og ingen ventetid på blur.
+    Fra som standard — kun til det ene billede øverst, der skal frem først.
+    Live Preview er uændret (App\Frontend\PriorityMedia).
 
     ratio er højden i sekstendedele af bredden (9 = 16:9, 12 = 4:3, 16 = 1:1).
     smRatio … xxlRatio gælder fra og med den størrelse og opefter; den
@@ -49,6 +53,9 @@
         class="w-full h-full object-cover {{ flip_image ?= 'scale-x-[-1]' }}"
         width="480" height="{{ _h }}"
         loading="{{ loading or 'lazy' }}"
+        {{ if priority == 'true' || priority == 'high' || priority === true }}
+            priority="true"
+        {{ /if }}
         {{ if _wait }}
             src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 480 {{ _h }}'%3E%3C/svg%3E"
         {{ /if }}
