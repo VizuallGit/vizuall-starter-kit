@@ -11,8 +11,9 @@ namespace App\Frontend;
  *
  * Kun de to fonte der altid står øverst på siden: brødteksten (--font-base
  * med --body-weight) og overskrifterne (--font-heading med --heading-weight).
- * Kilden er fonts.css og temaets tokens, ikke en liste her. En font fra et
- * Adobe-kit står ikke i fonts.css og preloades derfor ikke.
+ * Kilden er fonts.css og temaets tokens, ikke en liste her. Et Adobe-kit
+ * (`@import` af use.typekit.net i fonts.css) tæller også: dets @font-face står
+ * i kittets egen CSS, som ThemeTokens henter, og filerne ligger hos Adobe.
  *
  * Filen vælges som browseren selv vælger den: kun den første familie i
  * stakken tæller (er den ikke en webfont, henter browseren ikke de næste), kun
@@ -27,37 +28,67 @@ class FontPreload
         'medium' => 500, 'semibold' => 600, 'bold' => 700, 'extrabold' => 800, 'black' => 900,
     ];
 
-    private const TYPES = ['woff2' => 'font/woff2', 'woff' => 'font/woff', 'ttf' => 'font/ttf', 'otf' => 'font/otf'];
+    /** Fontformat (fra `format()` eller filendelsen) → preload-linkets type. */
+    private const TYPES = [
+        'woff2' => 'font/woff2', 'woff' => 'font/woff',
+        'ttf' => 'font/ttf', 'truetype' => 'font/ttf', 'otf' => 'font/otf', 'opentype' => 'font/otf',
+    ];
 
-    /** `<link rel="preload">` til brødtekstens og overskrifternes fontfiler. */
-    public static function links(string $fontsCss, array $tokens): string
+    private const KIT = '#@import\s+url\(\s*["\']?(https://use\.typekit\.net/[a-z0-9]+\.css)["\']?\s*\)#i';
+
+    /**
+     * `<link rel="preload">` til brødtekstens og overskrifternes fontfiler.
+     *
+     * @param  list<string>  $kitCss  CSS'en for hvert Adobe-kit fonts.css importerer
+     */
+    public static function links(string $fontsCss, array $tokens, array $kitCss = []): string
     {
         $links = '';
 
-        foreach (static::urls($fontsCss, $tokens) as $url) {
-            $ext = strtolower(pathinfo(parse_url($url, PHP_URL_PATH) ?? '', PATHINFO_EXTENSION));
-            $type = isset(self::TYPES[$ext]) ? ' type="'.self::TYPES[$ext].'"' : '';
-            $links .= '<link rel="preload" href="'.e($url).'" as="font"'.$type.' crossorigin>';
+        foreach (static::chosen($fontsCss, $tokens, $kitCss) as $face) {
+            $ext = strtolower(pathinfo(parse_url($face['url'], PHP_URL_PATH) ?? '', PATHINFO_EXTENSION));
+            $format = self::TYPES[$face['format']] ?? self::TYPES[$ext] ?? null;
+            $type = $format ? ' type="'.$format.'"' : '';
+            $links .= '<link rel="preload" href="'.e($face['url']).'" as="font"'.$type.' crossorigin>';
         }
 
         return $links;
     }
 
     /**
-     * Fontfilerne som sti fra sitets rod, uden dubletter.
+     * Fontfilerne som sti fra sitets rod (eller fuld URL hos Adobe), uden dubletter.
      *
      * @param  array<string, string>  $tokens  ThemeTokens::tokens()
+     * @param  list<string>  $kitCss
      * @return list<string>
      */
-    public static function urls(string $fontsCss, array $tokens): array
+    public static function urls(string $fontsCss, array $tokens, array $kitCss = []): array
     {
-        $faces = static::faces($fontsCss);
+        return array_column(static::chosen($fontsCss, $tokens, $kitCss), 'url');
+    }
+
+    /**
+     * Adobe-kittene fonts.css importerer — ikke dem der står i en kommentar.
+     *
+     * @return list<string>
+     */
+    public static function kits(string $fontsCss): array
+    {
+        preg_match_all(self::KIT, preg_replace('#/\*.*?(?:\*/|$)#s', '', $fontsCss), $kits);
+
+        return array_values(array_unique($kits[1]));
+    }
+
+    /** @return list<array{family: string, url: string, format: string, min: int, max: int}> */
+    private static function chosen(string $fontsCss, array $tokens, array $kitCss): array
+    {
+        $faces = array_merge(static::faces($fontsCss), ...array_map(static::faces(...), $kitCss));
         $wanted = [
             [static::family($tokens, 'font-base'), static::weight($tokens['body-weight'] ?? null, 400)],
             [static::family($tokens, 'font-heading'), static::weight($tokens['heading-weight'] ?? null, 700)],
         ];
 
-        $urls = [];
+        $chosen = [];
 
         foreach ($wanted as [$family, $weight]) {
             if ($family === null) {
@@ -67,11 +98,11 @@ class FontPreload
             $face = static::match(array_filter($faces, fn ($f) => strcasecmp($f['family'], $family) === 0), $weight);
 
             if ($face) {
-                $urls[] = $face['url'];
+                $chosen[$face['url']] = $face;
             }
         }
 
-        return array_values(array_unique($urls));
+        return array_values($chosen);
     }
 
     /** Den første familie i `--font-base: 'Inter', 'Helvetica', …`. */
@@ -105,9 +136,10 @@ class FontPreload
     }
 
     /**
-     * fonts.css' @font-face-regler med normal stil der dækker latinske bogstaver.
+     * @font-face-reglerne (fra fonts.css eller et kit) med normal stil der
+     * dækker latinske bogstaver.
      *
-     * @return list<array{family: string, url: string, min: int, max: int}>
+     * @return list<array{family: string, url: string, format: string, min: int, max: int}>
      */
     private static function faces(string $css): array
     {
@@ -118,7 +150,7 @@ class FontPreload
 
         foreach ($blocks[1] as $block) {
             if (! preg_match('/font-family\s*:\s*["\']?([^"\';]+?)["\']?\s*;/i', $block, $family)
-                || ! preg_match('/src\s*:[^;]*?url\(\s*["\']?([^"\')]+)["\']?\s*\)/i', $block, $src)) {
+                || ! preg_match('/src\s*:[^;]*?url\(\s*["\']?([^"\')]+)["\']?\s*\)\s*(?:format\(\s*["\']?([\w-]+))?/i', $block, $src)) {
                 continue;
             }
 
@@ -147,6 +179,7 @@ class FontPreload
                 'family' => trim($family[1]),
                 // Stierne i fonts.css er relative til filen selv.
                 'url' => preg_match('#^(?:/|https?://)#i', $url) ? $url : '/fonts/'.preg_replace('#^\./#', '', $url),
+                'format' => strtolower($src[2] ?? ''),
                 'min' => min($min, $max),
                 'max' => max($min, $max),
             ];

@@ -3,6 +3,8 @@
 namespace App\Tags;
 
 use App\Frontend\FontPreload;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Statamic\Tags\Tags;
 
 /**
@@ -26,7 +28,7 @@ use Statamic\Tags\Tags;
  * added on the server reaches visitors without a build or a stale cache.
  * The body and heading font files are preloaded (FontPreload), read from
  * the same two files, so a font changed in the Theme panel is the one
- * preloaded on the next request.
+ * preloaded on the next request — an Adobe kit's fonts too.
  */
 class ThemeTokens extends Tags
 {
@@ -71,12 +73,50 @@ class ThemeTokens extends Tags
         return '<link rel="stylesheet" href="/fonts/fonts.css?v='.filemtime($file).'">';
     }
 
-    /** `<link rel="preload">` for the font files fonts.css gives the body and headings. */
+    /**
+     * `<link rel="preload">` for the font files fonts.css gives the body and
+     * headings — also when they come from an Adobe Fonts kit it imports. A
+     * kit's CSS chains to p.typekit.net before its fonts apply, so that host
+     * is preconnected.
+     */
     public static function fontPreloads(array $tokens): string
     {
         $file = public_path('fonts/fonts.css');
 
-        return is_file($file) ? FontPreload::links((string) file_get_contents($file), $tokens) : '';
+        if (! is_file($file)) {
+            return '';
+        }
+
+        $css = (string) file_get_contents($file);
+        $kits = FontPreload::kits($css);
+        $preconnect = $kits ? '<link rel="preconnect" href="https://p.typekit.net">' : '';
+
+        return $preconnect.FontPreload::links($css, $tokens, array_map(static::kitCss(...), $kits));
+    }
+
+    /**
+     * An Adobe kit's CSS, kept for a day. A kit that does not answer is asked
+     * again in ten minutes; until then its fonts are just not preloaded.
+     */
+    private static function kitCss(string $url): string
+    {
+        $key = 'theme-tokens-kit:'.md5($url);
+        $css = Cache::get($key);
+
+        if (is_string($css)) {
+            return $css;
+        }
+
+        try {
+            $response = Http::timeout(3)->get($url);
+            $css = $response->successful() ? $response->body() : '';
+        } catch (\Throwable) {
+            $css = '';
+        }
+
+        Cache::put($key, $css, $css === '' ? now()->addMinutes(10) : now()->addDay());
+
+        return $css;
     }
 
     /**
