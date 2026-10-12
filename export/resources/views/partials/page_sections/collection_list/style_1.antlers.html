@@ -1,0 +1,50 @@
+{{#
+    Kort fra en samling eller håndplukkede entries. Kortet (components/entry_card)
+    læser kun `card:*` — hvilket felt der er billede, tekst og etiket, siger
+    samlingens blueprint under "Vises på kort som". Ingen samling valgt = ingen
+    løkke: collection-tagget kan ikke sortere uden en samling.
+#}}
+<section id="id-{{ id }}" class="[ {{ _class }} ] wrapper relative flow-y" data-auto-contrast {{ visual_edit outline_inside="true" section_orderable="true" }}>
+    {{ partial:components/section_heading }}
+    <ul class="[ list ] auto-grid auto-grid-lg gap-gutter" role="list">
+        {{ if list_source:value == 'picked' }}
+            {{ list_entries }}
+                {{ partial:components/entry_card }}
+            {{ /list_entries }}
+        {{ elseif list_collection }}
+            {{ collection :from="list_collection" :limit="list_limit" :sort="list_sort:value" }}
+                {{ partial:components/entry_card }}
+            {{ /collection }}
+        {{ /if }}
+    </ul>
+</section>
+
+{{ style_push }}
+<style>
+  #id-{{ id }} {
+    --color-bg: {{ bg_color ?? 'transparent' }};
+    --color-text: {{ text_color ?? 'inherit' }};
+
+    {{ partial:cms_styles/spacing_sides_css :padding="padding.laptop.padding" }}
+  }
+
+  @media (width < 64em) {
+    #id-{{ id }} {
+      {{ partial:cms_styles/spacing_sides_css :padding="padding.tablet.padding" }}
+    }
+  }
+
+  @media (width < 48em) {
+    #id-{{ id }} {
+      {{ partial:cms_styles/spacing_sides_css :padding="padding.mobile.padding" }}
+    }
+  }
+
+  @scope(.{{ _class }}) {
+    :scope {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+    }
+  }
+</style>
+{{ /style_push }}
