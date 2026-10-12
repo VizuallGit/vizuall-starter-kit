@@ -14,7 +14,7 @@
 ) }}
 
 {{ _alignment = switch(
-    (alignment == 'top') => 'items-top',
+    (alignment == 'top') => 'items-start',
     (alignment == 'bottom') => 'items-end',
     () => 'items-center'
 ) }}
@@ -121,16 +121,5 @@
                 {{ block_order_mobile }}#block-{{ value }}{ order: {{ index }}; }{{ /block_order_mobile }}
             }
         {{ /if }}
-.media-textbox-style-1 {
-    .blocks {
-        ;
-
-        display: grid;
-        grid-template-columns: repeat(var(--grid-cols), minmax(0, 1fr));
-        gap: var(--size-1000);
-        --grid-cols: {{ cols }}
-    }
-}
-
 </style>
 {{ /style_push }}
