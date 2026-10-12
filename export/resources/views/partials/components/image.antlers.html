@@ -66,8 +66,10 @@
     blur_load="false"; blur er kun ventetid på det billede der skal først frem).
     Fra som standard — kun til det ene billede øverst, der skal frem først.
     Live Preview er uændret (App\Frontend\PriorityMedia).
+    I Live Preview er blur fra (som blur_load="false"): hvert gem morpher
+    sektionen, og billedet ville ellers tone frem igen hver gang.
 #}}
-{{ _blur = _src && blur_load !== 'false' && blur_load !== false }}
+{{ _blur = _src && ! live_preview && blur_load !== 'false' && blur_load !== false }}
 {{ _wait = _blur && loading !== 'eager' }}
 {{ _pre = _wait ? 'data-' : '' }}
 {{ _blur_w = blur_width or 40 }}
