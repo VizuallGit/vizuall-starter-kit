@@ -1,25 +1,11 @@
 {{#
-    Ét kort for en entry fra en hvilken som helst samling. Læser kun `card:*`
-    (title, image, text, label, url), som Visual Editor lægger på hver entry ud
-    fra blueprintets "Vises på kort som". Arver løkkens scope — ingen props.
+    Ét kort for en entry fra en hvilken som helst samling. Kortet er sektionens
+    blokke (card_blocks), oppefra og ned; hver blok henter sit felt fra entryen
+    med {{ sve_prop prop="card_source" }} og falder tilbage på blokkens egen
+    tekst/billede. Arver løkkens scope — ingen props.
 #}}
 <li class="[ entry-card ] relative flow-y group">
-    {{ if card:image }}
-        <div class="overflow-clip">
-            {{ partial:components/image :imagePath="card:image" props_width="800" props_height="480" class="w-full group-hover:scale-110 transition-transform duration-700 ease-in-out" }}
-        </div>
-    {{ /if }}
-    {{ if card:label }}
-        <p class="text-sm opacity-70">{{ card:label }}</p>
-    {{ /if }}
-    <h3 class="text-400">
-        {{ if card:url }}
-            <a class="link-parent" href="{{ card:url }}">{{ card:title }}</a>
-        {{ else }}
-            {{ card:title }}
-        {{ /if }}
-    </h3>
-    {{ if card:text }}
-        <div class="text-sm opacity-70">{{ card:text }}</div>
-    {{ /if }}
+    {{ card_blocks }}
+        {{ partial src="card_blocks/{type}" }}
+    {{ /card_blocks }}
 </li>
