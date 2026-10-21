@@ -1,4 +1,7 @@
-{{ _is_placeholder = headline | is_default('blocks.headline') }}
+{{# `! headline` først: Antlers kører ingen modifier på et tomt felt, så
+    is_default alene sagde aldrig ja til en tom overskrift. Så tegnede skabelonen
+    intet, og editoren viste kun sin spøgelsestekst, der forsvinder ved klik. #}}
+{{ _is_placeholder = ! headline || (headline | is_default('blocks.headline')) }}
 {{# Semantisk tag fra `tag`, visuel skala fra `Font_size`. Inline Bard: én linje
     + farve via Bard color. #}}
 

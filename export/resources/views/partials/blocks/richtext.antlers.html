@@ -1,4 +1,6 @@
-{{ _is_placeholder = richtext | is_default('blocks.richtext') }}
+{{# `! richtext` først: Antlers kører ingen modifier på et tomt felt — se
+    blocks/headline. #}}
+{{ _is_placeholder = ! richtext || (richtext | is_default('blocks.richtext')) }}
 
 {{# Start-tekst pr. sted blokken bruges: kald partialen med richtext_placeholder,
     så står den indtil redaktøren selv skriver. Sendes den ikke, gælder teksten
