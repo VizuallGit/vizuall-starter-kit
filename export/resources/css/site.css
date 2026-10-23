@@ -167,11 +167,6 @@
     --gutter: var(--size-700);
     --body-color: var(--color-primary-900);
     --body-bg: var(--color-white);
-    --highlight-1: var(--color-primary);
-    --highlight-2: var(--color-secondary);
-    --highlight-3: var(--color-tertiary);
-    --highlight-4: var(--color-quaternary);
-    --heading-color: var(--highlight-1);
 
     --size-xxs: .8125rem;
     --size-xs: .875rem;

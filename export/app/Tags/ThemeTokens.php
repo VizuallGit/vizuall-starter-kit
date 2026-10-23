@@ -20,7 +20,9 @@ use Statamic\Tags\Tags;
  *
  * Each color also gets its short name, `--primary-900: var(--color-primary-900)`,
  * so templates, CSS and saved field values that say `var(--primary-900)` keep
- * working. Only literal colors are read: a color that points at a variable
+ * working. Literal colors are read, and a highlight — a color that points at
+ * one of them (`--color-highlight-1: var(--color-primary-500)`), the Theme
+ * panel's named palette colors. A color that points at anything else
  * (`--color-contrast-light: var(--contrast-light)`) is left to site.css.
  *
  * The fonts come along: public/fonts/fonts.css (the Theme panel's Fonts tab
@@ -41,9 +43,12 @@ class ThemeTokens extends Tags
      * ones a build saw in use — a class written in the dock since then would
      * point at nothing until the next deploy.
      */
-    private const MANAGED = '/^(?:size-[\w-]+|spacing-[\w-]+|text-[\w-]+|container-width|gutter|font-base|font-heading|font-size(?:-h[1-6])?|line-height|heading-text-transform|body-color|body-bg|heading-color|highlight-[1-4]|body-weight|heading-weight|heading-line-height|h[1-6]-(?:weight|line-height)|title-(?:font|size|weight|line-height|text-transform|letter-spacing)|button-[\w-]+|btn-radius|input-[\w-]+)$/';
+    private const MANAGED = '/^(?:size-[\w-]+|spacing-[\w-]+|text-[\w-]+|container-width|gutter|font-base|font-heading|font-size(?:-h[1-6])?|line-height|heading-text-transform|body-color|body-bg|body-weight|heading-weight|heading-line-height|h[1-6]-(?:weight|line-height)|title-(?:font|size|weight|line-height|text-transform|letter-spacing)|button-[\w-]+|btn-radius|input-[\w-]+)$/';
 
     private const LITERAL_COLOR = '/^(?:#[0-9a-fA-F]{3,8}|(?:rgba?|hsla?|oklch|oklab|lab|lch|color)\(.*\))$/';
+
+    /** A highlight's value: `var(--color-primary-500)`, captured as `color-primary-500`. */
+    private const COLOR_POINTER = '/^var\(\s*--(color-[\w-]+)\s*\)$/';
 
     public function index(): string
     {
@@ -120,8 +125,9 @@ class ThemeTokens extends Tags
     }
 
     /**
-     * The literal colors and the panel's other tokens in site.css' `@theme`
-     * blocks, name (without `--`) => value, in file order.
+     * The literal colors, the highlights that point at one of them, and the
+     * panel's other tokens in site.css' `@theme` blocks, name (without `--`)
+     * => value, in file order.
      *
      * @return array<string, string>
      */
@@ -136,6 +142,7 @@ class ThemeTokens extends Tags
         preg_match_all('/@theme\b[^{]*\{([^}]*)\}/', $css, $blocks);
 
         $tokens = [];
+        $pointers = [];
 
         foreach ($blocks[1] as $block) {
             $block = preg_replace('#/\*.*?\*/#s', '', $block);
@@ -144,13 +151,23 @@ class ThemeTokens extends Tags
 
             foreach ($matches as [, $name, $value]) {
                 $value = trim($value);
-                $keep = str_starts_with($name, 'color-')
-                    ? preg_match(self::LITERAL_COLOR, $value)
-                    : preg_match(self::MANAGED, $name) && $value !== 'initial' && ! str_contains($value, "var(--{$name})");
 
-                if ($keep) {
+                if (str_starts_with($name, 'color-')) {
+                    if (preg_match(self::LITERAL_COLOR, $value)) {
+                        $tokens[$name] = $value;
+                    } elseif (preg_match(self::COLOR_POINTER, $value, $m) && $m[1] !== $name) {
+                        $pointers[$name] = [$value, $m[1]];
+                    }
+                } elseif (preg_match(self::MANAGED, $name) && $value !== 'initial' && ! str_contains($value, "var(--{$name})")) {
                     $tokens[$name] = $value;
                 }
+            }
+        }
+
+        // A highlight comes along only when the color it points at is one we serve.
+        foreach ($pointers as $name => [$value, $target]) {
+            if (isset($tokens[$target])) {
+                $tokens[$name] = $value;
             }
         }
 

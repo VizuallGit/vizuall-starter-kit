@@ -11,9 +11,6 @@ h1,.h1,h2,.h2,h3,.h3,h4,.h4,h5,.h5,h6,.h6{
   font-weight: var(--heading-weight, 700);
   font-family: var(--font-heading);
   text-transform: var(--heading-text-transform);
-  /* Én highlight for alle overskrifter. En sektion med egen tekst sætter
-     --heading-color tilbage, så overskriften arver sektionens farve. */
-  color: var(--heading-color, inherit);
 }
 
 .font-heading,
