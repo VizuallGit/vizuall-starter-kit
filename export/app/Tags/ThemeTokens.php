@@ -41,7 +41,7 @@ class ThemeTokens extends Tags
      * ones a build saw in use — a class written in the dock since then would
      * point at nothing until the next deploy.
      */
-    private const MANAGED = '/^(?:size-[\w-]+|spacing-[\w-]+|text-[\w-]+|font-base|font-heading|font-size(?:-h[1-6])?|line-height|heading-text-transform|body-weight|heading-weight|heading-line-height|h[1-6]-(?:weight|line-height)|button-[\w-]+|btn-radius)$/';
+    private const MANAGED = '/^(?:size-[\w-]+|spacing-[\w-]+|text-[\w-]+|container-width|gutter|font-base|font-heading|font-size(?:-h[1-6])?|line-height|heading-text-transform|body-color|body-bg|heading-color|highlight-[1-4]|body-weight|heading-weight|heading-line-height|h[1-6]-(?:weight|line-height)|title-(?:font|size|weight|line-height|text-transform|letter-spacing)|button-[\w-]+|btn-radius|input-[\w-]+)$/';
 
     private const LITERAL_COLOR = '/^(?:#[0-9a-fA-F]{3,8}|(?:rgba?|hsla?|oklch|oklab|lab|lch|color)\(.*\))$/';
 

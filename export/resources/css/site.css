@@ -160,8 +160,18 @@
     --font-symbols: 'Iconfont', sans-serif;
 
     /* Temaet: redigeres i Live Preview (Tema-panelet) og lægges på :root af
-       theme_tokens-tagget ved hver visning, så en ændring ses uden build. */
+       theme_tokens-tagget ved hver visning, så en ændring ses uden build.
+       Tekst og baggrund sidder på body, så en sektion der sætter color
+       selv, stadig vinder. Gutter vælges som en størrelse fra skalaen. */
     --container-width: 85.375rem;
+    --gutter: var(--size-700);
+    --body-color: var(--color-primary-900);
+    --body-bg: var(--color-white);
+    --highlight-1: var(--color-primary);
+    --highlight-2: var(--color-secondary);
+    --highlight-3: var(--color-tertiary);
+    --highlight-4: var(--color-quaternary);
+    --heading-color: var(--highlight-1);
 
     --size-xxs: .8125rem;
     --size-xs: .875rem;
