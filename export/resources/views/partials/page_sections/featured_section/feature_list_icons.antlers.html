@@ -17,7 +17,7 @@
                         {{ if type == 'title' }}
                             <p class="font-heading leading-normal!" id="fs-{{ id }}" {{ visual_edit field="title" inline_edit="true" }}>{{ title }}</p>
                         {{ elseif type == 'text' }}
-                            <p {{ visual_edit field="text" inline_edit="true" }}>{{ text }}</p>
+                            <div {{ visual_edit field="text" inline_edit="true" }}>{{ text }}</div>
                         {{ /if }}
                     {{ /blocks }}
                 </div>
