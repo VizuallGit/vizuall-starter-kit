@@ -5,6 +5,7 @@ export_paths:
   - app/Http/Controllers/CP/DashboardPageSpeedController.php
   - app/Http/Middleware/RecordPageViews.php
   - app/Providers/AppServiceProvider.php
+  - app/Modifiers
   - app/Tags
   - app/Widgets
   - bootstrap/app.php
