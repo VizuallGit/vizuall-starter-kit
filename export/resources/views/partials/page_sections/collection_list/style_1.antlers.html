@@ -12,9 +12,13 @@
                 {{ partial:components/entry_card }}
             {{ /list_entries }}
         {{ elseif list_collection }}
-            {{ collection :from="list_collection" :limit="list_limit" :sort="list_sort:value" }}
-                {{ partial:components/entry_card }}
-            {{ /collection }}
+            {{ if list_collection | collection_exists }}
+                {{ collection :from="list_collection" :limit="list_limit" :sort="list_sort:value" }}
+                    {{ partial:components/entry_card }}
+                {{ /collection }}
+            {{ else }}
+                <li>Collection "{{ list_collection }}" doesn't exist</li>
+            {{ /if }}
         {{ /if }}
     </ul>
 </section>

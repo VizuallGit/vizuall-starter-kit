@@ -9,9 +9,13 @@
   
   <ul class="grid gap-500 grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-1">
 
-  {{ collection from="employees" }}
-    {{ partial:components/employee_card :props_headline="title" :props_text="job_title" :props_image="image" }}
-  {{ /collection }}
+  {{ if 'employees' | collection_exists }}
+    {{ collection from="employees" }}
+      {{ partial:components/employee_card :props_headline="title" :props_text="job_title" :props_image="image" }}
+    {{ /collection }}
+  {{ else }}
+    <li>Collection "employees" doesn't exist</li>
+  {{ /if }}
 </ul>
 
   <div class="bg-primary-100 text-350">
