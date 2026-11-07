@@ -50,6 +50,12 @@ class AppServiceProvider extends ServiceProvider
                 ->pushMiddlewareToGroup('statamic.web', \App\Http\Middleware\LoadUsedFrontendScripts::class);
         });
 
+        // Billeder skrevet som elementer (Build: format, quality, blur) gøres
+        // færdige med Glide og blur — også i Live Preview og den statiske
+        // udgivelse. Først, så scripts-lytteren ser blurred-img, og
+        // PriorityMedia ser de færdige billeder (se ImageMarkup).
+        \Illuminate\Support\Facades\Event::listen(\Statamic\Events\ResponseCreated::class, [\App\Frontend\ImageMarkup::class, 'created']);
+
         // Den statiske udgivelse (Static Publish → statamic/ssg) og Visual
         // Editors preview-billeder (/!/sve/…-preview, uden for statamic.web)
         // kalder toResponse() uden middlewaren. Samme arbejde på Statamics
@@ -146,6 +152,9 @@ class AppServiceProvider extends ServiceProvider
             'dashboardWidgets' => function () {
                 return User::current() ? app(WidgetCatalog::class)->payload() : null;
             },
+            // Build viser billedvalgene (størrelse, format, kvalitet, blur), når
+            // sitet kan gøre dem færdige: formaterne serveren kan lave.
+            'sveImageOptions' => fn () => \App\Frontend\ImageMarkup::forScript(),
         ]);
 
         $this->bootRedirectsUtility();
