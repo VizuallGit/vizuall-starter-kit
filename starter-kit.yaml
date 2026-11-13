@@ -42,6 +42,8 @@ export_paths:
   - resources/fieldsets/socialmedia_links.yaml
   - resources/fieldsets/widgets.yaml
   - resources/fieldsets/widgets
+  - resources/fieldsets/headers
+  - resources/fieldsets/footers
   - resources/views/layout.antlers.html
   - resources/views/default.antlers.html
   - resources/views/errors
@@ -54,11 +56,13 @@ export_paths:
   - resources/views/partials/widgets
   - resources/views/partials/blocks
   - resources/views/partials/components
+  - resources/views/partials/card_blocks
   - resources/views/partials/cms_styles
   - resources/views/partials/responsive
   - resources/views/partials/sets
   - resources/views/partials/page_sections/global_section.antlers.html
   - resources/views/partials/page_sections/main_content.antlers.html
+  - resources/views/patterns
   - resources/blueprints/default.yaml
   - resources/blueprints/assets
   - resources/blueprints/forms
@@ -99,6 +103,7 @@ dependencies:
   statamic-addon/component-exporter: ^1.0
   statamic-addon/fluid-size: ^1.0
   statamic-addon/modifiers: ^1.0
+  statamic-addon/paper: ^2.0
   statamic-addon/sections: ^1.0
   statamic-addon/spacing: ^1.0
   statamic-addon/static-publish: ^1.0
@@ -113,6 +118,7 @@ modules:
     export_paths:
       - resources/fieldsets/page_sections.yaml
       - resources/fieldsets/accordion_section
+      - resources/fieldsets/collection_list
       - resources/fieldsets/content_section
       - resources/fieldsets/featured_section
       - resources/fieldsets/form_section

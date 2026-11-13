@@ -57,8 +57,12 @@ return [
         'selector' => 'main > *',
         'overrides' => [],
         'width' => 1440,
+        // Temaet (farver, størrelser) står i resources/css/site.css, og
+        // skrifttyperne i public/fonts/fonts.css (Theme-panelets Fonts-fane).
+        // Ændres en af dem, er alle previews forældede.
         'watch' => [
             'public/build/manifest.json',
+            'public/fonts/fonts.css',
             'resources/css',
             'resources/views',
         ],
@@ -68,12 +72,6 @@ return [
             'resources/views/partials/page_sections',
         ],
         'section_partials' => 'resources/views/partials/page_sections',
-
-        // Sættet hvis værdier ALLE previews afhænger af — farver, fonte, spacing.
-        // Skrevet her selvom det er addonets default: header og footer bor ikke
-        // længere i samme sæt, og forveksles de to, bliver previews stående
-        // uændrede efter et farveskift.
-        'theme_global' => 'theme_settings',
     ],
 
     /*

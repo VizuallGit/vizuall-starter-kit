@@ -1,0 +1,15 @@
+<header class="wrapper" data-sve-chrome="header" data-sve-chrome-label="Header">
+  <div class="flex items-center gap-x-500 py-400">
+    <a href="/" aria-label="{{ site_settings:site_name }}" class="font-bold text-lg">
+      {{ if site_head:logo }}<img src="{{ site_head:logo }}" alt="" class="h-500 w-auto">{{ else }}{{ site_settings:site_name ?? 'Logo' }}{{ /if }}
+    </a>
+    <nav class="ml-auto" aria-label="Primær navigation">
+      <ul class="flex items-center gap-x-[1.5em] font-bold">
+        {{ nav:collection:pages max_depth="1" }}
+          <li><a href="{{ url }}">{{ title }}</a></li>
+        {{ /nav:collection:pages }}
+      </ul>
+    </nav>
+    <a class="btn bg-gray-800 text-gray-50 py-[.8em] px-1 text-xs" href="{{ site_head:button_link ?? '/kontakt' }}">{{ site_head:button_label ?? 'Kontakt' }}</a>
+  </div>
+</header>

@@ -1,0 +1,46 @@
+<header x-data="{ mobilMenu: false }" class="wrapper" data-sve-chrome="header" data-sve-chrome-label="Header">
+  <div class="flex items-center py-400 border-b border-gray-900/15 gap-x-500">
+    <a aria-label="Gå til {{ site_settings.site_name }} forside" href="/">
+      {{ svg src="logo" class="h-500 w-auto" }}
+    </a>
+    <nav class="ml-auto" aria-label="Primary navigation">
+      <menu class="font-bold flex items-center gap-x-[1.5em]">
+        {{ nav:main_navigation }}
+          <li><a class="{{ highlighted ?= 'btn bg-gray-800 text-gray-50 py-[.8em] px-1 text-xs' }}" href="{{ url }}">{{ title }}</a></li>
+        {{ /nav:main_navigation }}
+      </menu>
+    </nav>
+    <button @click="mobilMenu = true" aria-label="Åben mobil menu">{{ svg src="menu" class="h-400 w-auto" }}</button>
+  </div>
+  <div x-show="mobilMenu">
+    <div>
+      <nav class="ml-auto" aria-label="Mobil navigation">
+        <menu class="font-bold flex gap-x-[1.5em]">
+          {{ nav:mobil_navigation }}
+            <li><a href="{{ url }}">{{ title }}</a></li>
+          {{ /nav:mobil_navigation }}
+        </menu>
+      </nav>
+    </div>
+  </div>
+</header>
+
+{{ sve_tw handle="view/partials/site_head" }}
+
+{{ style_push }}
+<style>
+.site-head {
+  
+  background-color: var(--primary-650);
+}
+.header {
+   padding-block: var(--size-900);
+   background-color: var(--primary-800);
+}
+  padding-block: var(--size-900);
+.yyyy {
+  
+  padding-block: var(--size-800);
+}
+</style>
+{{ /style_push }}

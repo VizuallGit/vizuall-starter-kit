@@ -1,0 +1,7 @@
+{{#
+    Link: entryens egen side eller et link-felt. link-parent gør hele kortet
+    klikbart på sitet — ikke i Live Preview, hvor hver blok skal kunne klikkes.
+#}}
+{{ if card_source && {sve_prop prop="card_source" fallback=""} }}
+    <a class="{{ live_preview ? '' : 'link-parent' }} {{ card_style:value == 'button' ? 'inline-block self-start rounded-lg bg-primary text-white px-4 py-2' : 'underline' }}" href="{{ sve_prop prop="card_source" fallback="" }}" {{ visual_edit }}>{{ card_text or 'Læs mere' }}</a>
+{{ /if }}

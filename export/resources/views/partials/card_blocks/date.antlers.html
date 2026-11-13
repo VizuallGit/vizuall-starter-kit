@@ -1,0 +1,17 @@
+{{#
+    Dato: entryens datofelt i et af tre formater (sitets locale styrer
+    månedsnavnet). Værdien lægges i en variabel først: et modifier på selve
+    sve_prop-tagget bliver ikke kørt.
+#}}
+{{ _card_date = {sve_prop prop="card_source" fallback=""} }}
+{{ if card_source && _card_date }}
+    <time class="text-sm opacity-70" {{ visual_edit }}>
+        {{ if card_format:value == 'short' }}
+            {{ _card_date | format:d.m.Y }}
+        {{ elseif card_format:value == 'month' }}
+            {{ _card_date | iso_format('MMMM YYYY') }}
+        {{ else }}
+            {{ _card_date | iso_format('D. MMMM YYYY') }}
+        {{ /if }}
+    </time>
+{{ /if }}

@@ -1,0 +1,12 @@
+title: 'Footer 1'
+fields:
+  -
+    handle: text
+    field:
+      type: text
+      display: Text
+  -
+    handle: contact
+    field:
+      type: textarea
+      display: Contact

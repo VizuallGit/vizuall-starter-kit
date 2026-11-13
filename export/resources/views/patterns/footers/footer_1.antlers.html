@@ -1,0 +1,21 @@
+<footer class="bg-gray-900 text-gray-50" data-sve-chrome="footer" data-sve-chrome-label="Footer">
+  <div class="wrapper grid gap-500 py-700 md:grid-cols-3">
+    <div>
+      <p class="font-bold">{{ site_settings:site_name ?? 'Firmanavn' }}</p>
+      <p class="text-sm opacity-70">{{ site_foot:text ?? 'En kort tekst om virksomheden.' }}</p>
+    </div>
+    <nav aria-label="Footer navigation">
+      <ul class="space-y-1 text-sm">
+        {{ nav:collection:pages max_depth="1" }}
+          <li><a href="{{ url }}">{{ title }}</a></li>
+        {{ /nav:collection:pages }}
+      </ul>
+    </nav>
+    <p class="text-sm whitespace-pre-line">{{ site_foot:contact ?? 'Adresse
+Telefon
+E-mail' }}</p>
+  </div>
+  <div class="wrapper border-t border-gray-50/15 py-400 text-xs opacity-70">
+    &copy; {{ now format="Y" }} {{ site_settings:site_name }}
+  </div>
+</footer>

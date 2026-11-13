@@ -1,0 +1,9 @@
+title: 'Header 2'
+fields:
+  -
+    handle: logo
+    field:
+      type: assets
+      display: Logo
+      max_files: 1
+      container: assets

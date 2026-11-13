@@ -1,0 +1,10 @@
+{{# Billede: entryens assets-felt (card_source), ellers blokkens eget (card_image). #}}
+{{ if card_source && {sve_prop prop="card_source" fallback=""} }}
+    <div class="overflow-clip" style="aspect-ratio: {{ card_ratio ?? '16/9' }}" {{ visual_edit }}>
+        {{ partial:components/image :imagePath="{sve_prop:field prop='card_source' fallback=''}" props_width="800" :aspect="card_ratio" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" }}
+    </div>
+{{ elseif card_image }}
+    <div class="overflow-clip" style="aspect-ratio: {{ card_ratio ?? '16/9' }}" {{ visual_edit }}>
+        {{ partial:components/image :imagePath="card_image" props_width="800" :aspect="card_ratio" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-in-out" }}
+    </div>
+{{ /if }}

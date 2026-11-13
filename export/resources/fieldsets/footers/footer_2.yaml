@@ -1,0 +1,7 @@
+title: 'Footer 2'
+fields:
+  -
+    handle: text
+    field:
+      type: text
+      display: Text

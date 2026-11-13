@@ -1,0 +1,259 @@
+title: 'Collection list style 1'
+fields:
+  -
+    handle: content
+    field:
+      type: tab
+      display: Content
+      tab_icon: text
+  -
+    handle: section_heading
+    field: common.section_heading
+  -
+    handle: list_collection
+    field:
+      type: collections
+      display: Collection
+      max_items: 1
+      mode: select
+      instructions: 'The card blocks pick their fields from this collection.'
+  -
+    handle: list_source
+    field:
+      type: button_group
+      display: Show
+      options:
+        collection: 'Newest from the collection'
+        picked: 'Picked entries'
+      default: collection
+  -
+    handle: list_limit
+    field:
+      type: integer
+      display: Number
+      default: 6
+      width: 50
+      if:
+        list_source: 'equals collection'
+  -
+    handle: list_sort
+    field:
+      type: select
+      display: Order
+      placeholder: "The collection's own"
+      clearable: true
+      width: 50
+      options:
+        'date:desc': 'Newest first'
+        'date:asc': 'Oldest first'
+        'title:asc': 'Title A–Z'
+        random: Random
+      if:
+        list_source: 'equals collection'
+  -
+    handle: list_entries
+    field:
+      type: entries
+      display: Entries
+      instructions: 'Pick entries from the collection above.'
+      if:
+        list_source: 'equals picked'
+  -
+    handle: card
+    field:
+      type: tab
+      display: Card
+      tab_icon: 'lucide:layout-grid'
+  -
+    handle: card_blocks
+    field:
+      type: replicator
+      display: 'Card blocks'
+      instructions: 'What each card shows, top to bottom. Drag to reorder.'
+      collapse: true
+      button_label: 'Add block'
+      default:
+        - type: image
+          card_source: null
+        - type: headline
+          card_source: title
+        - type: text
+          card_source: null
+        - type: link
+          card_source: url
+      sets:
+        card:
+          display: Card
+          sets:
+            image:
+              display: Image
+              icon: 'lucide:image'
+              fields:
+                -
+                  handle: card_source
+                  field:
+                    type: sve_entry_field
+                    display: 'From field'
+                    accepts:
+                      - assets
+                -
+                  handle: card_image
+                  field:
+                    type: assets
+                    display: Image
+                    instructions: 'Shown when no field is chosen, or the entry has no image.'
+                    max_files: 1
+                -
+                  handle: card_ratio
+                  field:
+                    type: button_group
+                    display: Format
+                    options:
+                      '16/9': '16:9'
+                      '4/3': '4:3'
+                      '1/1': '1:1'
+                    default: '16/9'
+            headline:
+              display: Headline
+              icon: 'lucide:heading'
+              fields:
+                -
+                  handle: card_source
+                  field:
+                    type: sve_entry_field
+                    display: 'From field'
+                    accepts:
+                      - text
+                      - textarea
+                -
+                  handle: card_text
+                  field:
+                    type: text
+                    display: Text
+                    instructions: 'Shown when no field is chosen, or the field is empty.'
+                -
+                  handle: card_tag
+                  field:
+                    type: button_group
+                    display: Tag
+                    options:
+                      h2: H2
+                      h3: H3
+                      h4: H4
+                    default: h3
+            text:
+              display: Text
+              icon: 'lucide:text'
+              fields:
+                -
+                  handle: card_source
+                  field:
+                    type: sve_entry_field
+                    display: 'From field'
+                    accepts:
+                      - text
+                      - textarea
+                      - bard
+                      - markdown
+                -
+                  handle: card_text
+                  field:
+                    type: textarea
+                    display: Text
+                    instructions: 'Shown when no field is chosen, or the field is empty.'
+            label:
+              display: Label
+              icon: 'lucide:tag'
+              fields:
+                -
+                  handle: card_source
+                  field:
+                    type: sve_entry_field
+                    display: 'From field'
+                    accepts:
+                      - text
+                      - textarea
+                -
+                  handle: card_text
+                  field:
+                    type: text
+                    display: Text
+                    instructions: 'Shown when no field is chosen, or the field is empty.'
+            date:
+              display: Date
+              icon: 'lucide:calendar'
+              fields:
+                -
+                  handle: card_source
+                  field:
+                    type: sve_entry_field
+                    display: 'From field'
+                    accepts:
+                      - date
+                -
+                  handle: card_format
+                  field:
+                    type: button_group
+                    display: Format
+                    options:
+                      long: '14. oktober 2026'
+                      short: '14.10.2026'
+                      month: 'oktober 2026'
+                    default: long
+            link:
+              display: Link
+              icon: 'lucide:link'
+              fields:
+                -
+                  handle: card_source
+                  field:
+                    type: sve_entry_field
+                    display: 'From field'
+                    accepts:
+                      - entry_url
+                      - link
+                -
+                  handle: card_text
+                  field:
+                    type: text
+                    display: Text
+                    default: 'Læs mere'
+                -
+                  handle: card_style
+                  field:
+                    type: button_group
+                    display: Look
+                    options:
+                      link: Link
+                      button: Button
+                    default: link
+  -
+    handle: farver
+    field:
+      type: tab
+      display: Farver
+      style: accordion
+      tab_icon: 'material-symbols:invert-colors-outline'
+  -
+    handle: bg_color
+    field:
+      type: theme_color_picker
+      display: Color
+  -
+    handle: text_color
+    field:
+      type: theme_color_picker
+      display: 'Text color'
+  -
+    handle: spacing
+    field:
+      type: tab
+      display: Spacing
+      style: accordion
+      tab_icon: spacing
+  -
+    handle: padding
+    field: common.section_spacing
+    config:
+      display: Padding
+      sve_responsive: true

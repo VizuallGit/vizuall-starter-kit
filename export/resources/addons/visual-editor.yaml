@@ -1,6 +1,12 @@
 enabled: true
 panel: true
 page_activity: true
+page_activity_access:
+  audience: everyone
+  users: {}
+  groups: {}
+breakpoint_overview: true
+site_canvas: true
 pages: true
 pages_access:
   audience: everyone
@@ -34,6 +40,8 @@ performance_access:
   users: {}
   groups: {}
 psi: false
+xray: true
+design_overlay: true
 html_tree: true
 html_tree_access:
   audience: everyone
@@ -44,14 +52,44 @@ schema_access:
   audience: super
   users: {}
   groups: {}
+bard_styles: true
+bard_styles_access:
+  audience: super
+  users: {}
+  groups: {}
 comments: true
 comments_access:
   audience: everyone
   users: {}
   groups: {}
+toolbar_preset_developer_tools:
+  - collections
+  - forms
+  - templates
+  - blueprint
+  - sections
+  - code
+  - site_css
+  - theme
+  - xray
+  - ai
+toolbar_preset_editor_tools:
+  - pages
+  - globals
+  - collections
+  - forms
+  - listview
+  - outline
+  - ai
+  - aitext
+  - edits
+  - comments
+toolbar_preset_developer_dock: true
+toolbar_preset_editor_dock: true
+toolbar_preset_editor_panes:
+  - listview
+  - sections
 inline_edit: true
-focus_panel: true
-open_first_section: false
 template_dock: true
 template_dock_access:
   audience: super
@@ -64,6 +102,11 @@ site_css_access:
   groups: {}
 file_manager: true
 file_manager_access:
+  audience: super
+  users: {}
+  groups: {}
+live_reload: false
+live_reload_access:
   audience: super
   users: {}
   groups: {}
@@ -91,14 +134,20 @@ ai_text_access:
   audience: everyone
   users: {}
   groups: {}
+dock_ghost: true
+ghost_provider: claude
 ai_project_rules: true
-open_in_preview: false
+open_in_preview: true
+open_in_preview_collections:
+  - pages
+home_preview_button: true
 library_page: true
 library_custom: true
 previews_autowatch: false
 library_global: true
 library_templates: true
 library_in_use_only: false
+breakpoint_direction: desktop
 breakpoints:
   - id: wsnbqmbf
     handle: laptop
@@ -129,3 +178,5 @@ breakpoints:
     height: 812
 chrome_header: true
 chrome_footer: true
+ai_model: grok-4.7
+build_mode: true
